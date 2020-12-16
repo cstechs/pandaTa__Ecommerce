@@ -73,3 +73,17 @@ exports.updateCategory = asyncHandlers(async (req, res, next) => {
        res.status(500).json({message: error.message})
    }
 })
+
+
+// @Method: GET
+// @Route : api/category/:productSubcategoryId
+// @Desc  : Get category by SubCategoryid
+exports.getCategoryBySubCategoryId = async (req, res) => {
+    try {
+        let id = req.params.id
+        const category = await Category.find({SubCategory: id});
+        res.status(200).json({ success: true, data: category });
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}

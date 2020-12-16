@@ -29,6 +29,7 @@ const onSubmit = e => {
     }
     else {
         dispatch(addCategory(newCategory));
+        window.location.reload();
     }
 }
 

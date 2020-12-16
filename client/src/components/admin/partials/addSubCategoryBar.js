@@ -38,6 +38,7 @@ const onSubmit = e => {
     else {
         dispatch(addSubCategory(newSubCategory));
         dispatch(setAlert('Sub Category Added Suceesfully', 'succcess'));
+        window.location.reload();
     }
 }
 

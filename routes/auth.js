@@ -1,28 +1,80 @@
-const express = require('express');
-const {register, login, getMe, verify, resendToken} = require('../controllers/auth');
-const {recover, reset, resetPassword} = require('../controllers/password')
-const {protect} = require('../middleware/auth');
+const express = require("express");
+const { check } = require("express-validator");
+
+const Auth = require("../controllers/auth");
+const Password = require("../controllers/password");
+const validate = require("../middleware/validate");
 
 const router = express.Router();
 
-router.post('/register', register);
-router.post('/login', login);
-//router.get('/me', protect, getMe);
+router.get("/", (req, res) => {
+  res
+    .status(200)
+    .json({
+      message:
+        "You are in the Auth Endpoint. Register or Login to test Authentication.",
+    });
+});
 
+router.post(
+  "/register",
+  [
+    check("email").isEmail().withMessage("Enter a valid email address"),
+    check("password")
+      .isLength({ min: 6 })
+      .withMessage("Must be at least 6 chars long"),
+
+    //check('password').not().isEmpty().isLength({min: 10 , max:15}).withMessage('Must be at least 7 chars long'),
+    //check('password').isLength({ min: 6 }).withMessage('must be at least 6 chars long'),
+
+    check("firstName")
+      .not()
+      .isEmpty()
+      .withMessage("You first name is required"),
+    check("lastName").not().isEmpty().withMessage("You last name is required"),
+  ],
+  validate,
+  Auth.register
+);
+
+router.post(
+  "/login",
+  [
+    check("email").isEmail().withMessage("Enter a valid email address"),
+    check("password").not().isEmpty(),
+  ],
+  validate,
+  Auth.login
+);
 
 //EMAIL Verification
-router.get('/verify/:token', verify);
-
-router.post('/resend', resendToken);
+router.get("/verify/:token", Auth.verify);
+router.post("/resend", Auth.resendToken);
 
 //Password RESET
-router.post('/recover', recover);
+router.post(
+  "/recover",
+  [check("email").isEmail().withMessage("Enter a valid email address")],
+  validate,
+  Password.recover
+);
 
-router.get('/reset/:token', reset);
+router.get("/reset/:token", Password.reset);
 
-router.post('/reset/:token', resetPassword);
-
-//Sample route with authorization example for roles.
-//router.get('/me', protect, authorize('admin', 'user'),anySecureOperation);
+router.post(
+  "/reset/:token",
+  [
+    check("password")
+      .not()
+      .isEmpty()
+      .isLength({ min: 6 })
+      .withMessage("Must be at least 6 chars long"),
+    check("confirmPassword", "Passwords do not match").custom(
+      (value, { req }) => value === req.body.password
+    ),
+  ],
+  validate,
+  Password.resetPassword
+);
 
 module.exports = router;

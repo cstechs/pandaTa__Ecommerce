@@ -20,26 +20,26 @@ const productSchema = mongoose.Schema({
     type: Number,
     required: [true, "Product quantity is required"],
   },
-  productCategory:{
+  productSubCategory: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Product category is required"],
-    ref: 'SubCategory'
+    ref: "SubCategory",
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     //required: [true, "Created by is required"],
-    ref: 'User'
+    ref: "User",
   },
   updatedAt: {
-    type: Date
+    type: Date,
   },
   updatedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
 });
 const Product = mongoose.model("Product", productSchema);

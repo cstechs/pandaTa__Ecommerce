@@ -1,103 +1,129 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
-const Token = require('../models/Token');
+const Token = require("../models/token");
 
-const userSchema = mongoose.Schema({
-
-  firstName: {
-    type: String,
-    require: [true, "First Name is required"]
-  },
-  
-  lastName: {
-    type: String,
-    require: [true, "Last Name is required"]
-  },
-
-  userName: {
-    type: String,
-    require: [true, "Please add a Username"]
-  },
-
-  email: {
-    type: String,
-    required: [true, "Please add an Email"],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email'
-    ]
-  },
-
-  role: {
-    type: String,
-    enum: ['user', 'admin', 'customer']
-  },
-
-  password: {
-    type: String,
-    required: [true, "Please enter a password"],
-    minlength: 6,
-    select: false
-  },
-
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-
-  isVerified: {
-      type: Boolean,
-      default: false
-  },
-
-  resetPasswordToken: {
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
       type: String,
-      required: false
-  },
+      unique: true,
+      required: "Your email is required",
+      trim: true,
+    },
 
-  resetPasswordExpires: {
+    userName: {
+      type: String,
+      unique: true,
+      required: false,
+      index: true,
+      sparse: true,
+    },
+
+    password: {
+      type: String,
+      required: "Your password is required",
+      max: 100,
+    },
+
+    firstName: {
+      type: String,
+      required: "First Name is required",
+      max: 100,
+    },
+
+    lastName: {
+      type: String,
+      required: "Last Name is required",
+      max: 100,
+    },
+    role: {
+      type: String,
+      required: true,
+    },
+    bio: {
+      type: String,
+      required: false,
+      max: 255,
+    },
+
+    profileImage: {
+      type: String,
+      required: false,
+      max: 255,
+    },
+
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    resetPasswordToken: {
+      type: String,
+      required: false,
+    },
+
+    resetPasswordExpires: {
       type: Date,
-      required: false
-  }
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
 
-}, {timestamps: true})
+UserSchema.pre("save", function (next) {
+  const user = this;
 
+  if (!user.isModified("password")) return next();
 
-//Hashing the password before saving to db.
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
-    next();
-  };
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  bcrypt.genSalt(10, function (err, salt) {
+    if (err) return next(err);
+
+    bcrypt.hash(user.password, salt, function (err, hash) {
+      if (err) return next(err);
+
+      user.password = hash;
+      next();
+    });
+  });
 });
 
-//Signing the JWT token with the _id of user.
-userSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES });
+UserSchema.methods.comparePassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
 };
 
-//Comparing the entered password with hashed password
-userSchema.methods.verifyPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+UserSchema.methods.generateJWT = function () {
+  const today = new Date();
+  const expirationDate = new Date(today);
+  expirationDate.setDate(today.getDate() + 60);
+
+  let payload = {
+    id: this._id,
+    email: this.email,
+    username: this.username,
+    firstName: this.firstName,
+    lastName: this.lastName,
+  };
+
+  return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
+  });
 };
 
-userSchema.methods.generatePasswordReset = function() {
-  this.resetPasswordToken = crypto.randomBytes(20).toString('hex');
+UserSchema.methods.generatePasswordReset = function () {
+  this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
   this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
 };
 
-userSchema.methods.generateVerificationToken = function() {
+UserSchema.methods.generateVerificationToken = function () {
   let payload = {
-      userId: this._id,
-      token: crypto.randomBytes(20).toString('hex')
+    userId: this._id,
+    token: crypto.randomBytes(20).toString("hex"),
   };
 
   return new Token(payload);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("Users", UserSchema);

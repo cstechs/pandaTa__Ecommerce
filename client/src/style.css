@@ -2,7 +2,8 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500|Rubik:500,700);
 @import url(https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900);
-html, body {
+html,
+body {
   min-height: 100%;
   min-height: 100vh;
   overflow: auto;
@@ -12,7 +13,7 @@ body {
   margin: 0;
   padding: 0;
 }
-input{
+input {
   outline: none !important;
 }
 input::-webkit-outer-spin-button,
@@ -20,31 +21,30 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
-#loader{
-  position:fixed;
-  z-index:99999;
-  top:0;
-  left:0;
-  bottom:0;
-  right:0;
-  background:white;
+#loader {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
   transition: 1s 0.4s;
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
-#loader img{
+#loader img {
   width: 190px;
 }
 .logo {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 900;
   font-size: 32px;
-  color: #43425D;
+  color: #43425d;
 }
 body ::-webkit-scrollbar {
   width: 7px;
@@ -54,18 +54,26 @@ body ::-webkit-scrollbar {
 body ::-webkit-scrollbar-track {
   background: white;
 }
- 
+
 body ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: #f7f7f7;
 }
 .Side_Bar ::-webkit-scrollbar-track {
-  background: #43425D;
+  background: #43425d;
 }
 
 .Side_Bar ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background: #34334b;
+}
+
+.chatBox ::-webkit-scrollbar-track {
+  background: #f7f7f7;
+}
+
+.chatBox ::-webkit-scrollbar-thumb {
+  background: #d1cfcf;
 }
 
 .show {
@@ -76,7 +84,7 @@ body ::-webkit-scrollbar-thumb {
   display: none !important;
 }
 .active {
-  color: #43425D !important;
+  color: #43425d !important;
   font-weight: 500;
 }
 .modal {
@@ -96,20 +104,19 @@ body ::-webkit-scrollbar-thumb {
 
 .component {
   width: 100%;
-  overflow: hidden;
 }
 
 h2 {
-  color: #43425D;
+  color: #43425d;
   font-size: 30px;
   font-weight: 500;
 }
 
-.underLine{
-background: #626264;
-width: 90%;
-height: 1px;
-margin: 5px 0 20px 0;
+.underLine {
+  background: #626264;
+  width: 90%;
+  height: 1px;
+  margin: 5px 0 20px 0;
 }
 .button-base {
   -webkit-appearance: none;
@@ -128,13 +135,13 @@ margin: 5px 0 20px 0;
 .ripple {
   position: relative;
   overflow: hidden;
-  transition:1s all;
+  transition: 1s all;
 }
 
 .ripple:before {
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.7);
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -153,13 +160,17 @@ margin: 5px 0 20px 0;
   padding-left: 35px !important;
   margin-top: 3%;
 }
-.breadcrumb li{
-font-size: 13px;
-font-family: 'raleway';
-color: #43425D !important;
-font-weight: 600;
+.breadcrumb li {
+  font-size: 13px;
+  font-family: "raleway";
+  cursor: pointer;
+  color: #43425d !important;
+  font-weight: 600;
 }
-.PageTitle{
+.breadcrumb .active {
+  cursor: default;
+}
+.PageTitle {
   margin: auto;
   border-radius: 30px;
   padding: 8px;
@@ -167,15 +178,15 @@ font-weight: 600;
   text-align: center;
   font-weight: 500;
   margin-top: 1%;
-  background: #43425D;
-  color: white; 
+  background: #43425d;
+  color: white;
 }
 @media screen and (max-width: 1194px) {
   .modal {
     width: 55% !important;
   }
-  .PageTitle{
-    font-size: 14px; 
+  .PageTitle {
+    font-size: 14px;
   }
 }
 
@@ -186,11 +197,10 @@ font-weight: 600;
   h2 {
     font-size: 25px;
   }
-  .PageTitle{
+  .PageTitle {
     width: 150px;
     font-size: 13px;
   }
-  
 }
 
 @media screen and (max-width: 763px) {
@@ -203,15 +213,18 @@ font-weight: 600;
   .breadcrumb {
     padding-left: 10px !important;
   }
-  .breadcrumb li{
-  font-size: 11px;
+  .breadcrumb li {
+    font-size: 11px;
   }
   .active {
     display: inherit !important;
   }
 }
-@media screen and (max-width: 530px) {}
+@media screen and (max-width: 530px) {
+}
 
-@media screen and (max-width: 330px) {}
+@media screen and (max-width: 330px) {
+}
 
-@media screen and (max-width: 290px) {}
+@media screen and (max-width: 290px) {
+}

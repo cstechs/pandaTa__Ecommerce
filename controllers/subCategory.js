@@ -12,7 +12,8 @@ exports.createSubCategory = asyncHandlers(async (req, res, next) => {
     return res.status(400).json({ success: false, message: "Please enter/select all the fields." });
   }
   let subCategory = await SubCategory.findOne({ subCategoryName });
-  if (subCategory) {
+  let Category = await SubCategory.findOne({categoryId });
+  if (subCategory && Category) {
     return res.status(400).json({ success: false, message: 'Sub Category already exists' });
   }
   subCategory = await SubCategory.create({ subCategoryName, categoryId});

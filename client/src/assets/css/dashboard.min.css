@@ -858,7 +858,13 @@ li.menuitem-active>a:not(.collapsed)>span.menu-arrow {
 .notification-list {
     margin-left: 0
 }
-
+.notification-icon-badge {
+    position: absolute;
+    font-size: 12px;
+    padding: 1px 6px;
+    right: 2px;
+    text-align: center;
+}
 .notification-list .noti-title {
     background-color: transparent;
     padding: 15px 20px
@@ -2071,7 +2077,8 @@ li.menuitem-active>a:not(.collapsed)>span.menu-arrow {
     border-bottom-left-radius: 0;
     display: inline-block;
     padding: 8px 12px;
-    position: relative
+    position: relative;
+    max-width: 250px;
 }
 
 .conversation-list .ctext-wrap i {
@@ -2104,7 +2111,6 @@ li.menuitem-active>a:not(.collapsed)>span.menu-arrow {
     float: right!important;
     margin-right: 1px;
     text-align: right;
-    width: 40%!important;
 }
 
 .conversation-list .odd .ctext-wrap {
@@ -7093,6 +7099,7 @@ table[data-toggle=table] {
     cursor: pointer;
     outline: none;
     padding: 65px 0;
+    text-align: center;
     box-shadow: none
 }
 
@@ -7101,7 +7108,6 @@ table[data-toggle=table] {
 }
 
 .dz-message {
-    text-align: center;
     padding: 1rem 0
 }
 
@@ -7131,6 +7137,9 @@ table[data-toggle=table] {
     font-size: 12px;
 }
 
+.dz-message label {
+    margin-top: 20px;
+}
 @font-face {
     font-family: dropify;
     src: url(../fonts/dropify.eot);
@@ -7673,7 +7682,15 @@ ul.rdw-dropdown-optionwrapper li {
     font-size: 14px;
     font-weight: 600;
 }
-
+.ProductBar .SelectedImage {
+    border-radius: 5px;
+    border: 2px dashed #ced4da;
+    padding: 10px;
+    text-align: right;
+}
+.ProductBar .SelectedImage img{
+    width: 110px;
+}
 .Product_Bar_Portion .closeIcon {
     color: white;
     position: absolute;

@@ -99,12 +99,10 @@ hr {
 
 .Dashobard h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
-    margin-bottom: 1.5rem
 }
 
 p {
     margin-top: 0;
-    margin-bottom: 1rem
 }
 
 abbr[data-original-title], abbr[title] {
@@ -349,7 +347,6 @@ template {
 }
 
 .Dashboard .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 1.5rem;
     font-weight: 500;
     line-height: 1.1
 }
@@ -1525,15 +1522,18 @@ pre code {
 }
 .table .product_image{
     width: 70px;
+    margin-right: 5px;
     float: left;
+    height: 35px;
 }
 .table .product_image img{
     width: 70%;
     font-size: 8px;
+    height: 100%;
 }
 .table .product_name{
     width: 250px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 .table-sm td, .table-sm th {
     padding: .5rem
@@ -4858,6 +4858,21 @@ a.badge-dark:focus, a.badge-dark:hover {
 }
 
 a.badge-dark.focus, a.badge-dark:focus {
+    outline: 0;
+    box-shadow: 0 0 0 .15rem rgba(50, 58, 70, .5)
+}
+
+.badge-darkpurple {
+    color: #fff;
+    background-color: #43425D
+}
+
+a.badge-darkpurple:focus, a.badge-darkpurple:hover {
+    color: #fff;
+    background-color: #43425D
+}
+
+a.badge-darkpurple.focus, a.badge-darkpurple:focus {
     outline: 0;
     box-shadow: 0 0 0 .15rem rgba(50, 58, 70, .5)
 }

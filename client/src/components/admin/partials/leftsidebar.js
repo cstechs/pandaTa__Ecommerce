@@ -20,7 +20,7 @@ const LeftBar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/admin/products" className="ripple button-base">
+          <Link to="/admin/product" className="ripple button-base">
             <i className="mdi mdi-cart-plus leftbar_icon" />
             <span> Products </span>
           </Link>

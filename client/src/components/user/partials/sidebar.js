@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import Login from '../auth/login'
@@ -29,11 +29,17 @@ const Sidebar = () => {
     document.getElementById("border").style.transform = "translateX(105%)";
   }
 
+  const state = useSelector(state => state.auth);
+  const [isPreviewShown, setPreviewShown] = useState(false);
+
   const category = useSelector(state => state.category);
   const subCategory = useSelector(state => state.subCategory);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (state.isAuthenticated) {
+      setPreviewShown(true);
+    }
     dispatch(getCategory());
     dispatch(getSubCategory());
   }, []);
@@ -63,9 +69,19 @@ const Sidebar = () => {
         </ul>
       </div>
       <div id="Account">
+        
+      {!isPreviewShown && <>
         <button className="ripple button-base" data-toggle="modal" data-target="#exampleModalCenter1">Log in</button>
         <button className="ripple button-base" data-toggle="modal" data-target="#exampleModalCenter2">Sign up</button>
         <Link to="sellerapplication/"><button className="ripple button-base">Sign up as seller</button></Link>
+        </>
+      }
+        
+      {isPreviewShown && <>
+        <button className="ripple button-base" data-toggle="modal" data-target="#exampleModalCenter1">Request Quote</button>
+        <Link to="admin/"><button className="ripple button-base">Dashboard</button></Link>
+        </>
+      }
         <p>
           <a href="http://cstechsoftwares.com/"><i className="fab fa-facebook-f"></i></a>
           <a href="http://cstechsoftwares.com/"><i className="fab fa-pinterest"></i></a>
