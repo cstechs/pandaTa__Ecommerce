@@ -5,6 +5,7 @@ import Login from "../auth/login";
 import { logout } from "../../../redux/_actions/authAction";
 import Register from "../auth/register";
 import Sidebar from "./sidebar";
+import { getCart } from "../../../redux/_actions/cartAction";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getProduct } from "../../../redux/_actions/productAction";
 const Header = () => {
@@ -18,6 +19,10 @@ const Header = () => {
 
   const [isPreviewShown, setPreviewShown] = useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const state = useSelector((state) => state.auth);
+  const cart = useSelector((state) => state.cart);
+  //console.log(cart?.cartItems?.data?.items?.length);
+
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
   const [searchProduct, setSearchProduct] = useState([]);
@@ -30,6 +35,13 @@ const Header = () => {
     }
     setSearchProduct(temp);
   };
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
+  if (state.loading === false) {
+    window.location.reload();
+  }
 
   useEffect(() => {
     if (user) {
@@ -154,7 +166,7 @@ const Header = () => {
                   <Link to="/cart">
                     <i className="fa fa-shopping-cart"></i>
                     <span className="badge-darkpurple rounded-circle notification-icon-badge">
-                      0
+                      {cart?.cartItems?.data?.items?.length}
                     </span>
                   </Link>
                   <div class="btn-group">
@@ -180,7 +192,10 @@ const Header = () => {
                       <div>
                         <span
                           class="dropdown-item"
-                          onClick={() => dispatch(logout())}
+                          onClick={() => {
+                            dispatch(logout());
+                            window.location.reload();
+                          }}
                         >
                           <i className="fas fa-sign-out-alt"></i>
                           LogOut

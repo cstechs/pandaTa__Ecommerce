@@ -36,3 +36,16 @@ export const getChat = () => {
     }
   };
 };
+
+// export const getChat = () => {
+//   return (dispatch) => {
+//     const config = { header: { "Content-Type": "application/json" } };
+//     fetch("/api/chat/", config)
+//       .then((res) => res.json())
+//       .then((res) => {
+//         console.log("res", res.data);
+//         dispatch({ type: CHAT_LOAD_SUCCESS, payload: res.data });
+//       })
+//       .catch((err) => err.message);
+//   };
+// };

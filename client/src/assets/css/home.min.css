@@ -704,7 +704,12 @@
   margin-top: 2px;
   outline: none !important;
 }
-
+.checkout .checkoutBox tr {
+  border-bottom: 1px solid #e4e4e4;
+}
+.checkout .checkoutBox td {
+  padding: 14px 0;
+}
 .checkout .checkoutBox .col-12 input {
   width: 98.4%;
 }
@@ -787,6 +792,261 @@
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.checkout .createAccount p {
+  position: relative;
+  left: 30px;
+  font-size: 15px;
+  color: #6b6b6b;
+}
+
+.checkout h6 {
+  color: #43425d;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.checkout table {
+  width: 100%;
+}
+.checkoutBox .price {
+  border: 1px solid #c1c8d8;
+  padding: 4px 10px;
+  margin: 0 7px;
+  border-radius: 4px;
+}
+.checkout table tr td {
+  padding: 6px 6px 6px 0;
+  font-size: 14px;
+}
+
+.checkout table .imageBox {
+  width: 85px;
+  padding: 7px 0;
+  border-radius: 4px;
+  margin-right: -30px;
+}
+
+.checkout table .imageBox img {
+  width: 100%;
+}
+
+.checkout table input[type="number"] {
+  width: 35px;
+  text-align: center;
+  border: 1px solid #bebebe;
+}
+
+.shippingCharge {
+  border-top: 1px solid #bebebe;
+  padding-right: 10%;
+  padding-left: 22%;
+  font-size: 14px;
+}
+
+.checkout .paymentMethod {
+  width: 100%;
+  border-left: 2px solid #c8c8c8;
+  height: auto;
+  padding: 10px 10px 30px 25px;
+}
+
+.addCard {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+.addCard input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.addCard .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border: 1px solid #43425d;
+  border-radius: 50%;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.addCard input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.addCard .checkmark:after {
+  top: 4px;
+  left: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #43425d;
+}
+
+.checkout .button {
+  padding: 11px 32px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+.checkout .bck {
+  border: 1px solid #6b6b6b;
+  background: transparent;
+}
+
+.checkout .nxt {
+  background: #43425d;
+  border: 1px solid #43425d;
+  color: white;
+}
+
+.orderPlaced {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.orderPlaced h1 {
+  color: #43425d;
+  font-size: 45px;
+  margin: 0;
+}
+
+.orderPlaced p {
+  color: #000000;
+  margin-top: 16px;
+  font-size: 17px;
+  font-family: "Roboto";
+}
+
+.orderPlaced button {
+  color: #fff;
+  background-color: #43425d;
+  margin-top: 26px;
+  font-size: 15px;
+  padding: 9px 28px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 1010px) {
+  .checkout .checkoutBox {
+    width: 90%;
+  }
+  .checkout table tr td {
+    font-size: 13px;
+  }
+  .checkout table .imageBox {
+    width: 65px;
+    margin-right: -20px;
+  }
+  .checkout table input[type="number"] {
+    width: 32px;
+  }
+  .checkout .paymentMethod {
+    padding: 10px 5px 30px 5px;
+  }
+  .addCard {
+    font-size: 13px;
+  }
+  .checkout .checkoutBox input {
+    width: 100%;
+  }
+  .checkout .checkoutBox .col-12 input {
+    width: 100%;
+  }
+  .checkout .checkoutBox select {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 763px) {
+  .checkout .head span {
+    margin: 30px;
+    font-size: 14px;
+  }
+  .checkout .checkoutBox {
+    padding: 30px 0 50px 5px;
+  }
+  .checkout .checkoutBox input {
+    width: 100%;
+  }
+  .checkout .checkoutBox .col-12 input {
+    width: 100%;
+  }
+  .checkout .checkoutBox select {
+    width: 100%;
+  }
+  .checkout .createAccount {
+    top: 2px;
+    left: 3px;
+  }
+  .checkout table tr td {
+    font-size: 13px;
+  }
+  .checkout .paymentMethod {
+    width: 100%;
+    border-left: 0;
+    height: auto;
+    padding: 10px 5px 30px 0px;
+  }
+  .addCard {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .checkout .head span {
+    display: none;
+    font-size: 16px;
+  }
+  .checkout .checkoutBox {
+    padding: 30px 0 30px 0;
+    width: 96%;
+  }
+  .checkout .createAccount {
+    top: 2px;
+    left: 3px;
+  }
+  .checkout table .imageBox {
+    width: 55px;
+    margin-right: -10px;
+  }
+  .checkout table input[type="number"] {
+    width: 30px;
+    padding: 4px;
+  }
+  .checkout .float-left {
+    float: none !important;
+  }
+  .checkout .float-right {
+    float: none !important;
+  }
+  .checkout .button {
+    display: block;
+    width: 95%;
+    margin: auto !important;
+    margin-bottom: 15% !important;
+  }
+  .checkout .bck {
+    position: absolute;
+    top: 70px;
+    width: 90%;
+    left: 5%;
+  }
 }
 .seller .SideBar {
   width: 105%;
@@ -988,268 +1248,6 @@
     width: 100%;
     margin-top: 13%;
     padding-left: 0;
-  }
-}
-.checkout .createAccount p {
-  position: relative;
-  left: 30px;
-  font-size: 15px;
-  color: #6b6b6b;
-}
-
-.checkout h6 {
-  color: #43425d;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.checkout table {
-  width: 100%;
-}
-
-.checkout table tr td {
-  padding: 6px 6px 6px 0;
-  font-size: 14px;
-}
-
-.checkout table .imageBox {
-  width: 85px;
-  border: 1px solid #bebebe;
-  padding: 7px 0;
-  border-radius: 4px;
-  margin-right: -30px;
-}
-
-.checkout table .imageBox img {
-  width: 100%;
-}
-
-.checkout table input[type="number"] {
-  width: 35px;
-  text-align: center;
-  border: 1px solid #bebebe;
-}
-
-.shippingCharge {
-  border-top: 1px solid #bebebe;
-  padding-right: 10%;
-  padding-left: 22%;
-  font-size: 14px;
-}
-
-.checkout .paymentMethod {
-  width: 100%;
-  border-left: 2px solid #c8c8c8;
-  height: auto;
-  padding: 10px 10px 30px 25px;
-}
-
-.addCard {
-  display: block;
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  user-select: none;
-}
-
-.addCard input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.addCard .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 20px;
-  width: 20px;
-  background-color: #fff;
-  border: 1px solid #43425d;
-  border-radius: 50%;
-}
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.addCard input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.addCard .checkmark:after {
-  top: 4px;
-  left: 4px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #43425d;
-}
-
-.checkout .button {
-  padding: 11px 32px;
-  font-size: 13px;
-  border-radius: 5px;
-}
-
-.checkout .bck {
-  border: 1px solid #6b6b6b;
-  background: transparent;
-}
-
-.checkout .nxt {
-  background: #43425d;
-  border: 1px solid #43425d;
-  color: white;
-}
-
-.orderPlaced {
-  padding: 80px 0;
-  text-align: center;
-}
-
-.orderPlaced h1 {
-  color: #43425d;
-  font-size: 45px;
-  margin: 0;
-}
-
-.orderPlaced p {
-  color: #000000;
-  margin-top: 16px;
-  font-size: 17px;
-  font-family: "Roboto";
-}
-
-.orderPlaced button {
-  color: #fff;
-  background-color: #43425d;
-  margin-top: 26px;
-  font-size: 15px;
-  padding: 9px 28px;
-  border-radius: 5px;
-}
-
-#OrderSuccess {
-  display: none;
-}
-
-#BillingAddress {
-  display: none;
-}
-
-#Payment {
-  display: none;
-}
-
-@media screen and (max-width: 1010px) {
-  .checkout .checkoutBox {
-    width: 90%;
-  }
-  .checkout table tr td {
-    font-size: 13px;
-  }
-  .checkout table .imageBox {
-    width: 65px;
-    margin-right: -20px;
-  }
-  .checkout table input[type="number"] {
-    width: 32px;
-  }
-  .checkout .paymentMethod {
-    padding: 10px 5px 30px 5px;
-  }
-  .addCard {
-    font-size: 13px;
-  }
-  .checkout .checkoutBox input {
-    width: 100%;
-  }
-  .checkout .checkoutBox .col-12 input {
-    width: 100%;
-  }
-  .checkout .checkoutBox select {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: 763px) {
-  .checkout .head span {
-    margin: 30px;
-    font-size: 14px;
-  }
-  .checkout .checkoutBox {
-    padding: 30px 0 50px 5px;
-  }
-  .checkout .checkoutBox input {
-    width: 100%;
-  }
-  .checkout .checkoutBox .col-12 input {
-    width: 100%;
-  }
-  .checkout .checkoutBox select {
-    width: 100%;
-  }
-  .checkout .createAccount {
-    top: 2px;
-    left: 3px;
-  }
-  .checkout table tr td {
-    font-size: 13px;
-  }
-  .checkout .paymentMethod {
-    width: 100%;
-    border-left: 0;
-    height: auto;
-    padding: 10px 5px 30px 0px;
-  }
-  .addCard {
-    font-size: 13px;
-  }
-}
-
-@media screen and (max-width: 530px) {
-  .checkout .head span {
-    display: none;
-    font-size: 16px;
-  }
-  .checkout .checkoutBox {
-    padding: 30px 0 30px 0;
-    width: 96%;
-  }
-  .checkout .createAccount {
-    top: 2px;
-    left: 3px;
-  }
-  .checkout table .imageBox {
-    width: 55px;
-    margin-right: -10px;
-  }
-  .checkout table input[type="number"] {
-    width: 30px;
-    padding: 4px;
-  }
-  .checkout .float-left {
-    float: none !important;
-  }
-  .checkout .float-right {
-    float: none !important;
-  }
-  .checkout .button {
-    display: block;
-    width: 95%;
-    margin: auto !important;
-    margin-bottom: 15% !important;
-  }
-  .checkout .bck {
-    position: absolute;
-    top: 70px;
-    width: 90%;
-    left: 5%;
   }
 }
 

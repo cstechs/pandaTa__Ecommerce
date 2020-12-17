@@ -1,5 +1,12 @@
 const initState = {
-  wishLists: [],
+  wishLists: [
+    {
+      products: [{ test: "1" }, { test: "2" }, { test: "3" }],
+    },
+    {
+      products: [{ test: "1" }, { test: "2" }, { test: "3" }],
+    },
+  ],
   error: null,
   loading: true,
 };

@@ -17,8 +17,8 @@ const UpdateProductBar = (props) => {
   const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
-  //   console.log("cat", category?.categories?.data);
-  //   console.log("sub", subCategory?.subCategories?.data);
+  //console.log("cat", category?.categories?.data);
+  //console.log("sub", subCategory?.subCategories?.data);
   //   {
   //     console.log(props.productId);
   //   }
@@ -52,8 +52,6 @@ const UpdateProductBar = (props) => {
   };
   useEffect(() => {
     dispatch(getCategory());
-    dispatch(getSubCategory());
-    dispatch(getCategoryBySubCategoryId(props.products.productSubCategory));
   }, []);
 
   const onSubmit = () => {
@@ -151,38 +149,14 @@ const UpdateProductBar = (props) => {
                     value={productCategory}
                     onChange={onCategoryChange}
                   >
-                    <option
-                      value={
-                        category.categories?.data?.find(
-                          (x) =>
-                            x._id ===
-                            subCategory.subCategories?.data?.find(
-                              (x) => x._id == productSubCategory
-                            )?.categoryId
-                        )?._id
-                      }
-                    >
-                      {
-                        category.categories?.data?.find(
-                          (x) =>
-                            x._id ===
-                            subCategory.subCategories?.data?.find(
-                              (x) => x._id == productSubCategory
-                            )?.categoryId
-                        )?.categoryName
-                      }
+                    <option value="" selected disabled>
+                      Select Category
                     </option>
-                    {category.categories.data?.map(
-                      ({ _id, categoryName }, index) => (
-                        <>
-                          {index > 0 && (
-                            <option key={_id} value={_id}>
-                              {categoryName}
-                            </option>
-                          )}
-                        </>
-                      )
-                    )}
+                    {category.categories.data?.map(({ _id, categoryName }) => (
+                      <option key={_id} value={_id}>
+                        {categoryName}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-group mb-2">
@@ -196,22 +170,14 @@ const UpdateProductBar = (props) => {
                     required
                     onChange={onChange}
                   >
-                    <option value={productSubCategory}>
-                      {
-                        subCategory.subCategories?.data?.find(
-                          (x) => x._id == productSubCategory
-                        )?.subCategoryName
-                      }
+                    <option value="" selected disabled>
+                      Select Sub Category
                     </option>
                     {subCategory.subCategories.data?.map(
-                      ({ _id, subCategoryName }, index) => (
-                        <>
-                          {index > 0 && (
-                            <option key={_id} value={_id}>
-                              {subCategoryName}
-                            </option>
-                          )}
-                        </>
+                      ({ _id, subCategoryName }) => (
+                        <option key={_id} value={_id}>
+                          {subCategoryName}
+                        </option>
                       )
                     )}
                   </select>

@@ -19,7 +19,7 @@ const Navbar = () => {
     <nav>
       <ul>
         {/* {console.log(category.categories.data)} */}
-        {category.categories.data?.map(({ _id, categoryName }) => (
+        {category.categories.data?.map(({ _id, categoryName, index }) => (
           <div className="dropdown" key={_id}>
             <li>
               <Link to="/product">{categoryName}</Link>
@@ -30,11 +30,16 @@ const Navbar = () => {
             {/* {subCategory.subCategories.data?.find(
               (item) => (item.categoryId === _id) === undefined
             ) && ( */}
-            <NavbarDropdown
-              _id={_id}
-              categoryName={categoryName}
-              subCategory={subCategory}
-            />
+
+            {subCategory.subCategories?.data?.find(
+              (item) => item.categoryId === _id
+            ) != undefined && (
+              <NavbarDropdown
+                _id={_id}
+                categoryName={categoryName}
+                subCategory={subCategory}
+              />
+            )}
           </div>
         ))}
       </ul>

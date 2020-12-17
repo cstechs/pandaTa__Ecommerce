@@ -1,0 +1,140 @@
+import React, { useState, useEffect } from "react";
+import { createChat, getChat } from "../../../redux/_actions/chatAction";
+import { useSelector, useDispatch } from "react-redux";
+import UserImage from "../../../assets/images/admin/users/user-6.jpg";
+
+const Chat = ({ ChatHide }) => {
+  const ChatHandler = () => {
+    ChatHide();
+  };
+  const chat = useSelector((state) => state.chat);
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const [checkSender, setCheckSender] = useState(null);
+  const dispatch = useDispatch();
+
+  const onSubmit = (e) => {
+    // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
+    // //     dispatch(setAlert('Please Enter fields.', 'danger'));
+    // // }
+    // else {
+    e.preventDefault();
+    console.log("dfsd");
+    dispatch(createChat(newMessage));
+    dispatch(getChat());
+    var objDiv = document.getElementById("mydiv");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  };
+  useEffect(() => {
+    dispatch(getChat());
+    var objDiv = document.getElementById("mydiv");
+    objDiv.scrollTop = objDiv.scrollHeight;
+    // $("#mydiv").scrollTop($("#mydiv").height);
+  }, []);
+
+  useEffect(() => {
+    var objDiv = document.getElementById("mydiv");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }, [getChat]);
+
+  //   useEffect(() => {
+  //     setSendChat(() =>
+  //       chat?.chats?.data?.map((item) => {
+  //         return {
+  //           Message: item.message,
+  //           Sender: item.sender,
+  //           createdBy: item.createdBy,
+  //           sellerId: item.sellerId,
+  //         };
+  //       })
+  //     );
+  //   }, [chat]);
+  //   console.log("checking", sendChat);
+
+  const [newMessage, setNewMessage] = useState({
+    message: "",
+    sender: "",
+    createdBy: "",
+    sellerId: "",
+  });
+  const { message } = newMessage;
+  const onChange = (e) => {
+    if (user.role == "seller") {
+      setCheckSender(1);
+      newMessage.sender = checkSender;
+      newMessage.createdBy = user._id;
+      setNewMessage({
+        ...newMessage,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setCheckSender(0);
+      newMessage.sender = checkSender;
+      newMessage.createdBy = user._id;
+      setNewMessage({
+        ...newMessage,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+  return (
+    <>
+      <div className="head">
+        <img
+          src={UserImage}
+          className="mr-2 rounded-circle"
+          height={38}
+          alt="Brandon Smith"
+        />
+        <span>Supplier’s Name</span>
+        <i className="ti-close" onClick={() => ChatHandler()}></i>
+      </div>
+      <div className="body">
+        <div className="messageBox">
+          <ul className="conversation-list mt-2">
+            {chat.chats?.data?.map((item, index) => (
+              <>
+                {console.log("chatlength", chat.chats?.data?.length)}
+                {item.sender == 1 && (
+                  <li
+                    className="clearfix odd"
+                    id={`${index == chat.chats?.data?.length - 1 && "mydiv"}`}
+                  >
+                    <div className="conversation-text">
+                      <div className="ctext-wrap">
+                        <p>{item.message}</p>
+                      </div>
+                    </div>
+                  </li>
+                )}
+                {item.sender == 0 && (
+                  <li className="clearfix">
+                    <div className="conversation-text">
+                      <div className="ctext-wrap">
+                        <p>{item.message}</p>
+                      </div>
+                    </div>
+                  </li>
+                )}
+              </>
+            ))}
+          </ul>
+        </div>
+        <form onSubmit={(e) => onSubmit(e)}>
+          <input
+            type="text"
+            required
+            placeholder="Type Your Message Here..."
+            name="message"
+            value={message}
+            onChange={onChange}
+          />
+          <button>
+            <i className="fe-send" />
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default Chat;

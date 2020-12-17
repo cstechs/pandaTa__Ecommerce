@@ -15,6 +15,7 @@ import { addItemToCart } from "../../../redux/_actions/cartAction";
 
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
+
   // console.log("cart", cartItem.data?.items)
   const [quantity, setQuantity] = useState([]);
 

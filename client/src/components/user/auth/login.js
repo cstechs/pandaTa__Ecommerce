@@ -8,6 +8,7 @@ import { CLEAR_ERRORS } from "../../../redux/types";
 const Login = () => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [user] = useState(() => JSON.parse(localStorage.getItem("user")));
 
   useEffect(() => {
     if (state.error === "Invalid Creds..") {
@@ -20,17 +21,14 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
       dispatch(setAlert("Please enter all the fields.", "danger"));
     } else {
       dispatch(login(email, password));
-      window.location.reload();
-      if (state.isAuthenticated) {
-        window.location.reload();
-      }
+
+      //window.location.reload();
     }
   };
 

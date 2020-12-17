@@ -8,13 +8,13 @@ import {
 } from "../types";
 import axios from "axios";
 
-export const addItemToCart = (productId, quantity) => {
+export const addItemToCart = (productId, createdBy, quantity) => {
   return async (dispatch) => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.post(
         "/api/cart/addItemToCart",
-        { productId, quantity },
+        { productId, createdBy, quantity },
         config
       );
       console.log(res.data);

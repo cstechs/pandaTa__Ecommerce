@@ -15,6 +15,9 @@ const initState = {
 const chatReducer = (state = initState, action) => {
   switch (action.type) {
     case CHAT_LOAD_SUCCESS:
+      {
+        console.log("ac", action.payload);
+      }
       return {
         ...state,
         chats: action.payload,

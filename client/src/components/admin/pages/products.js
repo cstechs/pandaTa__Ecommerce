@@ -21,7 +21,9 @@ const Products = () => {
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const [isPreviewShown, setPreviewShown] = useState(false);
-
+  const category = useSelector((state) => state.category);
+  const subCategory = useSelector((state) => state.subCategory);
+  console.log("sub", subCategory);
   const [products, setProduct] = useState(0);
 
   const handlePreview = (item) => {
@@ -122,46 +124,55 @@ const Products = () => {
                             </thead>
                             <tbody>
                               {product.products.data?.map((item) => (
-                                  <tr key={item._id}>
-                                    <td className="productName">
-                                      <Link to={`/product/${item._id}`}>
-                                        <div className="product_image">
-                                          <img
-                                            src={`/${item.productImage}`}
-                                            className="mr-2"
-                                            alt="product-img"
-                                          />
-                                        </div>
-                                        <div className="product_name">
-                                          <p className="m-0 font-13 text-secondary">
-                                            {item.productName}
-                                          </p>
-                                        </div>
-                                      </Link>
-                                    </td>
-                                    <td>
-                                      <div className="badge badge-success p-1 mt-1 productQuantityBadge">
-                                          {item.productQuantity} in stock
+                                <tr key={item._id}>
+                                  <td className="productName">
+                                    <Link to={`/product/${item._id}`}>
+                                      <div className="product_image">
+                                        <img
+                                          src={`/${item.productImage}`}
+                                          className="mr-2"
+                                          alt="product-img"
+                                        />
                                       </div>
-                                    </td>
-                                    <td className="pt-2">${item.productPrice}</td>
-                                    <td className="pt-2 font-16">
-                                      <i
-                                        className="fas fa-edit"
-                                        onClick={() => handlePreview(item)}
-                                      ></i>
-                                      |
-                                      <i className="fas fa-trash-alt text-danger"></i>
-                                    </td>
-                                  </tr>
-                                )
-                              )}
+                                      <div className="product_name">
+                                        <p className="m-0 font-13 text-secondary">
+                                          {item.productName}
+                                        </p>
+                                      </div>
+                                    </Link>
+                                  </td>
+                                  <td>
+                                    <div
+                                      className={`${
+                                        item.productQuantity > 50 &&
+                                        "badge badge-success p-1 mt-1 productQuantityBadge"
+                                      } ${
+                                        item.productQuantity < 50 &&
+                                        "badge badge-warning p-1 mt-1 productQuantityBadge"
+                                      }${
+                                        item.productQuantity <= 0 &&
+                                        "badge badge-danger p-1 mt-1 productQuantityBadge"
+                                      }`}
+                                    >
+                                      {item.productQuantity} in stock
+                                    </div>
+                                  </td>
+                                  <td className="pt-2">${item.productPrice}</td>
+                                  <td className="pt-2 font-16">
+                                    <i
+                                      className="fas fa-edit"
+                                      onClick={() => handlePreview(item)}
+                                    ></i>
+                                    |
+                                    <i className="fas fa-trash-alt text-danger"></i>
+                                  </td>
+                                </tr>
+                              ))}
                             </tbody>
                           </table>
                           {isPreviewShown && (
                             <div
                               className="Product_Bar_Portion"
-                              id="UpdateProductBar"
                               style={{ transform: "translateX(0)" }}
                             >
                               <UpdateProductBar products={products} />

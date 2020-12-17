@@ -10,6 +10,7 @@ import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { createChat, getChat } from "../../../redux/_actions/chatAction";
 import RelatedProduct from "../partials/relatedProducts";
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
+import Chat from "../partials/Chat";
 
 const SingleProduct = () => {
   const product = useSelector((state) => state.product);
@@ -88,8 +89,9 @@ const SingleProduct = () => {
     }
   };
 
-  const addToCart = (e) => {
-    dispatch(addItemToCart(e, quantity));
+  const addToCart = (e, user, quantity) => {
+    console.log("e", e, "user", user, "qua", quantity);
+    dispatch(addItemToCart(e, user, quantity));
   };
 
   const onSubmit = (e) => {
@@ -104,7 +106,7 @@ const SingleProduct = () => {
   };
   useEffect(() => {
     dispatch(getChat());
-  }, [chat]);
+  }, []);
 
   return (
     <>
@@ -169,7 +171,9 @@ const SingleProduct = () => {
                 </div>
                 <button
                   className="AddToCart ripple"
-                  onClick={() => addToCart(product?.product?.data._id)}
+                  onClick={() =>
+                    addToCart(product?.product?.data._id, user._id, 1)
+                  }
                 >
                   Add To Cart
                 </button>
@@ -207,57 +211,7 @@ const SingleProduct = () => {
         {/* chat */}
         {StartChatShown && (
           <div className="chatBox">
-            <div className="head">
-              <img
-                src={UserImage}
-                className="mr-2 rounded-circle"
-                height={38}
-                alt="Brandon Smith"
-              />
-              <span>Supplier’s Name</span>
-              <i className="ti-close" onClick={() => ChatHide()}></i>
-            </div>
-            <div className="body">
-              <div className="messageBox">
-                <ul className="conversation-list mt-2">
-                  {chat.chats?.data?.map((item) => (
-                    <>
-                      {item.sender == 1 && (
-                        <li className="clearfix odd">
-                          <div className="conversation-text">
-                            <div className="ctext-wrap">
-                              <p>{item.message}</p>
-                            </div>
-                          </div>
-                        </li>
-                      )}
-                      {item.sender == 0 && (
-                        <li className="clearfix">
-                          <div className="conversation-text">
-                            <div className="ctext-wrap">
-                              <p>{item.message}</p>
-                            </div>
-                          </div>
-                        </li>
-                      )}
-                    </>
-                  ))}
-                </ul>
-              </div>
-              <form onSubmit={(e) => onSubmit(e)}>
-                <input
-                  type="text"
-                  required
-                  placeholder="Type Your Message Here..."
-                  name="message"
-                  value={message}
-                  onChange={onChange}
-                />
-                <button>
-                  <i className="fe-send" />
-                </button>
-              </form>
-            </div>
+            <Chat ChatHide={ChatHide} />
           </div>
         )}
       </div>

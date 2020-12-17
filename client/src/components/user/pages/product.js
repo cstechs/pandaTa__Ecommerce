@@ -10,14 +10,18 @@ import { getProduct } from "../../../redux/_actions/productAction";
 
 const Product = ({ history }) => {
   const product = useSelector((state) => state.product);
+  const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [proId, setProId] = useState([]);
   const [check, setCheck] = useState(false);
-  //const category = useSelector((state) => state.category);
+  const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   useEffect(() => {
     dispatch(getProduct());
   }, []);
+  // console.log("pro", product);
+  // console.log("sub", subCategory);
+  console.log("load", state.loading);
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
