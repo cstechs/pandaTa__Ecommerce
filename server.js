@@ -17,6 +17,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const auth = require("./routes/auth");
 
 //Initialize express app
 const app = express();
@@ -57,6 +58,7 @@ app.use("/api/product", product);
 app.use("/api/cart", cart);
 app.use("/api/chat", chat);
 app.use("/api/wish", wish);
+app.use("/api/auth", auth);
 
 //Redirect all other urls to client(frontend)
 app.get("*", (req, res) => {

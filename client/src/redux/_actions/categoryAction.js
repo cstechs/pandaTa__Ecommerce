@@ -6,6 +6,10 @@ import {
   CATEGORY_EMPTY_SET,
   CATEGORY_SINGLE_LOAD_SUCCESS,
   CATEGORY_SINGLE_LOAD_FAIL,
+  CATEGORY_UPDATE_SUCCESS,
+  CATEGORY_UPDATE_FAIL,
+  CATEGORY_DELETE_SUCCESS,
+  CATEGORY_DELETE_FAIL,
 } from "../types";
 import axios from "axios";
 
@@ -63,4 +67,38 @@ export const getCategoryBySubCategoryId = (SubCategoryId) => {
       });
     }
   };
+};
+
+export const updateCategory = (id, categoryName) => async (dispatch) => {
+  const config = { header: { "Content-Type": "application/json" } };
+  try {
+    const res = await axios.patch(
+      "/api/category/" + id,
+      { categoryName },
+      config
+    );
+    //console.log(res.data);
+
+    dispatch({ type: CATEGORY_UPDATE_SUCCESS, payload: res.data });
+  } catch (err) {
+    //  console.log(err);
+    dispatch({
+      type: CATEGORY_UPDATE_FAIL,
+      payload: err.response.data.message,
+    });
+  }
+};
+
+export const deleteCategory = (id) => async (dispatch) => {
+  const config = { header: { "Content-Type": "application/json" } };
+  try {
+    const res = await axios.delete("/api/category/" + id, { id }, config);
+
+    dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: res.data });
+  } catch (err) {
+    dispatch({
+      type: CATEGORY_DELETE_FAIL,
+      payload: err.response.data.message,
+    });
+  }
 };

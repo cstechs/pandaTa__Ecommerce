@@ -20,12 +20,10 @@ exports.store = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user)
-      return res
-        .status(401)
-        .json({
-          message:
-            "The email address you have entered is already associated with another account. You can change this users role instead.",
-        });
+      return res.status(401).json({
+        message:
+          "The email address you have entered is already associated with another account. You can change this users role instead.",
+      });
 
     const password = "_" + Math.random().toString(36).substr(2, 9); //generate a random password
     const newUser = new User({ ...req.body, password });
@@ -48,7 +46,7 @@ exports.store = async (req, res) => {
       req.headers.host +
       "/api/auth/reset/" +
       user.resetPasswordToken;
-    let html = `<p>Hi ${user.username}<p><br><p>A new account has been created for you on ${domain}. Please click on the following <a href="${link}">link</a> to set your password and login.</p> 
+    let html = `<p>Hi ${user.userName}<p><br><p>A new account has been created for you on ${domain}. Please click on the following <a href="${link}">link</a> to set your password and login.</p> 
                   <br><p>If you did not request this, please ignore this email.</p>`;
 
     await sendEmail({ to, from, subject, html });
@@ -89,11 +87,9 @@ exports.update = async function (req, res) {
 
     //Make sure the passed id is that of the logged in user
     if (userId.toString() !== id.toString())
-      return res
-        .status(401)
-        .json({
-          message: "Sorry, you don't have the permission to upd this data.",
-        });
+      return res.status(401).json({
+        message: "Sorry, you don't have the permission to upd this data.",
+      });
 
     const user = await User.findByIdAndUpdate(
       id,
@@ -133,11 +129,9 @@ exports.destroy = async function (req, res) {
 
     //Make sure the passed id is that of the logged in user
     if (user_id.toString() !== id.toString())
-      return res
-        .status(401)
-        .json({
-          message: "Sorry, you don't have the permission to delete this data.",
-        });
+      return res.status(401).json({
+        message: "Sorry, you don't have the permission to delete this data.",
+      });
 
     await User.findByIdAndDelete(id);
     res.status(200).json({ message: "User has been deleted" });

@@ -11,14 +11,12 @@ exports.recover = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user)
-      return res
-        .status(401)
-        .json({
-          message:
-            "The email address " +
-            req.body.email +
-            " is not associated with any account. Double-check your email address and try again.",
-        });
+      return res.status(401).json({
+        message:
+          "The email address " +
+          req.body.email +
+          " is not associated with any account. Double-check your email address and try again.",
+      });
 
     //Generate and set password reset token
     user.generatePasswordReset();
@@ -32,10 +30,10 @@ exports.recover = async (req, res) => {
     let from = process.env.FROM_EMAIL;
     let link =
       "http://" +
-      req.headers.host +
+      process.env.APPURL +
       "/api/auth/reset/" +
       user.resetPasswordToken;
-    let html = `<p>Hi ${user.username}</p>
+    let html = `<p>Hi ${user.userName}</p>
                     <p>Please click on the following <a href="${link}">link</a> to reset your password.</p> 
                     <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`;
 
@@ -102,7 +100,7 @@ exports.resetPassword = async (req, res) => {
     let subject = "Your password has been changed";
     let to = user.email;
     let from = process.env.FROM_EMAIL;
-    let html = `<p>Hi ${user.username}</p>
+    let html = `<p>Hi ${user.userName}</p>
                     <p>This is a confirmation that the password for your account ${user.email} has just been changed.</p>`;
 
     await sendEmail({ to, from, subject, html });

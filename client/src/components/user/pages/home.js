@@ -137,9 +137,9 @@ const Home = () => {
               <h2>Our Seller</h2>
             </div>
             <div className="col-md-3 col-6">
-              <div class="user">
+              <div className="user">
                 <span></span>
-                <div class="imgCircle">
+                <div className="imgCircle">
                   <img src={UserImage} alt="" />
                 </div>
                 <h5>Publisher Name</h5>
@@ -148,9 +148,9 @@ const Home = () => {
               </div>
             </div>
             <div className="col-md-3 col-6">
-              <div class="user">
+              <div className="user">
                 <span></span>
-                <div class="imgCircle">
+                <div className="imgCircle">
                   <img src={UserImage} alt="" />
                 </div>
                 <h5>Publisher Name</h5>
@@ -159,9 +159,9 @@ const Home = () => {
               </div>
             </div>
             <div className="col-md-3 col-6">
-              <div class="user">
+              <div className="user">
                 <span></span>
-                <div class="imgCircle">
+                <div className="imgCircle">
                   <img src={UserImage} alt="" />
                 </div>
                 <h5>Publisher Name</h5>
@@ -170,9 +170,9 @@ const Home = () => {
               </div>
             </div>
             <div className="col-md-3 col-6">
-              <div class="user">
+              <div className="user">
                 <span></span>
-                <div class="imgCircle">
+                <div className="imgCircle">
                   <img src={UserImage} alt="" />
                 </div>
                 <h5>Publisher Name</h5>

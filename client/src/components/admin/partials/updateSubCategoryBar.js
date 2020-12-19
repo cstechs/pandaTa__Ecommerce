@@ -1,45 +1,109 @@
-import React, {} from 'react'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getCategory } from "../../../redux/_actions/categoryAction";
+import { updateSubCategory } from "../../../redux/_actions/subCategoryAction";
 
-const UpdateSubCategoryBar = () => {
+const UpdateSubCategoryBar = (props) => {
+  const category = useSelector((state) => state.category);
+  const [name, setName] = useState(props.newSubcategory?.subCategoryName);
+  const dispatch = useDispatch();
 
-    function toggle() {
-        document.getElementById("UpdateSubCategoryBar").classList.toggle("ShowProductAndCategoryBar");
-    }
+  function handleHide() {
+    window.location.reload();
+  }
 
-    return (
-        <>
-            <i className="fas fa-times-circle closeIcon" onClick={toggle}></i>
-            <div className="CategoryBar">
-                <form>
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="card-box">
-                                <h5 className="text-uppercase bg-light p-2 mt-2 mb-3">Update Sub Category</h5>
-                                <div className="form-group mb-2">
-                                    <label htmlFor="category-name">Selct Category <span className="text-danger">*</span></label>
-                                    <select className="form-control">
-                                        <option disabled>Select Category</option>
-                                        <option>Homeware</option>
-                                        <option>Furniture</option>
-                                        <option>Lighting</option>
-                                        <option>Gifts</option>
-                                    </select>
-                                </div>
-                                <div className="form-group mb-2">
-                                    <label htmlFor="category-name">Sub Category Name <span className="text-danger">*</span></label>
-                                    <input type="text" id="category-name" className="form-control" name="SubcategoryName" placeholder="e.g : beds" />
-                                </div>
-                                <div className="text-right mt-4">
-                                    <span className="btn btn-danger ripple button-base mr-2 px-4" onClick={toggle}>CANCEL</span>
-                                    <button type="submit" className="btn btn-success ripple button-base px-5 ">UPDATE SUB CATEGORY</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+  useEffect(() => {
+    dispatch(getCategory());
+  }, []);
+  console.log("it", props.newSubcategory);
+  const handleSubCategoryUpdate = (e) => {
+    e.preventDefault();
+    dispatch(updateSubCategory(props.newSubcategory?._id, name, categoryId));
+  };
+  const [newSubCategory, setNewSubCategory] = useState({
+    categoryId: "",
+  });
+
+  const { categoryId } = newSubCategory;
+  console.log("checl", props.newSubcategory?._id);
+
+  const onChange = (e) =>
+    setNewSubCategory({ ...newSubCategory, [e.target.name]: e.target.value });
+  return (
+    <>
+      <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
+      <div className="CategoryBar">
+        <form>
+          <div className="row">
+            <div className="col-12">
+              <div className="card-box">
+                <h5 className="text-uppercase bg-light p-2 mt-2 mb-3">
+                  Update Sub Category
+                </h5>
+                <div className="form-group mb-2">
+                  <label htmlFor="category-name">
+                    Selct Category <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    className="form-control"
+                    name="categoryId"
+                    value={categoryId}
+                    onChange={onChange}
+                  >
+                    <option disabled>Select Category</option>
+
+                    {category.categories.data?.map((item) => (
+                      <option
+                        key={item._id}
+                        value={item._id}
+                        // onClick={() => {
+                        //   setCat(item._id);
+                        //   console.log("cat", Cat);
+                        // }}
+                      >
+                        {item.categoryName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group mb-2">
+                  <label htmlFor="category-name">
+                    Sub Category Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="category-name"
+                    className="form-control"
+                    name="SubcategoryName"
+                    placeholder="e.g : beds"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="text-right mt-4">
+                  <span
+                    className="btn btn-danger ripple button-base mr-2 px-4"
+                    onClick={handleHide}
+                  >
+                    CANCEL
+                  </span>
+                  <button
+                    type="submit"
+                    className="btn btn-success ripple button-base px-5 "
+                    onClick={(e) => {
+                      handleSubCategoryUpdate(e);
+                    }}
+                  >
+                    UPDATE SUB CATEGORY
+                  </button>
+                </div>
+              </div>
             </div>
-        </>
-    )
-}
+          </div>
+        </form>
+      </div>
+    </>
+  );
+};
 
 export default UpdateSubCategoryBar;

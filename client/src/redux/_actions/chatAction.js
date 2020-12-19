@@ -12,6 +12,7 @@ export const createChat = (chat) => {
     try {
       const res = await axios.post("/api/chat/createChat", chat, config);
       //console.log(res.data);
+      dispatch(getChat());
       dispatch({ type: CHAT_SUCCESS, payload: res.data });
     } catch (err) {
       //   console.log(err);

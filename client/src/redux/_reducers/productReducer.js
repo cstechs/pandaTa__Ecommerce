@@ -1,6 +1,9 @@
 import {
   PRODUCT_LOAD_SUCCESS,
   PRODUCT_SUCCESS,
+  PRODUCT_FAIL,
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
   PRODUCT_LOAD_FAIL,
   PRODUCT_SINGLE_LOAD_SUCCESS,
   PRODUCT_EMPTY_SET,
@@ -40,13 +43,26 @@ const productReducer = (state = initState, action) => {
         loading: false,
       };
     case PRODUCT_SUCCESS:
-      {
-        console.log("product updated");
-      }
       return {
         ...state,
         products: action.payload,
         loading: false,
+      };
+    case PRODUCT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case PRODUCT_UPDATE_SUCCESS:
+      return {
+        ...state,
+        products: action.payload,
+        loading: false,
+      };
+    case PRODUCT_UPDATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     case PRODUCT_SINGLE_LOAD_SUCCESS:
       return {

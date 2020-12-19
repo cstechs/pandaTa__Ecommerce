@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
 
     if (!user)
       return res.status(401).json({
-        msg:
+        message:
           "The email address " +
           email +
           " is not associated with any account. Double-check your email address and try again.",
@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
 
     //validate password
     if (!user.comparePassword(password))
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid Creds.." });
 
     // Make sure the user has been verified
     if (!user.isVerified)
@@ -146,9 +146,10 @@ async function sendVerificationEmail(user, req, res) {
     let subject = "Account Verification Token";
     let to = user.email;
     let from = process.env.FROM_EMAIL;
-    let link = "http://" + req.headers.host + "/api/auth/verify/" + token.token;
+    let link =
+      "http://" + process.env.APPURL + "/api/auth/verify/" + token.token;
     let html = `<p>Hi ${
-      user.firstName + "" + user.lastName
+      user.firstName + " " + user.lastName
     }<p><br><p>Please click on the following <a href="${link}">link</a> to verify your account.</p> 
                   <br><p>If you did not request this, please ignore this email.</p>`;
 

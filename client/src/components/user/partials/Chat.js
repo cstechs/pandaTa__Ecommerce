@@ -20,21 +20,19 @@ const Chat = ({ ChatHide }) => {
     e.preventDefault();
     console.log("dfsd");
     dispatch(createChat(newMessage));
-    dispatch(getChat());
-    var objDiv = document.getElementById("mydiv");
-    objDiv.scrollTop = objDiv.scrollHeight;
   };
   useEffect(() => {
     dispatch(getChat());
-    var objDiv = document.getElementById("mydiv");
-    objDiv.scrollTop = objDiv.scrollHeight;
+
     // $("#mydiv").scrollTop($("#mydiv").height);
   }, []);
 
   useEffect(() => {
     var objDiv = document.getElementById("mydiv");
-    objDiv.scrollTop = objDiv.scrollHeight;
-  }, [getChat]);
+    if (objDiv) {
+      objDiv.scrollIntoView();
+    }
+  }, [chat]);
 
   //   useEffect(() => {
   //     setSendChat(() =>
@@ -107,7 +105,10 @@ const Chat = ({ ChatHide }) => {
                   </li>
                 )}
                 {item.sender == 0 && (
-                  <li className="clearfix">
+                  <li
+                    className="clearfix"
+                    id={`${index == chat.chats?.data?.length - 1 && "mydiv"}`}
+                  >
                     <div className="conversation-text">
                       <div className="ctext-wrap">
                         <p>{item.message}</p>

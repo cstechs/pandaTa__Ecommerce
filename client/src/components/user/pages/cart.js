@@ -15,6 +15,7 @@ import { addItemToCart } from "../../../redux/_actions/cartAction";
 
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
 
   // console.log("cart", cartItem.data?.items)
   const [quantity, setQuantity] = useState([]);
@@ -56,7 +57,7 @@ const Cart = () => {
     //   dispatch(addItemToCart(id, +1));
     //   return [...prev];
     // });
-    dispatch(addItemToCart(id, +1));
+    dispatch(addItemToCart(id, user._id, +1));
     console.log("quantity", quantity);
   };
   const handleRemoveQuantity = (index, Quantity, id, total) => {
@@ -70,7 +71,7 @@ const Cart = () => {
 
     // return [...prev];
     // });
-    dispatch(addItemToCart(id, -1));
+    dispatch(addItemToCart(id, user._id, -1));
   };
 
   return (

@@ -8,6 +8,8 @@ import {
   PRODUCT_SINGLE_LOAD_SUCCESS,
   RELATED_PRODUCT_EMPTY_SET,
   PRODUCT_SINGLE_LOAD_FAIL,
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
 } from "../types";
 import axios from "axios";
 
@@ -73,10 +75,13 @@ export const updateProduct = (product, productId) => {
         config
       );
       //  console.log(res.data);
-      dispatch({ type: PRODUCT_SUCCESS, payload: res.data });
+      dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: res?.data });
     } catch (err) {
       // console.log(err);
-      dispatch({ type: PRODUCT_FAIL, payload: err.response.data.message });
+      dispatch({
+        type: PRODUCT_UPDATE_FAIL,
+        payload: err?.response?.data?.message,
+      });
     }
   };
 };
@@ -97,7 +102,10 @@ export const getProductBySubCategoryId = (CategoryId) => {
       }
     } catch (err) {
       //  console.log(err);
-      dispatch({ type: RELATED_PRODUCT_LOAD_FAIL, payload: err.response.data.message });
+      dispatch({
+        type: RELATED_PRODUCT_LOAD_FAIL,
+        payload: err.response.data.message,
+      });
     }
   };
 };

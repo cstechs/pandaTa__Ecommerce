@@ -54,8 +54,8 @@ const UpdateProductBar = (props) => {
     dispatch(getCategory());
   }, []);
 
-  const onSubmit = () => {
-    // e.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
     if (
       productName === "" ||
       productQuantity === "" ||
@@ -76,12 +76,12 @@ const UpdateProductBar = (props) => {
       data.append("productSubCategory", newProduct.productSubCategory);
       data.append("productImage", newProduct.productImage);
       dispatch(updateProduct(data, props.products._id));
+      console.log("data", data);
     }
   };
 
   function handleHide() {
-    //    window.location.reload();
-    console.log(props.products._id);
+    window.location.reload();
   }
   return (
     <>
@@ -149,7 +149,7 @@ const UpdateProductBar = (props) => {
                     value={productCategory}
                     onChange={onCategoryChange}
                   >
-                    <option value="" selected disabled>
+                    <option defaultValue="" disabled>
                       Select Category
                     </option>
                     {category.categories.data?.map(({ _id, categoryName }) => (
@@ -170,7 +170,7 @@ const UpdateProductBar = (props) => {
                     required
                     onChange={onChange}
                   >
-                    <option value="" selected disabled>
+                    <option defaultValue="" disabled>
                       Select Sub Category
                     </option>
                     {subCategory.subCategories.data?.map(
@@ -217,7 +217,7 @@ const UpdateProductBar = (props) => {
                   </div>
                   <label>Current Image</label>
                   <div className="SelectedImage">
-                    <img src={`/${productImage}`} />
+                    <img src={`/${props.products.productImage}`} />
                   </div>
                 </div>
               </div>
@@ -230,7 +230,7 @@ const UpdateProductBar = (props) => {
                 </span>
                 <button
                   className="btn btn-success ripple button-base px-5 mr-3"
-                  onClick={() => onSubmit()}
+                  onClick={(e) => onSubmit(e)}
                 >
                   UPDATE PRODUCT
                 </button>

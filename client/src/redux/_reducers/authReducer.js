@@ -11,6 +11,8 @@ import {
   RECOVER_FAIL,
   RESET_SUCCESS,
   RESET_FAIL,
+  VERIFY_SUCCESS,
+  VERIFY_FAIL,
 } from "../types";
 
 const initState = {
@@ -18,7 +20,9 @@ const initState = {
   user: {},
   token: localStorage.getItem("token"),
   error: null,
+  errors: null,
   loading: true,
+  msg: null,
 };
 
 const authReducer = (state = initState, action) => {
@@ -31,7 +35,11 @@ const authReducer = (state = initState, action) => {
         user: action.payload,
       };
     case REGISTER_SUCCESS:
-      return state;
+    case VERIFY_SUCCESS:
+      return {
+        ...state,
+        msg: action.payload,
+      };
     case LOGIN_SUCCESS:
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       localStorage.setItem("token", action.payload.token);
@@ -43,7 +51,6 @@ const authReducer = (state = initState, action) => {
         loading: false,
         user: action.payload.user,
       };
-
     case RECOVER_SUCCESS:
     case RESET_SUCCESS:
       localStorage.setItem("token", action.payload.token);
@@ -54,10 +61,21 @@ const authReducer = (state = initState, action) => {
         loading: false,
       };
     case REGISTER_FAIL:
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      console.log("called");
+      return {
+        ...state,
+        token: null,
+        isAuthenticated: false,
+        user: null,
+        errors: action.payload,
+      };
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case RECOVER_FAIL:
     case RESET_FAIL:
+    case VERIFY_FAIL:
     case LOGOUT:
       localStorage.removeItem("token");
       localStorage.removeItem("user");

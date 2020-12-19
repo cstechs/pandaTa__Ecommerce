@@ -8,12 +8,10 @@ const validate = require("../middleware/validate");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res
-    .status(200)
-    .json({
-      message:
-        "You are in the Auth Endpoint. Register or Login to test Authentication.",
-    });
+  res.status(200).json({
+    message:
+      "You are in the Auth Endpoint. Register or Login to test Authentication.",
+  });
 });
 
 router.post(
@@ -49,6 +47,7 @@ router.post(
 
 //EMAIL Verification
 router.get("/verify/:token", Auth.verify);
+
 router.post("/resend", Auth.resendToken);
 
 //Password RESET

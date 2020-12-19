@@ -12,14 +12,44 @@ const Register = ({ history }) => {
 
   useEffect(() => {
     if (localStorage.getItem("token") && auth.isAuthenticated)
-      if (auth.error === "User already exists") {
+      if (auth.errors?.startsWith("The email address")) {
         //browserHistory.push('/');
 
         dispatch(setAlert(auth.error, "danger"));
         dispatch({ type: CLEAR_ERRORS });
       }
+    if (auth.errors?.message?.startsWith("The email address")) {
+      //browserHistory.push('/');
+
+      dispatch(setAlert(auth.error, "danger"));
+      dispatch({ type: CLEAR_ERRORS });
+    } else if (
+      auth.errors?.error?.password == "Must be at least 6 chars long"
+    ) {
+      //browserHistory.push('/');
+
+      dispatch(setAlert(auth.error, "danger"));
+      dispatch({ type: CLEAR_ERRORS });
+    } else if (auth.errors?.error?.email == "Enter a valid email address") {
+      //browserHistory.push('/');
+
+      dispatch(setAlert(auth.error, "danger"));
+      dispatch({ type: CLEAR_ERRORS });
+    } else if (auth.errors?.error?.firstName == "You first name is required") {
+      dispatch(setAlert(auth.error, "danger"));
+      dispatch({ type: CLEAR_ERRORS });
+    } else if (auth.errors?.error?.lastName == "You last name is required") {
+      dispatch(setAlert(auth.error, "danger"));
+      dispatch({ type: CLEAR_ERRORS });
+    }
+
+    if (auth.msg?.message) {
+      //browserHistory.push('/');
+
+      dispatch(setAlert(auth.msg.message, "success"));
+    }
     // eslint-disable-next-line
-  }, [auth.isAuthenticated, auth.error]);
+  }, [auth.isAuthenticated, auth.error, auth.msg]);
 
   const [newUser, setNewUser] = useState({
     userName: "",
@@ -82,21 +112,21 @@ const Register = ({ history }) => {
               value={userName}
               onChange={onChange}
               autoFocus
-              placeholder="Username"
+              placeholder="User Name"
             />
             <input
               type="text"
               name="firstName"
               value={firstName}
               onChange={onChange}
-              placeholder="firstname"
+              placeholder="First Name"
             />
             <input
               type="text"
               name="lastName"
               value={lastName}
               onChange={onChange}
-              placeholder="last Name"
+              placeholder="Last Name"
             />
             <input
               type="email"

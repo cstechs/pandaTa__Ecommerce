@@ -2,8 +2,12 @@ import {
   CATEGORY_LOAD_SUCCESS,
   CATEGORY_LOAD_FAIL,
   CATEGORY_EMPTY_SET,
+  CATEGORY_UPDATE_FAIL,
+  CATEGORY_UPDATE_SUCCESS,
   CATEGORY_SINGLE_LOAD_SUCCESS,
   CATEGORY_SINGLE_LOAD_FAIL,
+  CATEGORY_DELETE_FAIL,
+  CATEGORY_DELETE_SUCCESS,
   CLEAR_ERRORS,
 } from "../types";
 
@@ -27,6 +31,15 @@ const categoryReducer = (state = initState, action) => {
         ...state,
         categories: [],
         error: action.payload,
+      };
+    case CATEGORY_UPDATE_SUCCESS:
+      return {
+        ...state,
+      };
+    case CATEGORY_DELETE_SUCCESS:
+      console.log("ac", action.payload);
+      return {
+        ...state,
       };
     case CATEGORY_EMPTY_SET:
       return {

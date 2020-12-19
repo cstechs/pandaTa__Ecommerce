@@ -153,9 +153,6 @@ const Header = () => {
                         <button className="ripple button-base px-4">
                           Dashboard
                         </button>
-                        <span className="badge-darkpurple rounded-circle notification-icon-badge">
-                          9+
-                        </span>
                       </Link>
                     </>
                   )}
@@ -180,7 +177,7 @@ const Header = () => {
                         alt="user-image"
                         className="rounded-circle"
                       />
-                      <label className="ml-3">{user.userName}</label>
+                      <label>{user.userName}</label>
                     </span>
                     <div class="dropdown-menu">
                       <div>

@@ -1,6 +1,7 @@
 const asyncHandlers = require("../middleware/async");
 const ObjectId = require("mongodb").ObjectID;
 const Product = require("../models/Product");
+
 // @Method: POST
 // @Route : api/product/createProduct
 // @Desc  : Handling the creation of product
@@ -41,6 +42,7 @@ exports.createProduct = asyncHandlers(async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 // @Method: GET
 // @Route : api/product/
 // @Desc  : Get all products
@@ -52,6 +54,7 @@ exports.getProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 // @Method: GET
 // @Route : api/product/:id
 // @Desc  : Get product by id
@@ -77,6 +80,7 @@ exports.removeProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 // @Method: PATCH
 // @Route : api/product/:id
 // @Desc  : Handling the updation of product

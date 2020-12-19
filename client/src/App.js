@@ -35,6 +35,7 @@ import AdminForgetPassword from "./components/admin/auth/forgetpassword";
 import AdminRegister from "./components/admin/auth/register";
 import AdminResetPassword from "./components/admin/auth/resetpassword";
 import ErrorPage from "./components/user/pages/404";
+import VerifyView from "./components/user/auth/verifyPage";
 import Alerts from "./components/admin/partials/alerts";
 
 import { getProduct } from "./redux/_actions/productAction";
@@ -64,7 +65,8 @@ function App() {
           <Route exact path="/wishlist" component={UserWishlist} />
           {/* <Route exact path='/sellerapplication' component={UserSellerApplication}/> */}
           <Route exact path="/seller" component={UserSeller} />
-          {product.products.data?.map(({ _id }) => (
+          <Route exact path="/verify/:token" component={VerifyView} />
+          {product?.products?.data?.map(({ _id }) => (
             <Route
               exact
               key={_id}
@@ -75,26 +77,19 @@ function App() {
           {/* ADMIN PANEL ROUTES */}
           <PrivateRoute exact path="/admin" component={AdminPanel} />
           {/* <Route exact path='/admin/panel' component={AdminPanel}/> */}
-          <PrivateRoute exact path="/admin/login" component={AdminLogin} />
-          <PrivateRoute
+          <Route exact path="/admin/login" component={AdminLogin} />
+          <Route
             exact
             path="/admin/forgetpassword"
             component={AdminForgetPassword}
           />
-          <PrivateRoute
-            path="/admin/resetpassword"
-            component={AdminResetPassword}
-          />
+          <Route path="/admin/resetpassword" component={AdminResetPassword} />
           <PrivateRoute
             exact
             path="/admin/register"
             component={AdminRegister}
           />
-          <PrivateRoute
-            exact
-            path="/admin/setting"
-            component={AdminPanelSetting}
-          />
+          <Route exact path="/admin/setting" component={AdminPanelSetting} />
           <PrivateRoute
             exact
             path="/admin/setting/edit"
@@ -142,7 +137,7 @@ function App() {
           />
           <PrivateRoute exact path="/admin/chat/" component={AdminPanelChat} />
           {/* 404 PAGE ROUTES */}
-          {/* <Route path="*" component={ErrorPage} /> */}
+          <Route path="*" component={ErrorPage} />
         </Switch>
       </Router>
     </>

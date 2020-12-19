@@ -8,6 +8,8 @@ import {
   RESET_SUCCESS,
   RESET_FAIL,
   LOGOUT,
+  VERIFY_SUCCESS,
+  VERIFY_FAIL,
 } from "../types";
 import axios from "axios";
 
@@ -21,7 +23,7 @@ export const register = (user) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     } catch (err) {
       console.log(err);
-      dispatch({ type: REGISTER_FAIL, payload: err.response.data.message });
+      dispatch({ type: REGISTER_FAIL, payload: err.response.data });
     }
   };
 };
@@ -71,6 +73,19 @@ export const resetpassword = (password, confirmpassword) => {
     } catch (err) {
       console.log(err);
       dispatch({ type: RESET_FAIL, payload: err.response.data.message });
+    }
+  };
+};
+
+export const verifyaccount = (token) => {
+  return async (dispatch) => {
+    try {
+      const config = { header: { "Content-Type": "application/json" } };
+      const res = await axios.get(`/api/auth/verify/` + token, config);
+      dispatch({ type: VERIFY_SUCCESS, payload: res.data });
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: VERIFY_FAIL, payload: err.response.data.message });
     }
   };
 };
