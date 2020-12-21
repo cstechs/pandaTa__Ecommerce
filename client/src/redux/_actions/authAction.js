@@ -60,13 +60,13 @@ export const forgot = (email) => {
   };
 };
 
-export const resetpassword = (password, confirmpassword) => {
+export const resetpassword = (password, confirmPassword, token) => {
   return async (dispatch) => {
     try {
       const config = { header: { "Content-Type": "application/json" } };
       const res = await axios.post(
-        `/api/auth/reset`,
-        { password, confirmpassword },
+        `/api/auth/reset/`,
+        { password, confirmPassword },
         config
       );
       dispatch({ type: RESET_SUCCESS, payload: res.data });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 const Product = () => {
   const wish = useSelector((state) => state.wishlist);
   console.log("wish", wish.wishLists);
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   return (
     <>
       <div className="component">

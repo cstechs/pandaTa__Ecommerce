@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import ProductSideBar from "../partials/productSideBar";
 import productimg from "../../../assets/images/user/product.png";
-import businessimg from "../../../assets/images/user/businessLogo.png";
-import UserImage from "../../../assets/images/admin/users/user-2.jpg";
+// import businessimg from "../../../assets/images/user/businessLogo.png";
+// import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 
 const Category = () => {
-  function categoryDropDownToggle() {
-    document.getElementById("categoryShowIcon").classList.toggle("show");
-    document.getElementById("categoryHideIcon").classList.toggle("hide");
-    document.getElementById("categoryDropDown").classList.toggle("hide");
-  }
+  // function categoryDropDownToggle() {
+  //   document.getElementById("categoryShowIcon").classList.toggle("show");
+  //   document.getElementById("categoryHideIcon").classList.toggle("hide");
+  //   document.getElementById("categoryDropDown").classList.toggle("hide");
+  // }
 
-  function materialDropDownToggle() {
-    document.getElementById("materialShowIcon").classList.toggle("show");
-    document.getElementById("materialHideIcon").classList.toggle("hide");
-    document.getElementById("materialDropDown").classList.toggle("hide");
-  }
+  // function materialDropDownToggle() {
+  //   document.getElementById("materialShowIcon").classList.toggle("show");
+  //   document.getElementById("materialHideIcon").classList.toggle("hide");
+  //   document.getElementById("materialDropDown").classList.toggle("hide");
+  // }
 
-  function finishDropDownToggle() {
-    document.getElementById("finishShowIcon").classList.toggle("show");
-    document.getElementById("finishHideIcon").classList.toggle("hide");
-    document.getElementById("finishDropDown").classList.toggle("hide");
-  }
+  // function finishDropDownToggle() {
+  //   document.getElementById("finishShowIcon").classList.toggle("show");
+  //   document.getElementById("finishHideIcon").classList.toggle("hide");
+  //   document.getElementById("finishDropDown").classList.toggle("hide");
+  // }
 
-  function styleDropDownToggle() {
-    document.getElementById("styleShowIcon").classList.toggle("show");
-    document.getElementById("styleHideIcon").classList.toggle("hide");
-    document.getElementById("styleDropDown").classList.toggle("hide");
-  }
+  // function styleDropDownToggle() {
+  //   document.getElementById("styleShowIcon").classList.toggle("show");
+  //   document.getElementById("styleHideIcon").classList.toggle("hide");
+  //   document.getElementById("styleDropDown").classList.toggle("hide");
+  // }
 
-  const category = useSelector((state) => state.category);
+  // const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
   useEffect(() => {

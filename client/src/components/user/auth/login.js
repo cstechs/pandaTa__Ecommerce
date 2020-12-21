@@ -9,7 +9,6 @@ import Register from "./register";
 const Login = () => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [user] = useState(() => JSON.parse(localStorage.getItem("user")));
 
   useEffect(() => {
     if (state.error === "Invalid Creds..") {
@@ -18,7 +17,7 @@ const Login = () => {
     } else if (state.error?.toString().startsWith("The email address")) {
       dispatch(setAlert(state.error, "danger"));
       dispatch({ type: CLEAR_ERRORS });
-    } else if (state.error == "Your account has not been verified.") {
+    } else if (state.error === "Your account has not been verified.") {
       dispatch(setAlert(state.error, "danger"));
       dispatch({ type: CLEAR_ERRORS });
     }

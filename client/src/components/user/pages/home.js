@@ -70,22 +70,22 @@ const Home = () => {
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src={SliderImage1} className="d-block w-100" alt="..." />
+              <img src={SliderImage1} className="d-block w-100" alt="" />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage2} className="d-block w-100" alt="..." />
+              <img src={SliderImage2} className="d-block w-100" alt="" />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage3} className="d-block w-100" alt="..." />
+              <img src={SliderImage3} className="d-block w-100" alt="" />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage4} className="d-block w-100" alt="..." />
+              <img src={SliderImage4} className="d-block w-100" alt="" />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage5} className="d-block w-100" alt="..." />
+              <img src={SliderImage5} className="d-block w-100" alt="" />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage6} className="d-block w-100" alt="..." />
+              <img src={SliderImage6} className="d-block w-100" alt="" />
             </div>
           </div>
         </div>

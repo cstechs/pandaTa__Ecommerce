@@ -13,17 +13,17 @@ const Product = ({ history }) => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [proId, setProId] = useState([]);
-  const [check, setCheck] = useState(false);
-  const category = useSelector((state) => state.category);
+  const [check] = useState(false);
+  //const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   useEffect(() => {
     dispatch(getProduct());
-  }, []);
+  }, [dispatch]);
   // console.log("pro", product);
   // console.log("sub", subCategory);
   console.log("load", state.loading);
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
 
   function ProductIdSetter(productId) {
     if (proId.find((val) => val === productId)) {
@@ -49,6 +49,7 @@ const Product = ({ history }) => {
         </li>
         <li className="breadcrumb-item active">Products</li>
       </ol>
+
       <div className="seller">
         <div className="container-fluid">
           <div className="row">

@@ -14,18 +14,25 @@ const UpdateSubCategoryBar = (props) => {
 
   useEffect(() => {
     dispatch(getCategory());
-  }, []);
-  console.log("it", props.newSubcategory);
+  });
+
   const handleSubCategoryUpdate = (e) => {
     e.preventDefault();
+    console.log(
+      "prop",
+      props.newSubcategory?._id,
+      "name",
+      name,
+      "cat",
+      categoryId
+    );
     dispatch(updateSubCategory(props.newSubcategory?._id, name, categoryId));
   };
   const [newSubCategory, setNewSubCategory] = useState({
-    categoryId: "",
+    categoryId: props.newSubcategory.categoryId,
   });
 
   const { categoryId } = newSubCategory;
-  console.log("checl", props.newSubcategory?._id);
 
   const onChange = (e) =>
     setNewSubCategory({ ...newSubCategory, [e.target.name]: e.target.value });
@@ -60,8 +67,13 @@ const UpdateSubCategoryBar = (props) => {
                         //   setCat(item._id);
                         //   console.log("cat", Cat);
                         // }}
+                        defaultValue
                       >
                         {item.categoryName}
+                        {console.log(
+                          "checked",
+                          props.newSubcategory.categoryId === item._id
+                        )}
                       </option>
                     ))}
                   </select>

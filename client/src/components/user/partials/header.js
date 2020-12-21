@@ -147,15 +147,16 @@ const Header = () => {
               )}
               {isPreviewShown && (
                 <>
-                  {user && user.role === "seller" && (
-                    <>
-                      <Link to="/admin">
-                        <button className="ripple button-base px-4">
-                          Dashboard
-                        </button>
-                      </Link>
-                    </>
-                  )}
+                  {(user && user.role === "seller") ||
+                    (user.role === "admin" && (
+                      <>
+                        <Link to="/admin">
+                          <button className="ripple button-base px-4">
+                            Dashboard
+                          </button>
+                        </Link>
+                      </>
+                    ))}
                   <i className="fa fa-search searc" onClick={search}></i>
                   <Link to="/wishlist">
                     <i className="fa fa-heart"></i>
@@ -166,10 +167,10 @@ const Header = () => {
                       {cart?.cartItems?.data?.items?.length}
                     </span>
                   </Link>
-                  <div class="btn-group">
+                  <div className="btn-group">
                     <span
                       type="button"
-                      class="dropdown-toggle"
+                      className="dropdown-toggle"
                       data-toggle="dropdown"
                     >
                       <img
@@ -179,16 +180,16 @@ const Header = () => {
                       />
                       <label>{user.userName}</label>
                     </span>
-                    <div class="dropdown-menu">
+                    <div className="dropdown-menu">
                       <div>
-                        <span class="dropdown-item">
+                        <span className="dropdown-item">
                           <i className="fa fa-user"></i>
                           Profile
                         </span>
                       </div>
                       <div>
                         <span
-                          class="dropdown-item"
+                          className="dropdown-item"
                           onClick={() => {
                             dispatch(logout());
                             window.location.reload();

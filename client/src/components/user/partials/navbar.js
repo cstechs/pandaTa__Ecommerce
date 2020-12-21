@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategory } from "../../../redux/_actions/categoryAction";
@@ -13,7 +13,7 @@ const Navbar = () => {
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getSubCategory());
-  }, []);
+  }, [dispatch]);
 
   return (
     <nav>
@@ -33,7 +33,7 @@ const Navbar = () => {
 
             {subCategory.subCategories?.data?.find(
               (item) => item.categoryId === _id
-            ) != undefined && (
+            ) !== undefined && (
               <NavbarDropdown
                 _id={_id}
                 categoryName={categoryName}

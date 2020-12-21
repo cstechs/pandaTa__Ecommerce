@@ -8,7 +8,7 @@ const Productitems = ({ product, proId }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProduct());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setCheck(proId);
@@ -24,7 +24,7 @@ const Productitems = ({ product, proId }) => {
           productImage,
           productSubCategory,
         }) => (
-          <>
+          <React.Fragment key={_id}>
             {check.length == 0 && (
               <div className="col-md-4 col-6" key={_id}>
                 <Link to={`/product/${_id}`}>
@@ -68,7 +68,7 @@ const Productitems = ({ product, proId }) => {
                   </Link>
                 </div>
               )}
-          </>
+          </React.Fragment>
         )
       )}
     </>

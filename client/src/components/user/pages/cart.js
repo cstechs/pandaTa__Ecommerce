@@ -106,7 +106,7 @@ const Cart = () => {
                   cartItem.data &&
                     cartItem.data.items.map((item, index) => {
                       return (
-                        <tbody>
+                        <tbody key={item._id}>
                           <tr>
                             <td>
                               <i className="ti-close"></i>

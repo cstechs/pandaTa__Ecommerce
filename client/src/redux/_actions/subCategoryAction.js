@@ -74,6 +74,7 @@ export const getSubCategoryByCategoryId = (CategoryId) => {
 export const updateSubCategory = (id, subCategoryName, categoryId) => async (
   dispatch
 ) => {
+  console.log(id, subCategoryName, categoryId);
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.patch(
@@ -84,6 +85,7 @@ export const updateSubCategory = (id, subCategoryName, categoryId) => async (
     //console.log(res.data);
 
     dispatch({ type: SUBCATEGORY_UPDATE_SUCCESS, payload: res.data });
+    window.location.reload();
   } catch (err) {
     //  console.log(err);
     dispatch({

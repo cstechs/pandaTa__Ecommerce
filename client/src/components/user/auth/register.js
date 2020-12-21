@@ -8,7 +8,6 @@ import { CLEAR_ERRORS } from "../../../redux/types";
 const Register = ({ history }) => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const browserHistory = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem("token") && auth.isAuthenticated)
@@ -90,6 +89,7 @@ const Register = ({ history }) => {
         setAlert("Password and confirm password does not match.", "danger")
       );
     else {
+      console.log(("new", newUser));
       dispatch(register(newUser));
     }
   };
@@ -105,7 +105,7 @@ const Register = ({ history }) => {
             ></i>
           </div>
           <div className="logo">PANDA / TA</div>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={(e) => onSubmit(e)}>
             <input
               type="text"
               name="userName"

@@ -206,11 +206,10 @@ const Category = () => {
                                 <tr className="pt-3" key={item._id}>
                                   <td>{item?.subCategoryName}</td>
                                   <td>
-                                    {item?.categoryId}
                                     {
-                                      category?.categories?.data?.find(
+                                      category.categories.data?.find(
                                         (x) => x._id == item.categoryId
-                                      )?.item?.categoryName
+                                      )?.categoryName
                                     }
                                   </td>
                                   <td className="font-16">

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { verifyaccount } from "../../../redux/_actions/authAction";
-import { setAlert } from "../../../redux/_actions/alertAction";
+// import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS } from "../../../redux/types";
 import Login from "./login";
 

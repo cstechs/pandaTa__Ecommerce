@@ -1,6 +1,6 @@
 import {
-  CHAT_FAIL,
-  CHAT_SUCCESS,
+  CHAT_CREATE_FAIL,
+  CHAT_CREATE_SUCCESS,
   CHAT_LOAD_SUCCESS,
   CHAT_LOAD_FAIL,
 } from "../types";
@@ -13,10 +13,10 @@ export const createChat = (chat) => {
       const res = await axios.post("/api/chat/createChat", chat, config);
       //console.log(res.data);
       dispatch(getChat());
-      dispatch({ type: CHAT_SUCCESS, payload: res.data });
+      dispatch({ type: CHAT_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
       //   console.log(err);
-      dispatch({ type: CHAT_FAIL, payload: err.response.data.message });
+      dispatch({ type: CHAT_CREATE_FAIL, payload: err.response.data.message });
     }
   };
 };

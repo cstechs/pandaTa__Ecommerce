@@ -17,17 +17,17 @@ const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
     document.getElementById("materialDropDown").classList.toggle("hide");
   }
 
-  function finishDropDownToggle() {
-    document.getElementById("finishShowIcon").classList.toggle("show");
-    document.getElementById("finishHideIcon").classList.toggle("hide");
-    document.getElementById("finishDropDown").classList.toggle("hide");
-  }
+  // function finishDropDownToggle() {
+  //   document.getElementById("finishShowIcon").classList.toggle("show");
+  //   document.getElementById("finishHideIcon").classList.toggle("hide");
+  //   document.getElementById("finishDropDown").classList.toggle("hide");
+  // }
 
-  function styleDropDownToggle() {
-    document.getElementById("styleShowIcon").classList.toggle("show");
-    document.getElementById("styleHideIcon").classList.toggle("hide");
-    document.getElementById("styleDropDown").classList.toggle("hide");
-  }
+  // function styleDropDownToggle() {
+  //   document.getElementById("styleShowIcon").classList.toggle("show");
+  //   document.getElementById("styleHideIcon").classList.toggle("hide");
+  //   document.getElementById("styleDropDown").classList.toggle("hide");
+  // }
 
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
   }
 
   return (
-    <>
+    <React.Fragment key={category.categories.data?.map((item) => item._id)}>
       {user && user.role === "seller" && (
         <div className="sellerProfilePortion">
           <div className="businessImage">
@@ -101,7 +101,7 @@ const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
         <div className="underLine w-100 mt-2"></div>
 
         {category.categories.data?.map((item, index) => (
-          <>
+          <React.Fragment key={item._id}>
             {index < 3 && (
               <div className="filterPortion">
                 <h5 className="mb-2">{item.categoryName}</h5>
@@ -129,10 +129,10 @@ const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
                 </ul>
               </div>
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

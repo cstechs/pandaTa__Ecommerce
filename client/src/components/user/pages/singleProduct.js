@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
@@ -9,7 +9,7 @@ import { getProductById } from "../../../redux/_actions/productAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { createChat, getChat } from "../../../redux/_actions/chatAction";
 import RelatedProduct from "../partials/relatedProducts";
-import UserImage from "../../../assets/images/admin/users/user-6.jpg";
+// import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import Chat from "../partials/Chat";
 
 const SingleProduct = () => {
@@ -22,8 +22,6 @@ const SingleProduct = () => {
   const arr = subCategory?.subCategories?.data?.filter(
     (x) => x._id === product?.product?.data.productSubCategory
   );
-
-  console.log("chatter", chat?.chats);
 
   // const SenderCheckFunction = () => {
   //   if (user.role === "seller") {

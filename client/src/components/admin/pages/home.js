@@ -1,70 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import Navbar from '../partials/topnavbar'
-import Footer from '../partials/footer'
+import Navbar from "../partials/topnavbar";
+import Footer from "../partials/footer";
 
-import cardbodyimg1 from '../../../assets/images/admin/current-progress-img-1.png'
-import cardbodyimg2 from '../../../assets/images/admin/current-progress-img-2.png'
-import cardbodyimg3 from '../../../assets/images/admin/current-progress-img-3.png'
+import cardbodyimg1 from "../../../assets/images/admin/current-progress-img-1.png";
+import cardbodyimg2 from "../../../assets/images/admin/current-progress-img-2.png";
+import cardbodyimg3 from "../../../assets/images/admin/current-progress-img-3.png";
 
-import UserImage from '../../../assets/images/admin/users/user-6.jpg'
-import { Line } from 'react-chartjs-2';
-import $ from 'jquery'
+import UserImage from "../../../assets/images/admin/users/user-6.jpg";
+import { Line } from "react-chartjs-2";
+import $ from "jquery";
 
 const Home = () => {
-  const [chartData, setChartData] = useState({})
+  const [chartData, setChartData] = useState({});
 
   const chart = () => {
     setChartData({
-      labels: ['June', 'July', 'Augest', 'September', 'Octuber', 'November'],
+      labels: ["June", "July", "Augest", "September", "Octuber", "November"],
       datasets: [
         {
           data: [32, 45, 22, 17, 48, 62],
-          backgroundColor: [
-            'rgba(211, 211,250,0.3)'
-          ],
-          borderColor: [
-            '#a3a0fb'
-          ],
+          backgroundColor: ["rgba(211, 211,250,0.3)"],
+          borderColor: ["#a3a0fb"],
           borderWidth: 2,
-          label: '.'
+          label: ".",
         },
-         {
+        {
           data: [12, 35, 32, 7, 48, 32],
-          backgroundColor: [
-            'rgba(191, 233, 255, 0.4)'
-          ],
-          borderColor: [
-            'rgb(106, 198, 255)'
-          ],
+          backgroundColor: ["rgba(191, 233, 255, 0.4)"],
+          borderColor: ["rgb(106, 198, 255)"],
           borderWidth: 2,
-          label: '.'
+          label: ".",
         },
         {
           data: [80, 80, 80, 80, 80, 80],
-          backgroundColor: [
-            'white'
-          ],
+          backgroundColor: ["white"],
           borderWidth: 0,
-          label: '.'
+          label: ".",
         },
       ],
-    })
-  }
+    });
+  };
   useEffect(() => {
     chart();
-    $('.count').each(function () {
-      $(this).prop('Counter', 0).animate({
-        Counter: $(this).text()
-      }, {
-        duration: 1000,
-        easing: 'swing',
-        step: function (now) {
-          $(this).text(Math.ceil(now));
-        }
-      });
+    $(".count").each(function () {
+      $(this)
+        .prop("Counter", 0)
+        .animate(
+          {
+            Counter: $(this).text(),
+          },
+          {
+            duration: 1000,
+            easing: "swing",
+            step: function (now) {
+              $(this).text(Math.ceil(now));
+            },
+          }
+        );
     });
-  }, [])
+  }, []);
   return (
     <div className="Dashobard">
       <div id="wrapper">
@@ -91,17 +86,14 @@ const Home = () => {
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
                         <span className="count">246</span>K
-              </h2>
+                      </h2>
                       <p className="text-danger mb-0 font-weight-bolder">
                         <i className="fa fa-arrow-down mr-1" />
-                13.8%
-              </p>
+                        13.8%
+                      </p>
                     </div>
                     <div className="float-right">
-                      <img
-                        src={cardbodyimg1}
-                        draggable="false"
-                      />
+                      <img src={cardbodyimg1} draggable="false" alt="" />
                     </div>
                   </div>
                 </div>
@@ -111,6 +103,7 @@ const Home = () => {
                       className="fa fa-info-circle text-muted float-right"
                       data-toggle="tooltip"
                       data-placement="bottom"
+                      alt=""
                     />
                     <h4 className="mt-0 font-13">Products Sold</h4>
                     <div className="float-left">
@@ -118,15 +111,12 @@ const Home = () => {
                         <span className="count">2453</span>
                       </h2>
                       <p className="text-success mb-0 font-weight-bolder">
-                        <i className="fa fa-arrow-up mr-1" />
-                13.8%
-              </p>
+                        <i className="fa fa-arrow-up mr-1" alt="" />
+                        13.8%
+                      </p>
                     </div>
                     <div className="float-right">
-                      <img
-                        src={cardbodyimg2}
-                        draggable="false"
-                      />
+                      <img src={cardbodyimg2} draggable="false" alt="" />
                     </div>
                   </div>
                 </div>
@@ -141,17 +131,14 @@ const Home = () => {
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
                         $<span className="count">39</span>K
-              </h2>
+                      </h2>
                       <p className="text-danger mb-0 font-weight-bolder">
                         <i className="fa fa-arrow-down mr-1" />
-                13.8%
-              </p>
+                        13.8%
+                      </p>
                     </div>
                     <div className="float-right">
-                      <img
-                        src={cardbodyimg3}
-                        draggable="false"
-                      />
+                      <img src={cardbodyimg3} draggable="false" alt="" />
                     </div>
                   </div>
                 </div>
@@ -162,23 +149,29 @@ const Home = () => {
                     <div className="card-body">
                       <div className="float-right d-none d-md-inline-block">
                         <div className="btn-group mb-2">
-                          <button type="button" className="btn btn-xs btn-secondary">
+                          <button
+                            type="button"
+                            className="btn btn-xs btn-secondary"
+                          >
                             Last 6 Months
-                  </button>
+                          </button>
                         </div>
                       </div>
                       <h4 className="header-title">Statistics </h4>
                       <div className="linechart mt-4">
-                        <Line data={chartData} options={{
-                          responsive: true,
-                        }} />
+                        <Line
+                          data={chartData}
+                          options={{
+                            responsive: true,
+                          }}
+                        />
                       </div>
                       <h4 className="chart-des">
                         <span />
-                Products sold
-                <span />
-                Total views
-              </h4>
+                        Products sold
+                        <span />
+                        Total views
+                      </h4>
                     </div>
                   </div>
                 </div>
@@ -191,16 +184,17 @@ const Home = () => {
                         className=" arrow-none card-drop"
                         data-toggle="dropdown"
                         aria-expanded="false"
+                        href="#"
                       >
                         <i className="mdi mdi-dots-vertical" />
                       </a>
                       <div className="dropdown-menu dropdown-menu-right">
-                        <a className="dropdown-item">
+                        <a className="dropdown-item" href="#">
                           Settings
-                </a>
-                        <a className="dropdown-item">
+                        </a>
+                        <a className="dropdown-item" href="#">
                           Action
-                </a>
+                        </a>
                       </div>
                     </div>
                     <h4 className="header-title">Referrer</h4>
@@ -278,31 +272,43 @@ const Home = () => {
                         <a
                           className=" arrow-none card-drop"
                           data-toggle="dropdown"
-                          aria-expanded="false">
+                          aria-expanded="false"
+                          href="#"
+                        >
                           <i className="mdi mdi-dots-vertical" />
                         </a>
                         <div className="dropdown-menu dropdown-menu-right">
-                          <a className="dropdown-item">
+                          <a className="dropdown-item" href="#">
                             Settings
-                         </a>
-                          <a className="dropdown-item">
+                          </a>
+                          <a className="dropdown-item" href="#">
                             Action
                           </a>
                         </div>
                       </div>
                       <h4 className="header-title mb-3">Inbox</h4>
-                      <div className="inbox-widget" data-simplebar style={{ maxHeight: 420 }} >
+                      <div
+                        className="inbox-widget"
+                        data-simplebar
+                        style={{ maxHeight: 420 }}
+                      >
                         <div className="inbox-item">
                           <div className="inbox-item-img">
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a
+                              className="btn btn-sm btn-link text-info font-13"
+                              href="#"
+                            >
                               Reply
                             </a>
                           </p>
@@ -312,12 +318,15 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a className="btn btn-sm btn-link text-info font-13">
                               Reply
                             </a>
                           </p>
@@ -327,12 +336,15 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a className="btn btn-sm btn-link text-info font-13">
                               Reply
                             </a>
                           </p>
@@ -342,12 +354,15 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a className="btn btn-sm btn-link text-info font-13">
                               Reply
                             </a>
                           </p>
@@ -357,12 +372,15 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a className="btn btn-sm btn-link text-info font-13">
                               Reply
                             </a>
                           </p>
@@ -372,12 +390,18 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a
+                              className="btn btn-sm btn-link text-info font-13"
+                              href="#"
+                            >
                               Reply
                             </a>
                           </p>
@@ -387,12 +411,18 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a
+                              className="btn btn-sm btn-link text-info font-13"
+                              href="#"
+                            >
                               Reply
                             </a>
                           </p>
@@ -402,12 +432,18 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a
+                              className="btn btn-sm btn-link text-info font-13"
+                              href="#"
+                            >
                               Reply
                             </a>
                           </p>
@@ -417,12 +453,18 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a
+                              className="btn btn-sm btn-link text-info font-13"
+                              href="#"
+                            >
                               Reply
                             </a>
                           </p>
@@ -432,12 +474,18 @@ const Home = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle"
+                              alt=""
                             />
                           </div>
                           <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">This theme is awesome!</p>
+                          <p className="inbox-item-text">
+                            This theme is awesome!
+                          </p>
                           <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13" >
+                            <a
+                              className="btn btn-sm btn-link text-info font-13"
+                              href="#"
+                            >
                               Reply
                             </a>
                           </p>
@@ -453,7 +501,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

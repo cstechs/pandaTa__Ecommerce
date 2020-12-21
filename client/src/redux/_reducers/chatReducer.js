@@ -3,7 +3,8 @@ import {
   CHAT_LOAD_FAIL,
   CHAT_EMPTY_SET,
   CLEAR_ERRORS,
-  CHAT_SUCCESS,
+  CHAT_CREATE_SUCCESS,
+  CHAT_CREATE_FAIL,
 } from "../types";
 
 const initState = {
@@ -15,18 +16,20 @@ const initState = {
 const chatReducer = (state = initState, action) => {
   switch (action.type) {
     case CHAT_LOAD_SUCCESS:
-      {
-        console.log("ac", action.payload);
-      }
       return {
         ...state,
         chats: action.payload,
         loading: false,
       };
-    case CHAT_SUCCESS:
+    case CHAT_CREATE_SUCCESS:
       return {
         ...state,
         chats: action.payload.data,
+      };
+    case CHAT_CREATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     case CHAT_LOAD_FAIL:
       return {

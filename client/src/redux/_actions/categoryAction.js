@@ -80,6 +80,7 @@ export const updateCategory = (id, categoryName) => async (dispatch) => {
     //console.log(res.data);
 
     dispatch({ type: CATEGORY_UPDATE_SUCCESS, payload: res.data });
+    window.location.reload();
   } catch (err) {
     //  console.log(err);
     dispatch({

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const LeftBar = () => {
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+
   return (
     <>
       <div className="h-100" data-simplebar>
@@ -31,18 +33,22 @@ const LeftBar = () => {
                 <span>Invoice</span>
               </Link>
             </li>
-            <li>
-              <Link to="/admin/customers" className="ripple button-base">
-                <i className="mdi mdi-book-account-outline leftbar_icon" />
-                <span> Customer</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/admin/category" className="ripple button-base">
-                <i className="mdi mdi-card-plus leftbar_icon" />
-                <span> Category </span>
-              </Link>
-            </li>
+            {user && user.role === "admin" && (
+              <>
+                <li>
+                  <Link to="/admin/customers" className="ripple button-base">
+                    <i className="mdi mdi-book-account-outline leftbar_icon" />
+                    <span> Customer</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/category" className="ripple button-base">
+                    <i className="mdi mdi-card-plus leftbar_icon" />
+                    <span> Category </span>
+                  </Link>
+                </li>{" "}
+              </>
+            )}
             <li>
               <Link to="/admin/chat" className="ripple button-base">
                 <i className="mdi mdi-forum-outline leftbar_icon" />

@@ -9,7 +9,10 @@ import productProgessImg1 from "../../../assets/images/admin/current-products-pr
 import productProgessImg2 from "../../../assets/images/admin/current-products-progress-img-2.png";
 import productProgessImg3 from "../../../assets/images/admin/current-products-progress-img-3.png";
 
-import { getProduct } from "../../../redux/_actions/productAction";
+import {
+  deleteProduct,
+  getProduct,
+} from "../../../redux/_actions/productAction";
 
 const Products = () => {
   function productToggle() {
@@ -28,6 +31,9 @@ const Products = () => {
   const handlePreview = (item) => {
     setPreviewShown(true);
     setProduct(item);
+  };
+  const ProductDelete = (item) => {
+    dispatch(deleteProduct(item._id));
   };
   useEffect(() => {
     dispatch(getProduct());
@@ -163,7 +169,10 @@ const Products = () => {
                                       onClick={() => handlePreview(item)}
                                     ></i>
                                     |
-                                    <i className="fas fa-trash-alt text-danger"></i>
+                                    <i
+                                      className="fas fa-trash-alt text-danger"
+                                      onClick={() => ProductDelete(item)}
+                                    ></i>
                                   </td>
                                 </tr>
                               ))}

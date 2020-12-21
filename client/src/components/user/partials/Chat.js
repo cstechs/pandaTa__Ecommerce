@@ -18,8 +18,9 @@ const Chat = ({ ChatHide }) => {
     // // }
     // else {
     e.preventDefault();
-    console.log("dfsd");
+
     dispatch(createChat(newMessage));
+    setNewMessage({ ...newMessage, message: "" });
   };
   useEffect(() => {
     dispatch(getChat());
@@ -56,7 +57,7 @@ const Chat = ({ ChatHide }) => {
   });
   const { message } = newMessage;
   const onChange = (e) => {
-    if (user.role == "seller") {
+    if (user.role === "seller" || "admin") {
       setCheckSender(1);
       newMessage.sender = checkSender;
       newMessage.createdBy = user._id;

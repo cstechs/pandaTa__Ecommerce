@@ -40,6 +40,7 @@ const UpdateProductBar = (props) => {
     productImage,
     productSubCategory,
   } = newProduct;
+
   const onChange = (e) =>
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
 
@@ -52,6 +53,7 @@ const UpdateProductBar = (props) => {
   };
   useEffect(() => {
     dispatch(getCategory());
+    dispatch(getSubCategory());
   }, []);
 
   const onSubmit = (e) => {
@@ -61,7 +63,6 @@ const UpdateProductBar = (props) => {
       productQuantity === "" ||
       productPrice === "" ||
       productCategory === "" ||
-      productImage === "" ||
       productDescription === "" ||
       productSubCategory === ""
     ) {
@@ -75,8 +76,8 @@ const UpdateProductBar = (props) => {
       data.append("productDescription", newProduct.productDescription);
       data.append("productSubCategory", newProduct.productSubCategory);
       data.append("productImage", newProduct.productImage);
-      dispatch(updateProduct(data, props.products._id));
       console.log("data", data);
+      dispatch(updateProduct(data, props.products._id));
     }
   };
 
@@ -149,9 +150,6 @@ const UpdateProductBar = (props) => {
                     value={productCategory}
                     onChange={onCategoryChange}
                   >
-                    <option defaultValue="" disabled>
-                      Select Category
-                    </option>
                     {category.categories.data?.map(({ _id, categoryName }) => (
                       <option key={_id} value={_id}>
                         {categoryName}
@@ -170,9 +168,11 @@ const UpdateProductBar = (props) => {
                     required
                     onChange={onChange}
                   >
-                    <option defaultValue="" disabled>
-                      Select Sub Category
-                    </option>
+                    {
+                      subCategory.subCategories?.data?.find(
+                        (x) => x._id === productSubCategory
+                      )?.subCategoryName
+                    }
                     {subCategory.subCategories.data?.map(
                       ({ _id, subCategoryName }) => (
                         <option key={_id} value={_id}>
@@ -208,8 +208,8 @@ const UpdateProductBar = (props) => {
                     <input
                       {...getInputProps()}
                       name="productImage"
-                      required
                       onChange={handleOnUploadFile}
+                      value={acceptedFiles}
                     />
                     <i className="h1 text-muted dripicons-cloud-upload" />
                     <h4>Update Your Image Here</h4>

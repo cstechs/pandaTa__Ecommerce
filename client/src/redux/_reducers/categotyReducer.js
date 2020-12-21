@@ -36,10 +36,19 @@ const categoryReducer = (state = initState, action) => {
       return {
         ...state,
       };
-    case CATEGORY_DELETE_SUCCESS:
-      console.log("ac", action.payload);
+    case CATEGORY_UPDATE_FAIL:
       return {
         ...state,
+        error: action.payload,
+      };
+    case CATEGORY_DELETE_SUCCESS:
+      return {
+        ...state,
+      };
+    case CATEGORY_DELETE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     case CATEGORY_EMPTY_SET:
       return {

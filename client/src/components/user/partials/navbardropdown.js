@@ -11,7 +11,7 @@ const NavbarDropdown = ({ _id, categoryName, subCategory }) => {
       </div>
       <ul>
         {subCategory.subCategories.data?.map((item) => {
-          if (item.categoryId == _id) {
+          if (item.categoryId === _id) {
             return (
               <li key={item._id}>
                 <Link to="/" className="dropdownLink">

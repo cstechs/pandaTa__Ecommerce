@@ -19,7 +19,7 @@ const Login = ({ history }) => {
     } else if (state.error?.toString().startsWith("The email address")) {
       dispatch(setAlert(state.error, "danger"));
       dispatch({ type: CLEAR_ERRORS });
-    } else if (state.error == "Your account has not been verified.") {
+    } else if (state.error === "Your account has not been verified.") {
       dispatch(setAlert(state.error, "danger"));
       dispatch({ type: CLEAR_ERRORS });
     }

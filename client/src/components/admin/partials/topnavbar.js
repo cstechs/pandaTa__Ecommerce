@@ -36,7 +36,7 @@ const Navbar = () => {
                     />
                     <div className="input-group-append">
                       <button className="btn" type="submit">
-                        <i className="fe-search" />
+                        <i className="fe-search" alt="" />
                       </button>
                     </div>
                   </div>
@@ -51,7 +51,7 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="fe-search noti-icon" />
+                <i className="fe-search noti-icon" alt="" />
               </span>
               <div className="dropdown-menu dropdown-lg dropdown-menu-right p-0">
                 <form className="p-3">
@@ -72,7 +72,7 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="fe-message-square noti-icon" />
+                <i className="fe-message-square noti-icon" alt="" />
                 <span className="badge badge-danger rounded-circle noti-icon-badge">
                   0
                 </span>
@@ -91,7 +91,7 @@ const Navbar = () => {
                 <div className="noti-scroll" data-simplebar>
                   <span className="dropdown-item notify-item">
                     <div className="notify-icon bg-primary">
-                      <i className="mdi mdi-comment-account-outline" />
+                      <i className="mdi mdi-comment-account-outline" alt="" />
                     </div>
                     <p className="notify-details">
                       Caleb Flakelar commented on Admin
@@ -100,7 +100,7 @@ const Navbar = () => {
                   </span>
                   <span className="dropdown-item notify-item">
                     <div className="notify-icon bg-secondary">
-                      <i className="mdi mdi-heart" />
+                      <i className="mdi mdi-heart" alt="" />
                     </div>
                     <p className="notify-details">
                       Carlos Crouch liked
@@ -111,7 +111,7 @@ const Navbar = () => {
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all">
                   View all
-                  <i className="fe-arrow-right" />
+                  <i className="fe-arrow-right" alt="" />
                 </span>
               </div>
             </li>
@@ -123,7 +123,7 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="fe-bell noti-icon" />
+                <i className="fe-bell noti-icon" alt="" />
                 <span className="badge badge-danger rounded-circle noti-icon-badge">
                   0
                 </span>
@@ -145,6 +145,7 @@ const Navbar = () => {
                       <img
                         src={UserImage}
                         className="img-fluid rounded-circle"
+                        alt=""
                       />
                     </div>
                     <p className="notify-details">Cristina Pride</p>
@@ -156,7 +157,7 @@ const Navbar = () => {
                   </span>
                   <span className="dropdown-item notify-item">
                     <div className="notify-icon bg-secondary">
-                      <i className="mdi mdi-heart" />
+                      <i className="mdi mdi-heart" alt="" />
                     </div>
                     <p className="notify-details">
                       Carlos Crouch liked
@@ -167,7 +168,7 @@ const Navbar = () => {
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all">
                   View all
-                  <i className="fe-arrow-right" />
+                  <i className="fe-arrow-right" alt="" />
                 </span>
               </div>
             </li>
@@ -179,18 +180,14 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <img
-                  src={UserImage}
-                  alt="user-image"
-                  className="rounded-circle"
-                />
+                <img src={UserImage} alt="user" className="rounded-circle" />
                 <span className="pro-user-name ml-1">
-                  User <i className="mdi mdi-chevron-down" />
+                  {user.userName} <i className="mdi mdi-chevron-down" />
                 </span>
               </span>
               <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
                 <span className="dropdown-item notify-item ripple button-base">
-                  <i className="fe-user" />
+                  <i className="fe-user" alt="" />
                   <span>
                     Status : <b className="text-success">online</b>
                   </span>
@@ -199,11 +196,11 @@ const Navbar = () => {
                   to="/admin/setting"
                   className="dropdown-item notify-item ripple button-base"
                 >
-                  <i className="fe-settings" />
+                  <i className="fe-settings" alt="" />
                   <span>Settings</span>
                 </Link>
                 <span className="dropdown-item notify-item ripple button-base">
-                  <i className="fe-log-out" />
+                  <i className="fe-log-out" alt="" />
                   <span>Logout</span>
                 </span>
               </div>
@@ -213,7 +210,7 @@ const Navbar = () => {
                 to="/admin/setting"
                 className="nav-link waves-effect waves-light ripple button-base"
               >
-                <i className="mdi mdi-cog-outline noti-icon " />
+                <i className="mdi mdi-cog-outline noti-icon " alt="" />
               </Link>
             </li>
           </ul>
@@ -222,12 +219,13 @@ const Navbar = () => {
               <span className="logo logo-light pl-3">
                 <span className="logo-sm">
                   <div className="pand-logo">
-                    <img src={SmLogo} />
+                    <img src={SmLogo} alt="" />
                   </div>
                 </span>
                 <span className="logo-lg">
                   <div className="pand-logo">
-                    <img src={SmLogo} /> <span id="pandlogo">PANDA / TA </span>
+                    <img src={SmLogo} alt="" />{" "}
+                    <span id="pandlogo">PANDA / TA </span>
                   </div>
                 </span>
               </span>
@@ -239,7 +237,7 @@ const Navbar = () => {
                 className="button-menu-mobile waves-effect waves-light ripple button-base"
                 onClick={toggle}
               >
-                <i className="fe-menu" />
+                <i className="fe-menu" alt="" />
               </button>
             </li>
             <li>

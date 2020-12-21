@@ -1,48 +1,63 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { resetpassword } from '../../../redux/_actions/authAction';
-import { setAlert } from '../../../redux/_actions/alertAction'
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { resetpassword } from "../../../redux/_actions/authAction";
+import { setAlert } from "../../../redux/_actions/alertAction";
 
-const ResetPassword = () => {
+const ResetPassword = (props) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-    
-    const [password, setPassword] = useState('');
-    const [confirmpassword, setconfirmPassword] = useState('');
-    
-    const onSubmit = e => {
-      e.preventDefault();
-      if (password === '' || confirmpassword === '') {
-        dispatch(setAlert('Please enter all the fields.', 'danger'));
-      }
-      else if (password  != confirmpassword) {
-        dispatch(setAlert('Password Doesnot Match.', 'danger'));
-      } else {
-        dispatch(resetpassword(password, confirmpassword));
-      }
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setconfirmPassword] = useState("");
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log("pass", password, "conf", confirmpassword);
+    if (password === "" || confirmpassword === "") {
+      dispatch(setAlert("Please enter all the fields.", "danger"));
+    } else if (password !== confirmpassword) {
+      dispatch(setAlert("Password Doesnot Match.", "danger"));
+    } else {
+      dispatch(resetpassword(password, confirmpassword));
     }
-    return (
-        <div className="ResetPassword">
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-6">
-                    </div>
-                    <div className="col-md-6">
-                        <form onSubmit={onSubmit}>
-                            <div className="logo">
-                                PANDA / TA
-                </div>
-                            <p>Enter your new password</p>
-                            <input type="password" name="password" required autoFocus value={password} onChange={e => setPassword(e.target.value)} placeholder="New Password" />
-                            <input type="password" name="confirmpassword" value={confirmpassword} required onChange={e => setconfirmPassword(e.target.value)} placeholder="Confirm Password" />
-                            <input type="submit" className="ripple button-base" value="Reset Password" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <b className="terms">Term of use. Privacy policy</b>
+  };
+  return (
+    <div className="ResetPassword">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-6"></div>
+          <div className="col-md-6">
+            <form onSubmit={onSubmit}>
+              <div className="logo">PANDA / TA</div>
+              <p>Enter your new password</p>
+              <input
+                type="password"
+                name="password"
+                required
+                autoFocus
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="New Password"
+              />
+              <input
+                type="password"
+                name="confirmpassword"
+                value={confirmpassword}
+                required
+                onChange={(e) => setconfirmPassword(e.target.value)}
+                placeholder="Confirm Password"
+              />
+              <input
+                type="submit"
+                className="ripple button-base"
+                value="Reset Password"
+              />
+            </form>
+          </div>
         </div>
-    )
-}
+      </div>
+      <b className="terms">Term of use. Privacy policy</b>
+    </div>
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

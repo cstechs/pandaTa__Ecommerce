@@ -1,6 +1,6 @@
 import {
-  CART_SUCCESS,
-  CART_FAIL,
+  CART_CREATE_SUCCESS,
+  CART_CREATE_FAIL,
   CART_LOAD_SUCCESS,
   CART_LOAD_FAIL,
 } from "../types";
@@ -15,11 +15,11 @@ export const addItemToCart = (productId, createdBy, quantity) => {
         { productId, createdBy, quantity },
         config
       );
-      console.log(res.data);
-      dispatch({ type: CART_SUCCESS, payload: res.data });
+      //  console.log(res.data);
+      dispatch({ type: CART_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
       //console.log(err);
-      dispatch({ type: CART_FAIL, payload: err.response.data.message });
+      dispatch({ type: CART_CREATE_FAIL, payload: err.response.data.message });
     }
   };
 };
@@ -29,10 +29,10 @@ export const getCart = () => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.get("/api/cart/", config);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({ type: CART_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
-      console.log(err);
+      //  console.log(err);
       dispatch({ type: CART_LOAD_FAIL, payload: err.response.data.message });
     }
   };

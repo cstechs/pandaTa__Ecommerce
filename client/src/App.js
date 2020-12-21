@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./style.css";
 import "./assets/css/dashboard-bootstrap.min.css";
@@ -33,7 +33,7 @@ import AdminPanelEditSetting from "./components/admin/pages/updateProfile";
 import AdminLogin from "./components/admin/auth/login";
 import AdminForgetPassword from "./components/admin/auth/forgetpassword";
 import AdminRegister from "./components/admin/auth/register";
-import AdminResetPassword from "./components/admin/auth/resetpassword";
+import ResetPassword from "./components/admin/auth/resetpassword";
 import ErrorPage from "./components/user/pages/404";
 import VerifyView from "./components/user/auth/verifyPage";
 import Alerts from "./components/admin/partials/alerts";
@@ -50,7 +50,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProduct());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -66,10 +66,12 @@ function App() {
           {/* <Route exact path='/sellerapplication' component={UserSellerApplication}/> */}
           <Route exact path="/seller" component={UserSeller} />
           <Route exact path="/verify/:token" component={VerifyView} />
+          <Route exact path="/reset/:token" component={ResetPassword} />
           {product?.products?.data?.map(({ _id }) => (
             <Route
               exact
               key={_id}
+              s
               path={`/product/${_id}`}
               component={UserSingleProduct}
             />
@@ -83,7 +85,7 @@ function App() {
             path="/admin/forgetpassword"
             component={AdminForgetPassword}
           />
-          <Route path="/admin/resetpassword" component={AdminResetPassword} />
+          <Route path="/admin/resetpassword" component={ResetPassword} />
           <PrivateRoute
             exact
             path="/admin/register"

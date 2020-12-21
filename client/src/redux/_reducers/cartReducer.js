@@ -3,7 +3,8 @@ import {
   CART_LOAD_FAIL,
   CART_INCREMENT_FAIL,
   CART_INCREMENT,
-  CART_SUCCESS,
+  CART_CREATE_SUCCESS,
+  CART_CREATE_FAIL,
   CLEAR_ERRORS,
 } from "../types";
 
@@ -21,10 +22,15 @@ const cartReducer = (state = initState, action) => {
         cartItems: action.payload,
         loading: false,
       };
-    case CART_SUCCESS:
+    case CART_CREATE_SUCCESS:
       return {
         ...state,
         cartItems: action.payload,
+      };
+    case CART_CREATE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     case CART_LOAD_FAIL:
       return {

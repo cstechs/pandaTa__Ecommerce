@@ -30,14 +30,22 @@ const subCategoryReducer = (state = initState, action) => {
         error: action.payload,
       };
     case SUBCATEGORY_UPDATE_SUCCESS:
-      console.log("ac", action.payload);
       return {
         ...state,
       };
-    case SUBCATEGORY_DELETE_SUCCESS:
-      console.log("ac", action.payload);
+    case SUBCATEGORY_UPDATE_FAIL:
       return {
         ...state,
+        error: action.payload,
+      };
+    case SUBCATEGORY_DELETE_SUCCESS:
+      return {
+        ...state,
+      };
+    case SUBCATEGORY_DELETE_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
     case SUBCATEGORY_EMPTY_SET:
       return {
@@ -45,6 +53,7 @@ const subCategoryReducer = (state = initState, action) => {
         subCategories: [],
         loading: false,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,

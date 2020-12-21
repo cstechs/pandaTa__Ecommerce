@@ -8,7 +8,7 @@ const HomeRight = ({ product }) => {
         <div className="row">
           {product.products.data?.map((item, index) => {
             return (
-              <div key={item._id}>
+              <React.Fragment key={item._id}>
                 {" "}
                 {index > 6 && index < 11 && (
                   <div className="col-6">
@@ -73,7 +73,7 @@ const HomeRight = ({ product }) => {
                     </div>
                   </div>
                 )}
-              </div>
+              </React.Fragment>
             );
           })}
         </div>

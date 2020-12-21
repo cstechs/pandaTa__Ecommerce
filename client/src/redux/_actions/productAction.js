@@ -10,6 +10,8 @@ import {
   PRODUCT_SINGLE_LOAD_FAIL,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
+  PRODUCT_DELETE_FAIL,
+  PRODUCT_DELETE_SUCCESS,
 } from "../types";
 import axios from "axios";
 
@@ -76,6 +78,7 @@ export const updateProduct = (product, productId) => {
       );
       //  console.log(res.data);
       dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: res?.data });
+      window.location.reload();
     } catch (err) {
       // console.log(err);
       dispatch({
@@ -108,4 +111,20 @@ export const getProductBySubCategoryId = (CategoryId) => {
       });
     }
   };
+};
+
+export const deleteProduct = (id) => async (dispatch) => {
+  const config = { header: { "Content-Type": "multipart/form-data" } };
+  try {
+    const res = await axios.delete("/api/product/" + id, { id }, config);
+    console.log(res.data);
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: res.data });
+    window.location.reload();
+  } catch (err) {
+    // console.log(err);
+    dispatch({
+      type: PRODUCT_DELETE_FAIL,
+      payload: err?.response?.data?.message,
+    });
+  }
 };
