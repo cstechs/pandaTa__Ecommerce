@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import $ from "jquery";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-import productimg from "../../../assets/images/user/product.png";
+// import productimg from "../../../assets/images/user/product.png";
 import UserImage from "../../../assets/images/admin/users/user-1.jpg";
 import whybecomebuyerimg from "../../../assets/images/user/whybecomebuyer.png";
 import whybecomeSellerimg from "../../../assets/images/user//whybecomeseller.png";
@@ -18,10 +18,10 @@ import SliderImage6 from "../../../assets/images/user/SliderImage6.jpg";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getProduct } from "../../../redux/_actions/productAction";
 import OwlCarousel from "react-owl-carousel";
-import loader from "../../../assets/images/loader.gif";
+// import loader from "../../../assets/images/loader.gif";
 import HomeLeft from "../partials/HomeLeft";
 import HomeRight from "../partials/HomeRight";
-import { getUser } from "../../../redux/_actions/userAction";
+// import { getUser } from "../../../redux/_actions/userAction";
 const Home = () => {
   const [responsive] = useState({
     0: {

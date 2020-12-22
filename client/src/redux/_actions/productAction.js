@@ -98,7 +98,7 @@ export const getProductBySubCategoryId = (CategoryId) => {
         config
       );
       console.log(res.data);
-      if (res.data == []) {
+      if (res.data === []) {
         dispatch({ type: RELATED_PRODUCT_EMPTY_SET, payload: res.data });
       } else {
         dispatch({ type: RELATED_PRODUCT_LOAD_SUCCESS, payload: res.data });

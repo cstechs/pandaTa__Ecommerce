@@ -67,7 +67,7 @@ const Header = () => {
         }
       }
     };
-  }, []);
+  }, [user]);
   return (
     <>
       <div className="SearchBox" id="SeachBox">
@@ -153,16 +153,13 @@ const Header = () => {
               )}
               {isPreviewShown && (
                 <>
-                  {(user && user.role === "seller") ||
-                    (user.role === "admin" && (
-                      <>
-                        <Link to="/admin">
-                          <button className="ripple button-base px-4">
-                            Dashboard
-                          </button>
-                        </Link>
-                      </>
-                    ))}
+                  {((user && user.role === "seller") || "admin") && (
+                    <Link to="/admin">
+                      <button className="ripple button-base px-4">
+                        Dashboard
+                      </button>
+                    </Link>
+                  )}
                   <i className="fa fa-search searc" onClick={search}></i>
                   <Link to="/wishlist">
                     <i className="fa fa-heart"></i>
@@ -198,7 +195,10 @@ const Header = () => {
                           className="dropdown-item"
                           onClick={() => {
                             dispatch(logout());
-                            history.push("/");
+
+                            setTimeout(() => {
+                              history.push("/");
+                            }, 1000);
                           }}
                         >
                           <i className="fas fa-sign-out-alt"></i>

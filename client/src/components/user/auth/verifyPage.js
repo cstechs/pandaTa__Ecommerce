@@ -7,7 +7,7 @@ import { verifyaccount } from "../../../redux/_actions/authAction";
 // import { setAlert } from "../../../redux/_actions/alertAction";
 import { useHistory } from "react-router-dom";
 import { CLEAR_ERRORS } from "../../../redux/types";
-import Login from "./login";
+// import Login from "./login";
 
 const VerifyPage = (props) => {
   const state = useSelector((state) => state.auth);

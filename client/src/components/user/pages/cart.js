@@ -111,8 +111,8 @@ const Cart = () => {
                   </tr>
                 </thead>
                 {
-                  cartItem?.data?.createdBy === user._id &&
-                    cartItem?.data?.items &&
+                  // cartItem?.data?.createdBy === user._id &&
+                  cartItem?.data?.items &&
                     cartItem?.data?.items?.map((item, index) => {
                       return (
                         <tbody key={item._id}>

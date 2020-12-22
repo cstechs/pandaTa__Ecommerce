@@ -24,8 +24,8 @@ const Products = () => {
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const [isPreviewShown, setPreviewShown] = useState(false);
-  const category = useSelector((state) => state.category);
-  const subCategory = useSelector((state) => state.subCategory);
+  // const category = useSelector((state) => state.category);
+  // const subCategory = useSelector((state) => state.subCategory);
   const [products, setProduct] = useState(0);
 
   const handlePreview = (item) => {

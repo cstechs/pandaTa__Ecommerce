@@ -7,18 +7,18 @@ import { Link } from "react-router-dom";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
 import { getProductById } from "../../../redux/_actions/productAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
-import { createChat, getChat } from "../../../redux/_actions/chatAction";
+import { getChat } from "../../../redux/_actions/chatAction";
 import RelatedProduct from "../partials/relatedProducts";
 // import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import Chat from "../partials/Chat";
 
 const SingleProduct = () => {
   const product = useSelector((state) => state.product);
-  const chat = useSelector((state) => state.chat);
+  // const chat = useSelector((state) => state.chat);
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-  const [checkSender, setCheckSender] = useState(null);
+  // const [checkSender, setCheckSender] = useState(null);
   const arr = subCategory?.subCategories?.data?.filter(
     (x) => x._id === product?.product?.data.productSubCategory
   );
@@ -30,33 +30,33 @@ const SingleProduct = () => {
   //     setCheckSender(0);
   //   }
   // };
-  const [newMessage, setNewMessage] = useState({
-    message: "",
-    sender: "",
-    createdBy: "",
-    sellerId: "",
-  });
-  const { message } = newMessage;
+  // const [newMessage, setNewMessage] = useState({
+  //   message: "",
+  //   sender: "",
+  //   createdBy: "",
+  //   sellerId: "",
+  // });
+  // const { message } = newMessage;
 
-  const onChange = (e) => {
-    if (user.role == "seller") {
-      setCheckSender(1);
-      newMessage.sender = checkSender;
-      newMessage.createdBy = user._id;
-      setNewMessage({
-        ...newMessage,
-        [e.target.name]: e.target.value,
-      });
-    } else {
-      setCheckSender(0);
-      newMessage.sender = checkSender;
-      newMessage.createdBy = user._id;
-      setNewMessage({
-        ...newMessage,
-        [e.target.name]: e.target.value,
-      });
-    }
-  };
+  // const onChange = (e) => {
+  //   if (user.role == "seller") {
+  //     setCheckSender(1);
+  //     newMessage.sender = checkSender;
+  //     newMessage.createdBy = user._id;
+  //     setNewMessage({
+  //       ...newMessage,
+  //       [e.target.name]: e.target.value,
+  //     });
+  //   } else {
+  //     setCheckSender(0);
+  //     newMessage.sender = checkSender;
+  //     newMessage.createdBy = user._id;
+  //     setNewMessage({
+  //       ...newMessage,
+  //       [e.target.name]: e.target.value,
+  //     });
+  //   }
+  // };
 
   const [RelatedProductShown, setRelatedProductShown] = useState(false);
   const [StartChatShown, setStartChatShown] = useState(false);
@@ -91,19 +91,19 @@ const SingleProduct = () => {
     dispatch(addItemToCart(e, user, quantity));
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
-    // //     dispatch(setAlert('Please Enter fields.', 'danger'));
-    // // }
-    // else {
-    dispatch(createChat(newMessage));
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
+  //   // //     dispatch(setAlert('Please Enter fields.', 'danger'));
+  //   // // }
+  //   // else {
+  //   dispatch(createChat(newMessage));
 
-    // }
-  };
+  //   // }
+  // };
   useEffect(() => {
     dispatch(getChat());
-  }, []);
+  }, [getChat]);
 
   return (
     <>
