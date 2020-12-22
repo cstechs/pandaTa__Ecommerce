@@ -3,7 +3,7 @@ import { createChat, getChat } from "../../../redux/_actions/chatAction";
 import { useSelector, useDispatch } from "react-redux";
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 
-const Chat = ({ ChatHide }) => {
+const Chat = ({ ChatHide, product }) => {
   const ChatHandler = () => {
     ChatHide();
   };
@@ -53,11 +53,11 @@ const Chat = ({ ChatHide }) => {
     message: "",
     sender: "",
     createdBy: "",
-    sellerId: "",
+    sellerId: product?.product?.data?.createdBy,
   });
   const { message } = newMessage;
   const onChange = (e) => {
-    if (user.role === "seller" || "admin") {
+    if (user.role === "seller" || user.role === "admin") {
       setCheckSender(1);
       newMessage.sender = checkSender;
       newMessage.createdBy = user._id;
@@ -65,10 +65,11 @@ const Chat = ({ ChatHide }) => {
         ...newMessage,
         [e.target.name]: e.target.value,
       });
-    } else {
+    } else if (user.role === "customer") {
       setCheckSender(0);
       newMessage.sender = checkSender;
       newMessage.createdBy = user._id;
+
       setNewMessage({
         ...newMessage,
         [e.target.name]: e.target.value,
@@ -92,8 +93,8 @@ const Chat = ({ ChatHide }) => {
           <ul className="conversation-list mt-2">
             {chat.chats?.data?.map((item, index) => (
               <>
-                {console.log("chatlength", chat.chats?.data?.length)}
-                {item.sender == 1 && (
+                {/* {console.log("chatlength", item)} */}
+                {item.sender == 1 && item.createdBy === user._id && (
                   <li
                     className="clearfix odd"
                     id={`${index == chat.chats?.data?.length - 1 && "mydiv"}`}
@@ -105,7 +106,7 @@ const Chat = ({ ChatHide }) => {
                     </div>
                   </li>
                 )}
-                {item.sender == 0 && (
+                {item.sender == 0 && item.createdBy === user._id && (
                   <li
                     className="clearfix"
                     id={`${index == chat.chats?.data?.length - 1 && "mydiv"}`}

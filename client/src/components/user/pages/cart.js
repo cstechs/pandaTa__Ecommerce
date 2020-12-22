@@ -9,7 +9,11 @@ import { login } from "../../../redux/_actions/authAction";
 import productimg from "../../../assets/images/user/product.png";
 import Banner from "../../../assets/images/user/banner.PNG";
 import { useDispatch, useSelector } from "react-redux";
-import { cartIncrement, getCart } from "../../../redux/_actions/cartAction";
+import {
+  cartIncrement,
+  getCart,
+  removeCart,
+} from "../../../redux/_actions/cartAction";
 import CartInput from "./cartInput";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
 
@@ -29,17 +33,18 @@ const Cart = () => {
   useEffect(() => {
     dispatch(getCart());
   }, []);
+  console.log("check", cartItem?.data);
 
   useEffect(() => {
-    setQuantity(() =>
-      cartItem?.data?.items?.map((item) => {
-        return {
-          itemQuantity: item.quantity,
-          itemId: item.productId._id,
-          itemTotal: item.total,
-        };
-      })
-    );
+    // setQuantity(() =>
+    //   cartItem?.data?.items?.map((item) => {
+    //     return {
+    //       itemQuantity: item.quantity,
+    //       itemId: item.productId._id,
+    //       itemTotal: item.total,
+    //     };
+    //   })
+    // );
   }, [cartItem]);
   useEffect(() => {}, [addItemToCart]);
   //   const CartIncrement = () => {
@@ -58,7 +63,6 @@ const Cart = () => {
     //   return [...prev];
     // });
     dispatch(addItemToCart(id, user._id, +1));
-    console.log("quantity", quantity);
   };
   const handleRemoveQuantity = (index, Quantity, id, total) => {
     // if (Quantity > 0)
@@ -72,6 +76,11 @@ const Cart = () => {
     // return [...prev];
     // });
     dispatch(addItemToCart(id, user._id, -1));
+  };
+
+  const RemoveCart = () => {
+    dispatch(removeCart());
+    window.location.reload();
   };
 
   return (
@@ -101,39 +110,39 @@ const Cart = () => {
                     <th></th>
                   </tr>
                 </thead>
-
                 {
-                  cartItem.data &&
-                    cartItem.data.items.map((item, index) => {
+                  cartItem?.data?.createdBy === user._id &&
+                    cartItem?.data?.items &&
+                    cartItem?.data?.items?.map((item, index) => {
                       return (
                         <tbody key={item._id}>
                           <tr>
                             <td>
-                              <i className="ti-close"></i>
+                              <i
+                                className="ti-close"
+                                onClick={() => RemoveCart()}
+                              ></i>
                             </td>
                             <td>
                               <div className="float-left">
                                 <div className="imageBox">
                                   <img
-                                    src={item.productId.productImage}
+                                    src={item?.productId?.productImage}
                                     alt="ProductImage"
                                   />
                                 </div>
                               </div>
                               <div className="float-left">
-                                <h4>{item.productId.productName}</h4>
+                                <h4>{item?.productId?.productName}</h4>
                                 <span>Supplier's Name Here</span>
                               </div>
                             </td>
-                            <td>{item.productId.productPrice} </td>
+                            <td>{item?.productId?.productPrice} </td>
                             <td>
                               <div className="position-relative">
                                 <input
                                   type="number"
-                                  value={
-                                    // quantity ? quantity[index]?.itemQuantity : 1
-                                    item.quantity
-                                  }
+                                  value={item?.quantity}
                                   className="border-right-0"
                                 />
                                 <div className="AdjustQuantity">
@@ -143,7 +152,7 @@ const Cart = () => {
                                       handleAddQuantity(
                                         index,
                                         quantity[index]?.itemQuantity,
-                                        item.productId._id,
+                                        item?.productId?._id,
                                         item.total
                                       )
                                     }
@@ -154,7 +163,7 @@ const Cart = () => {
                                       handleRemoveQuantity(
                                         index,
                                         quantity[index].itemQuantity,
-                                        item.productId._id,
+                                        item?.productId?._id,
                                         item.total
                                       )
                                     }
@@ -166,74 +175,6 @@ const Cart = () => {
                               <p>{item.total}</p>
                             </td>
                           </tr>
-                          {/* <tr>
-                          <td>
-                            <i className="ti-close"></i>
-                          </td>
-                          <td>
-                            <div className="float-left">
-                              <div className="imageBox">
-                                <img src={productimg} alt="ProductImage" />
-                              </div>
-                            </div>
-                            <div className="float-left">
-                              <h4>Product Name Here</h4>
-                              <span>Supplier's Name Here</span>
-                            </div>
-                          </td>
-                          <td>$28.99 </td>
-                          <td>
-                            <div className="position-relative">
-                              <input
-                                type="number"
-                                id=""
-                                placeholder='0'
-                                className="border-right-0"
-                              />
-                              <div className="AdjustQuantity">
-                                <i className="fa fa-plus border-bottom-0" />
-                                <i className="fa fa-minus" />
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p>$28.99</p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <i className="ti-close"></i>
-                          </td>
-                          <td>
-                            <div className="float-left">
-                              <div className="imageBox">
-                                <img src={productimg} alt="ProductImage" />
-                              </div>
-                            </div>
-                            <div className="float-left">
-                              <h4>Product Name Here</h4>
-                              <span>Supplier's Name Here</span>
-                            </div>
-                          </td>
-                          <td>$28.99 </td>
-                          <td>
-                            <div className="position-relative">
-                              <input
-                                type="number"
-                                id=""
-                                placeholder="1"
-                                className="border-right-0"
-                              />
-                              <div className="AdjustQuantity">
-                                <i className="fa fa-plus border-bottom-0" />
-                                <i className="fa fa-minus" />
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <p>$28.99</p>
-                          </td>
-                        </tr> */}
                         </tbody>
                       );
                     })

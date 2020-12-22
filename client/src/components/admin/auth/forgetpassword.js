@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgot } from "../../../redux/_actions/authAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
+import { useHistory } from "react-router-dom";
 
 const ForgetPasssword = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [email, setEmail] = useState("");
 
@@ -14,6 +16,9 @@ const ForgetPasssword = () => {
       dispatch(setAlert("Please enter email address.", "danger"));
     } else {
       dispatch(forgot(email));
+      setTimeout(() => {
+        history.push("/");
+      }, 2200);
     }
   };
   return (

@@ -3,6 +3,8 @@ import {
   CART_CREATE_FAIL,
   CART_LOAD_SUCCESS,
   CART_LOAD_FAIL,
+  CART_DELETE_FAIL,
+  CART_DELETE_SUCCESS,
 } from "../types";
 import axios from "axios";
 
@@ -38,18 +40,17 @@ export const getCart = () => {
   };
 };
 
-// export const removeCart = () => (dispatch) =>{
-//   const config = { header: { "Content-Type": "application/json" } };
-//     try {
-//       const res = await axios.get("/api/cart/", config);
-//       console.log(res.data);
-//       dispatch({ type: CART_LOAD_SUCCESS, payload: res.data });
-//     } catch (err) {
-//       console.log(err);
-//       dispatch({ type: CART_LOAD_FAIL, payload: err.response.data.message });
-//     }
-
-// }
+export const removeCart = () => async (dispatch) => {
+  const config = { header: { "Content-Type": "application/json" } };
+  try {
+    const res = await axios.delete("/api/cart/empty-cart", config);
+    console.log(res.data);
+    dispatch({ type: CART_DELETE_SUCCESS, payload: res.data });
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: CART_DELETE_FAIL, payload: err.response.data.message });
+  }
+};
 
 // export const cartIncrement = (productId, quantity) => {
 //   return async (dispatch) => {

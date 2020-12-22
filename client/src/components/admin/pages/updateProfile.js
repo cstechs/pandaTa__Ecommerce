@@ -2,17 +2,39 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../partials/topnavbar";
 import Footer from "../partials/footer";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../redux/_actions/userAction";
 
 const UpdateProfile = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const dispatch = useDispatch();
   const [newUser, setNewUser] = useState({
-    userName: "",
-    firstName: "",
-    lastName: "",
+    _id: user._id,
+    userName: user.userName,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    role: user.role,
+    isVerified: user.isVerified,
+    password: user.password,
   });
+
+  const { userName, firstName, lastName } = newUser;
+
+  // const HandleChange = (e) => {
+  //   setNewUser((prev)=> {return{ {...prev, [e.target.name]: e.target.value }});
+  // };
 
   const HandleChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
+  };
+
+  const Submit = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(newUser, user._id));
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
@@ -76,6 +98,7 @@ const UpdateProfile = () => {
                                 <input
                                   type="email"
                                   placeholder="user@cstechsoftwares.com"
+                                  disabled
                                 />
                               </div>
                               <div className="col-md-6">
@@ -118,19 +141,38 @@ const UpdateProfile = () => {
                             <div className="row mt-2 pl-2">
                               <div className="col-12 mt-2">
                                 <label>User Name</label>
-                                <input type="text" name="userName" />
+                                <input
+                                  type="text"
+                                  name="userName"
+                                  value={userName}
+                                  onChange={(e) => HandleChange(e)}
+                                />
                               </div>
                               <div className="col-12 mt-2">
                                 <label>First Name</label>
-                                <input type="text" name="firstName" />
+                                <input
+                                  type="text"
+                                  name="firstName"
+                                  value={firstName}
+                                  onChange={(e) => HandleChange(e)}
+                                />
                               </div>
                               <div className="col-12 mt-2">
                                 <label>Last Name</label>
-                                <input type="text" />
+                                <input
+                                  type="text"
+                                  value={lastName}
+                                  name="lastName"
+                                  onChange={(e) => HandleChange(e)}
+                                />
                               </div>
                               <div className="col-12 mt-2">
                                 <label>Email Address</label>
-                                <input type="email" />
+                                <input
+                                  type="email"
+                                  value={user.email}
+                                  disabled
+                                />
                               </div>
                             </div>
                             <div className="row mt-2 mb-5">
@@ -140,7 +182,10 @@ const UpdateProfile = () => {
                                     CANCEL
                                   </button>
                                 </Link>
-                                <button className="btn btn-success ripple px-5 py-2">
+                                <button
+                                  className="btn btn-success ripple px-5 py-2"
+                                  onClick={(e) => Submit(e)}
+                                >
                                   UPDATE PROFILE
                                 </button>
                               </div>

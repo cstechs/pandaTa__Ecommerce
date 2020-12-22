@@ -5,12 +5,14 @@ import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { verifyaccount } from "../../../redux/_actions/authAction";
 // import { setAlert } from "../../../redux/_actions/alertAction";
+import { useHistory } from "react-router-dom";
 import { CLEAR_ERRORS } from "../../../redux/types";
 import Login from "./login";
 
 const VerifyPage = (props) => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const history = useHistory();
   var statusMessage = "";
   useEffect(() => {
     dispatch(verifyaccount(props.match.params.token));
@@ -19,6 +21,9 @@ const VerifyPage = (props) => {
       statusMessage = state.error;
       dispatch({ type: CLEAR_ERRORS });
     }
+    setTimeout(() => {
+      history.push("/");
+    }, 2000);
     // eslint-disable-next-line
   }, []);
 
@@ -34,18 +39,18 @@ const VerifyPage = (props) => {
             ? statusMessage
             : "Your Account Has Been Successfully Verified"}
         </h4>
-        <button
+        {/* <button
           className="ripple button-base"
           data-toggle="modal"
           data-target="#exampleModalCenter1"
         >
           Login Now
-        </button>
+        </button> */}
       </div>
       <div className="component">
         <Footer />
       </div>
-      <div
+      {/* <div
         className="modal fade"
         id="exampleModalCenter1"
         tabIndex={-1}
@@ -54,7 +59,7 @@ const VerifyPage = (props) => {
         aria-hidden="true"
       >
         <Login />
-      </div>
+      </div> */}
     </>
   );
 };

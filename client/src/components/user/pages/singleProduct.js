@@ -88,7 +88,6 @@ const SingleProduct = () => {
   };
 
   const addToCart = (e, user, quantity) => {
-    console.log("e", e, "user", user, "qua", quantity);
     dispatch(addItemToCart(e, user, quantity));
   };
 
@@ -188,10 +187,12 @@ const SingleProduct = () => {
                   <span className="mr-2 font-14">Supplier's Name : </span>
                   Supplier’s Name Here
                 </h6>
-                <button className="chatButton" onClick={() => ChatShow()}>
-                  <i className="fa fa-comments" />
-                  Start Chat
-                </button>
+                {user && (
+                  <button className="chatButton" onClick={() => ChatShow()}>
+                    <i className="fa fa-comments" />
+                    Start Chat
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -209,7 +210,7 @@ const SingleProduct = () => {
         {/* chat */}
         {StartChatShown && (
           <div className="chatBox">
-            <Chat ChatHide={ChatHide} />
+            <Chat ChatHide={ChatHide} product={product} />
           </div>
         )}
       </div>

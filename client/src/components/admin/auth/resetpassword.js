@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { resetpassword } from "../../../redux/_actions/authAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
+import { useHistory } from "react-router-dom";
 
 const ResetPassword = (props) => {
   const dispatch = useDispatch();
-
   const [password, setPassword] = useState("");
   const [confirmpassword, setconfirmPassword] = useState("");
+  const history = useHistory();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +18,12 @@ const ResetPassword = (props) => {
     } else if (password !== confirmpassword) {
       dispatch(setAlert("Password Doesnot Match.", "danger"));
     } else {
-      dispatch(resetpassword(password, confirmpassword));
+      dispatch(
+        resetpassword(password, confirmpassword, props.match.params.token)
+      );
+      setTimeout(() => {
+        history.push("/");
+      }, 2200);
     }
   };
   return (

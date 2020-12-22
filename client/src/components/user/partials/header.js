@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Login from "../auth/login";
 import { logout } from "../../../redux/_actions/authAction";
 import Register from "../auth/register";
@@ -8,6 +8,7 @@ import Sidebar from "./sidebar";
 import { getCart } from "../../../redux/_actions/cartAction";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getProduct } from "../../../redux/_actions/productAction";
+import RegisterSeller from "../auth/registerSeller";
 const Header = () => {
   const toggle = () => {
     document.getElementById("sideBar").classList.toggle("Toggleshow");
@@ -21,6 +22,7 @@ const Header = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const state = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
+  const history = useHistory();
   //console.log(cart?.cartItems?.data?.items?.length);
 
   const dispatch = useDispatch();
@@ -127,11 +129,15 @@ const Header = () => {
                   >
                     Sign up
                   </button>
-                  <Link to="/sellerapplication">
-                    <button className="ripple button-base">
-                      Sign up as seller{" "}
-                    </button>
-                  </Link>
+
+                  <button
+                    className="ripple button-base"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter3"
+                  >
+                    Sign up as seller{" "}
+                  </button>
+
                   <i className="fa fa-search searc" onClick={search}></i>
                   <Link to="/wishlist">
                     <i className="fa fa-heart"></i>
@@ -192,7 +198,7 @@ const Header = () => {
                           className="dropdown-item"
                           onClick={() => {
                             dispatch(logout());
-                            window.location.reload();
+                            history.push("/");
                           }}
                         >
                           <i className="fas fa-sign-out-alt"></i>
@@ -227,6 +233,16 @@ const Header = () => {
         aria-hidden="true"
       >
         <Register />
+      </div>
+      <div
+        className="modal fade"
+        id="exampleModalCenter3"
+        tabIndex={-1}
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <RegisterSeller />
       </div>
       <div className="Side_Bar" id="sideBar">
         <Sidebar />

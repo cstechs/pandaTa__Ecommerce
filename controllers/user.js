@@ -81,9 +81,11 @@ exports.show = async function (req, res) {
 // @access Public
 exports.update = async function (req, res) {
   try {
+    console.log("req", req.body);
+    console.log("param", req.params.id);
     const update = req.body;
     const id = req.params.id;
-    const userId = req.user._id;
+    const userId = req.params.id;
 
     //Make sure the passed id is that of the logged in user
     if (userId.toString() !== id.toString())

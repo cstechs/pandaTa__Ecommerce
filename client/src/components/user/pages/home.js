@@ -21,6 +21,7 @@ import OwlCarousel from "react-owl-carousel";
 import loader from "../../../assets/images/loader.gif";
 import HomeLeft from "../partials/HomeLeft";
 import HomeRight from "../partials/HomeRight";
+import { getUser } from "../../../redux/_actions/userAction";
 const Home = () => {
   const [responsive] = useState({
     0: {
@@ -38,6 +39,7 @@ const Home = () => {
   });
   const subCategory = useSelector((state) => state.subCategory);
   const product = useSelector((state) => state.product);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSubCategory());
@@ -52,6 +54,7 @@ const Home = () => {
       }, 1000);
     });
   }, []);
+
   return (
     <>
       {/* <div id="loader">
