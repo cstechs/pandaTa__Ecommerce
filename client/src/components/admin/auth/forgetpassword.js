@@ -18,7 +18,7 @@ const ForgetPasssword = () => {
       dispatch(forgot(email));
       setTimeout(() => {
         history.push("/");
-      }, 2200);
+      }, 2500);
     }
   };
   return (

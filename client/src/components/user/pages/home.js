@@ -18,7 +18,6 @@ import SliderImage6 from "../../../assets/images/user/SliderImage6.jpg";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getProduct } from "../../../redux/_actions/productAction";
 import OwlCarousel from "react-owl-carousel";
-// import loader from "../../../assets/images/loader.gif";
 import HomeLeft from "../partials/HomeLeft";
 import HomeRight from "../partials/HomeRight";
 // import { getUser } from "../../../redux/_actions/userAction";
@@ -57,9 +56,6 @@ const Home = () => {
 
   return (
     <>
-      {/* <div id="loader">
-          <img src={loader} alt="Loading" />
-        </div> */}
       <div className="component">
         <Header />
         <NavBar />

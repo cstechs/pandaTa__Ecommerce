@@ -23,7 +23,7 @@ const ResetPassword = (props) => {
       );
       setTimeout(() => {
         history.push("/");
-      }, 2200);
+      }, 2500);
     }
   };
   return (

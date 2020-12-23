@@ -10,8 +10,10 @@ import {
   CATEGORY_UPDATE_FAIL,
   CATEGORY_DELETE_SUCCESS,
   CATEGORY_DELETE_FAIL,
+  SET_ALERT,
 } from "../types";
 import axios from "axios";
+import { setAlert } from "./alertAction";
 
 export const addCategory = (Category) => {
   return async (dispatch) => {
@@ -23,9 +25,15 @@ export const addCategory = (Category) => {
         config
       );
       // console.log(res.data);
+      dispatch(
+        setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+      );
       dispatch({ type: CATEGORY_SUCCESS, payload: res.data });
     } catch (err) {
       // console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({ type: CATEGORY_FAIL, payload: err.response.data.message });
     }
   };
@@ -40,6 +48,9 @@ export const getCategory = () => {
       dispatch({ type: CATEGORY_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       // console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({
         type: CATEGORY_LOAD_FAIL,
         payload: err.response.data.message,
@@ -61,6 +72,9 @@ export const getCategoryBySubCategoryId = (SubCategoryId) => {
       }
     } catch (err) {
       //  console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({
         type: CATEGORY_SINGLE_LOAD_FAIL,
         payload: err.response.data.message,
@@ -78,11 +92,16 @@ export const updateCategory = (id, categoryName) => async (dispatch) => {
       config
     );
     //console.log(res.data);
-
+    dispatch(
+      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    );
     dispatch({ type: CATEGORY_UPDATE_SUCCESS, payload: res.data });
     window.location.reload();
   } catch (err) {
     //  console.log(err);
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
     dispatch({
       type: CATEGORY_UPDATE_FAIL,
       payload: err.response.data.message,
@@ -94,9 +113,14 @@ export const deleteCategory = (id) => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.delete("/api/category/" + id, { id }, config);
-
+    dispatch(
+      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    );
     dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: res.data });
   } catch (err) {
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
     dispatch({
       type: CATEGORY_DELETE_FAIL,
       payload: err.response.data.message,

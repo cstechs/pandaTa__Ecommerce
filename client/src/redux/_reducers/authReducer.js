@@ -53,7 +53,6 @@ const authReducer = (state = initState, action) => {
       };
     case RECOVER_SUCCESS:
     case RESET_SUCCESS:
-      console.log("letscheck", action.payload);
       return {
         ...state,
         token: action.payload,

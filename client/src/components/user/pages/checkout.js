@@ -14,10 +14,37 @@ const CheckOut = () => {
   const [successShown, setsuccessShown] = useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const cartItem = useSelector((state) => state.cart.cartItems);
+  const [userProfile, setUserProfile] = useState({
+    firstName: "",
+    lastName: "",
+    companyName: "",
+    country: "",
+    town: "",
+    postCode: "",
+    address: "",
+    email: "",
+    phoneNum: "",
+  });
+
+  const {
+    firstName,
+    lastName,
+    companyName,
+    country,
+    town,
+    postCode,
+    address,
+    email,
+    phoneNum,
+  } = userProfile;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCart());
   }, []);
+
+  const HandleChange = (e) => {
+    setUserProfile({ ...userProfile, [e.target.name]: e.target.value });
+  };
 
   const shippingPaymentSubmit = () => {
     setshippingShown(false);
@@ -72,17 +99,35 @@ const CheckOut = () => {
                       <label htmlFor="">
                         First Name<span className="text-danger">*</span>
                       </label>
-                      <input type="text" placeholder="Jhone" />
+                      <input
+                        type="text"
+                        name="firstName"
+                        placeholder="Jhone"
+                        value={firstName}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                     <div className="col-md-4 mt-3">
                       <label htmlFor="">
                         Last Name<span className="text-danger">*</span>
                       </label>
-                      <input type="text" placeholder="Smith" />
+                      <input
+                        type="text"
+                        name="lastName"
+                        placeholder="Smith"
+                        value={lastName}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                     <div className="col-md-4 mt-3">
                       <label htmlFor="">Company Name</label>
-                      <input type="text" placeholder="Rosuson Industries" />
+                      <input
+                        type="text"
+                        name="companyName"
+                        placeholder="Rosuson Industries"
+                        value={companyName}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                   </div>
                   <div className="row">
@@ -90,27 +135,41 @@ const CheckOut = () => {
                       <label htmlFor="">
                         Country<span className="text-danger">*</span>
                       </label>
-                      <select>
+                      <select name="country" onChange={(e) => HandleChange(e)}>
                         <option value="">Select Country</option>
-                        <option value="">United Kingdom (UK)</option>
-                        <option value="">United State</option>
-                        <option value="">Pakistan</option>
-                        <option value="">Iraq</option>
-                        <option value="">Iran</option>
-                        <option value="">Turkey</option>
+                        <option value="United Kingdom (UK)">
+                          United Kingdom (UK)
+                        </option>
+                        <option value="United State">United State</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Iraq">Iraq</option>
+                        <option value="Iran">Iran</option>
+                        <option value="Turkey">Turkey</option>
                       </select>
                     </div>
                     <div className="col-md-4 mt-3">
                       <label htmlFor="">
                         Town / City<span className="text-danger">*</span>
                       </label>
-                      <input type="text" placeholder="eg. New york" />
+                      <input
+                        type="text"
+                        name="town"
+                        placeholder="eg. New york"
+                        value={town}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                     <div className="col-md-4 mt-3">
                       <label htmlFor="">
                         Postcode<span className="text-danger">*</span>
                       </label>
-                      <input type="number" placeholder="eg. 358745" />
+                      <input
+                        type="number"
+                        name="postCode"
+                        placeholder="eg. 358745"
+                        value={postCode}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                   </div>
                   <div className="row">
@@ -121,6 +180,9 @@ const CheckOut = () => {
                       <input
                         type="text"
                         placeholder="eg. 2nd steer, Costrica, Uk 354548"
+                        name="address"
+                        value={address}
+                        onChange={(e) => HandleChange(e)}
                       />
                     </div>
                   </div>
@@ -129,11 +191,23 @@ const CheckOut = () => {
                       <label htmlFor="">
                         Email Address<span className="text-danger">*</span>
                       </label>
-                      <input type="email" placeholder="abc@xyz.com" />
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="abc@xyz.com"
+                        value={email}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                     <div className="col-md-4 mt-3">
                       <label htmlFor="">Phone</label>
-                      <input type="number" placeholder="eg. 94 788 1221" />
+                      <input
+                        type="number"
+                        name="phoneNum"
+                        placeholder="eg. 94 788 1221"
+                        value={phoneNum}
+                        onChange={(e) => HandleChange(e)}
+                      />
                     </div>
                     <div className="col-md-4 mt-3">
                       <div className="createAccount">

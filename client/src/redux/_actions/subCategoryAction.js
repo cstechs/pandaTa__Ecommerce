@@ -8,8 +8,10 @@ import {
   SUBCATEGORY_UPDATE_FAIL,
   SUBCATEGORY_DELETE_FAIL,
   SUBCATEGORY_DELETE_SUCCESS,
+  SET_ALERT,
 } from "../types";
 import axios from "axios";
+import { setAlert } from "./alertAction";
 
 export const addSubCategory = (subCategory) => {
   return async (dispatch) => {
@@ -22,9 +24,15 @@ export const addSubCategory = (subCategory) => {
         config
       );
       // console.log(res.data);
+      dispatch(
+        setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+      );
       dispatch({ type: SUBCATEGORY_SUCCESS, payload: res.data });
     } catch (err) {
       console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({ type: SUBCATEGORY_FAIL, payload: err.response.data.message });
     }
   };
@@ -39,6 +47,9 @@ export const getSubCategory = () => {
       dispatch({ type: SUBCATEGORY_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({
         type: SUBCATEGORY_LOAD_FAIL,
         payload: err.response.data.message,
@@ -63,6 +74,9 @@ export const getSubCategoryByCategoryId = (CategoryId) => {
       }
     } catch (err) {
       //  console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({
         type: SUBCATEGORY_LOAD_FAIL,
         payload: err.response.data.message,
@@ -83,11 +97,16 @@ export const updateSubCategory = (id, subCategoryName, categoryId) => async (
       config
     );
     //console.log(res.data);
-
+    dispatch(
+      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    );
     dispatch({ type: SUBCATEGORY_UPDATE_SUCCESS, payload: res.data });
     window.location.reload();
   } catch (err) {
     //  console.log(err);
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
     dispatch({
       type: SUBCATEGORY_UPDATE_FAIL,
       payload: err.response.data.message,
@@ -99,9 +118,14 @@ export const deleteSubCategory = (id) => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.delete("/api/subCategory/" + id, { id }, config);
-
+    dispatch(
+      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    );
     dispatch({ type: SUBCATEGORY_DELETE_SUCCESS, payload: res.data });
   } catch (err) {
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
     dispatch({
       type: SUBCATEGORY_DELETE_FAIL,
       payload: err.response.data.message,

@@ -16,6 +16,7 @@ import {
 } from "../../../redux/_actions/cartAction";
 import CartInput from "./cartInput";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
+import Loader from "../partials/loader";
 
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
@@ -33,18 +34,17 @@ const Cart = () => {
   useEffect(() => {
     dispatch(getCart());
   }, []);
-  console.log("check", cartItem?.data);
 
   useEffect(() => {
-    // setQuantity(() =>
-    //   cartItem?.data?.items?.map((item) => {
-    //     return {
-    //       itemQuantity: item.quantity,
-    //       itemId: item.productId._id,
-    //       itemTotal: item.total,
-    //     };
-    //   })
-    // );
+    setQuantity(() =>
+      cartItem?.data?.items?.map((item) => {
+        return {
+          itemQuantity: item.quantity,
+          itemId: item.productId._id,
+          itemTotal: item.total,
+        };
+      })
+    );
   }, [cartItem]);
   useEffect(() => {}, [addItemToCart]);
   //   const CartIncrement = () => {
@@ -85,134 +85,142 @@ const Cart = () => {
 
   return (
     <>
-      <div className="component">
-        <Header />
-        <NavBar />
-      </div>
-      <ol className="breadcrumb m-0">
-        <li className="breadcrumb-item">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="breadcrumb-item active">Cart</li>
-      </ol>
-      <div className="PageTitle">Cart</div>
-      <div className="cart">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-9">
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>ITEM DETAIL</th>
-                    <th>PRICE </th>
-                    <th>QTY</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                {
-                  // cartItem?.data?.createdBy === user._id &&
-                  cartItem?.data?.items &&
-                    cartItem?.data?.items?.map((item, index) => {
-                      return (
-                        <tbody key={item._id}>
-                          <tr>
-                            <td>
-                              <i
-                                className="ti-close"
-                                onClick={() => RemoveCart()}
-                              ></i>
-                            </td>
-                            <td>
-                              <div className="float-left">
-                                <div className="imageBox">
-                                  <img
-                                    src={item?.productId?.productImage}
-                                    alt="ProductImage"
-                                  />
-                                </div>
-                              </div>
-                              <div className="float-left">
-                                <h4>{item?.productId?.productName}</h4>
-                                <span>Supplier's Name Here</span>
-                              </div>
-                            </td>
-                            <td>{item?.productId?.productPrice} </td>
-                            <td>
-                              <div className="position-relative">
-                                <input
-                                  type="number"
-                                  value={item?.quantity}
-                                  className="border-right-0"
-                                />
-                                <div className="AdjustQuantity">
+      {cartItem ? (
+        <div>
+          {" "}
+          <div className="component">
+            <Header />
+            <NavBar />
+          </div>
+          <ol className="breadcrumb m-0">
+            <li className="breadcrumb-item">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="breadcrumb-item active">Cart</li>
+          </ol>
+          <div className="PageTitle">Cart</div>
+          <div className="cart">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-lg-9">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>ITEM DETAIL</th>
+                        <th>PRICE </th>
+                        <th>QTY</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    {
+                      // cartItem?.data?.createdBy === user._id &&
+                      cartItem?.data?.items &&
+                        cartItem?.data?.items?.map((item, index) => {
+                          return (
+                            <tbody key={item._id}>
+                              <tr>
+                                <td>
                                   <i
-                                    className="fa fa-plus border-bottom-0"
-                                    onClick={() =>
-                                      handleAddQuantity(
-                                        index,
-                                        quantity[index]?.itemQuantity,
-                                        item?.productId?._id,
-                                        item.total
-                                      )
-                                    }
-                                  />
-                                  <i
-                                    className="fa fa-minus"
-                                    onClick={() =>
-                                      handleRemoveQuantity(
-                                        index,
-                                        quantity[index].itemQuantity,
-                                        item?.productId?._id,
-                                        item.total
-                                      )
-                                    }
-                                  />
-                                </div>
-                              </div>
-                            </td>
-                            <td>
-                              <p>{item.total}</p>
-                            </td>
-                          </tr>
-                        </tbody>
-                      );
-                    })
-                  // ) : (
-                  //   null
-                  // )
-                }
-              </table>
-              <div className="detail">
-                <div className="float-right">
-                  <p>
-                    Subtotal
-                    <span>{cartItem?.data?.subTotal}</span>
-                  </p>
-                  <p>
-                    Shipping<span>$0.00</span>
-                  </p>
-                  <p>
-                    Total Amount<span>{cartItem?.data?.subTotal}</span>
-                  </p>
+                                    className="ti-close"
+                                    onClick={() => RemoveCart()}
+                                  ></i>
+                                </td>
+                                <td>
+                                  <div className="float-left">
+                                    <div className="imageBox">
+                                      <img
+                                        src={item?.productId?.productImage}
+                                        alt="ProductImage"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="float-left">
+                                    <h4>{item?.productId?.productName}</h4>
+                                    <span>Supplier's Name Here</span>
+                                  </div>
+                                </td>
+                                <td>{item?.productId?.productPrice} </td>
+                                <td>
+                                  <div className="position-relative">
+                                    <input
+                                      type="number"
+                                      // value={item?.quantity}
+                                      className="border-right-0"
+                                      defaultValue={item?.quantity}
+                                    />
+                                    <div className="AdjustQuantity">
+                                      <i
+                                        className="fa fa-plus border-bottom-0"
+                                        onClick={() =>
+                                          handleAddQuantity(
+                                            index,
+                                            quantity[index]?.itemQuantity,
+                                            item?.productId?._id,
+                                            item.total
+                                          )
+                                        }
+                                      />
+                                      <i
+                                        className="fa fa-minus"
+                                        onClick={() =>
+                                          handleRemoveQuantity(
+                                            index,
+                                            quantity[index].itemQuantity,
+                                            item?.productId?._id,
+                                            item.total
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <p>{item.total}</p>
+                                </td>
+                              </tr>
+                            </tbody>
+                          );
+                        })
+                      // ) : (
+                      //   null
+                      // )
+                    }
+                  </table>
+                  <div className="detail">
+                    <div className="float-right">
+                      <p>
+                        Subtotal
+                        <span>{cartItem?.data?.subTotal}</span>
+                      </p>
+                      <p>
+                        Shipping<span>$0.00</span>
+                      </p>
+                      <p>
+                        Total Amount<span>{cartItem?.data?.subTotal}</span>
+                      </p>
+                    </div>
+                  </div>
+                  <Link to="/checkout">
+                    <button className="btn btn-purple float-right font-13 ripple button-base">
+                      PROCEED TO CHECKOUT
+                    </button>
+                  </Link>
+                </div>
+                <div className="col-lg-3 banner">
+                  <img src={Banner} />
+                  <img src={Banner} />
                 </div>
               </div>
-              <Link to="/checkout">
-                <button className="btn btn-purple float-right font-13 ripple button-base">
-                  PROCEED TO CHECKOUT
-                </button>
-              </Link>
-            </div>
-            <div className="col-lg-3 banner">
-              <img src={Banner} />
-              <img src={Banner} />
             </div>
           </div>
+          <div className="component">
+            <Footer />
+          </div>
         </div>
-      </div>
-      <div className="component">
-        <Footer />
-      </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

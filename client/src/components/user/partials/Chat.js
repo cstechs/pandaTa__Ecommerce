@@ -11,6 +11,7 @@ const Chat = ({ ChatHide, product }) => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [checkSender, setCheckSender] = useState(null);
   const dispatch = useDispatch();
+  console.log("pro", product);
 
   const onSubmit = (e) => {
     // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
@@ -26,7 +27,7 @@ const Chat = ({ ChatHide, product }) => {
     dispatch(getChat());
 
     // $("#mydiv").scrollTop($("#mydiv").height);
-  });
+  }, [getChat]);
 
   useEffect(() => {
     var objDiv = document.getElementById("mydiv");
@@ -94,32 +95,39 @@ const Chat = ({ ChatHide, product }) => {
             {chat.chats?.data?.map((item, index) => (
               <>
                 {/* {console.log("chatlength", item)} */}
-                {item.createdBy === user._id &&
-                  item.sellerId === user._id &&
-                  user.role === "seller" && (
-                    <li
-                      className="clearfix odd"
-                      id={`${index == chat.chats?.data?.length - 1 && "mydiv"}`}
-                    >
-                      <div className="conversation-text">
-                        <div className="ctext-wrap">
-                          <p>{item.message}</p>
-                        </div>
-                      </div>
-                    </li>
+                {product?.product?.data?.createdBy === item.sellerId &&
+                  item.createdBy === user._id && (
+                    <>
+                      {item.sender == 1 && (
+                        <li
+                          className="clearfix"
+                          id={`${
+                            index == chat.chats?.data?.length - 1 && "mydiv"
+                          }`}
+                        >
+                          <div className="conversation-text">
+                            <div className="ctext-wrap">
+                              <p>{item.message}</p>
+                            </div>
+                          </div>
+                        </li>
+                      )}
+                      {item.sender == 0 && (
+                        <li
+                          className="clearfix odd"
+                          id={`${
+                            index == chat.chats?.data?.length - 1 && "mydiv"
+                          }`}
+                        >
+                          <div className="conversation-text">
+                            <div className="ctext-wrap">
+                              <p>{item.message}</p>
+                            </div>
+                          </div>
+                        </li>
+                      )}
+                    </>
                   )}
-                {item.createdBy === user._id && user.role === "customer" && (
-                  <li
-                    className="clearfix"
-                    id={`${index == chat.chats?.data?.length - 1 && "mydiv"}`}
-                  >
-                    <div className="conversation-text">
-                      <div className="ctext-wrap">
-                        <p>{item.message}</p>
-                      </div>
-                    </div>
-                  </li>
-                )}
               </>
             ))}
           </ul>

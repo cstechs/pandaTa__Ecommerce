@@ -1,14 +1,30 @@
-import{SET_ALERT,REMOVE_ALERT} from '../types'
+import { SET_ALERT, REMOVE_ALERT } from "../types";
 
-const initialState = [];
+const initialState = {
+  id: null,
+  alertType: "",
+  message: "",
+};
 
-export default (state = initialState, action) => {
+const alertReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ALERT:
-      return [...state, action.payload]
+      return {
+        ...state,
+        id: action.payload.id,
+        message: action.payload.payload.message,
+        alertType: action.payload.payload.alertType,
+      };
     case REMOVE_ALERT:
-      return state.filter(alert => alert.id !== action.payload)
+      // return state.filter((alert) => alert.id !== action.payload);
+      return {
+        id: null,
+        alertType: "",
+        message: "",
+      };
     default:
       return state;
   }
-}
+};
+
+export default alertReducer;

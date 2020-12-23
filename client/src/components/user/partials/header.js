@@ -9,6 +9,7 @@ import { getCart } from "../../../redux/_actions/cartAction";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getProduct } from "../../../redux/_actions/productAction";
 import RegisterSeller from "../auth/registerSeller";
+import Loader from "./loader";
 const Header = () => {
   const toggle = () => {
     document.getElementById("sideBar").classList.toggle("Toggleshow");
@@ -70,183 +71,191 @@ const Header = () => {
   }, [user]);
   return (
     <>
-      <div className="SearchBox" id="SeachBox">
-        <input
-          type="text"
-          id="SeachField"
-          autoFocus
-          placeholder="Search Here ..."
-        />
-        <i className="fa fa-search"></i>
-      </div>
-      <header>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-3 col-6">
-              <Link to="/">
-                <div className="logo">PANDA / TA</div>
-              </Link>
-            </div>
-            <div className="col-md-4">
-              <div className="searchbox">
-                <input
-                  type="text"
-                  placeholder="Search for Products"
-                  onChange={(e) => handleChange(e)}
-                />
-                <button className="ripple">Search</button>
-              </div>
-              <div className="searchDropdown">
-                {searchProduct?.map(
-                  ({
-                    _id,
-                    productName,
-                    productPrice,
-                    productImage,
-                    productSubCategory,
-                  }) => (
-                    <Link to={`/product/${_id}`} key={_id}>
-                      <span>{productName}</span>
-                    </Link>
-                  )
-                )}
-              </div>
-            </div>
-            <div className="col-md-5 col-6">
-              {!isPreviewShown && (
-                <>
-                  <button
-                    className="ripple button-base"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter1"
-                  >
-                    Log in
-                  </button>
-                  <button
-                    className="ripple button-base"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter2"
-                  >
-                    Sign up
-                  </button>
-
-                  <button
-                    className="ripple button-base"
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter3"
-                  >
-                    Sign up as seller{" "}
-                  </button>
-
-                  <i className="fa fa-search searc" onClick={search}></i>
-                  <Link to="/wishlist">
-                    <i className="fa fa-heart"></i>
-                  </Link>
-                  <Link to="/cart">
-                    <i className="fa fa-shopping-cart"></i>
-                    <span className="badge-darkpurple rounded-circle notification-icon-badge">
-                      0
-                    </span>
-                  </Link>
-                  <i className="fa fa-bars" onClick={toggle}></i>
-                </>
-              )}
-              {isPreviewShown && (
-                <>
-                  {((user && user.role === "seller") || "admin") && (
-                    <Link to="/admin">
-                      <button className="ripple button-base px-4">
-                        Dashboard
-                      </button>
-                    </Link>
-                  )}
-                  <i className="fa fa-search searc" onClick={search}></i>
-                  <Link to="/wishlist">
-                    <i className="fa fa-heart"></i>
-                  </Link>
-                  <Link to="/cart">
-                    <i className="fa fa-shopping-cart"></i>
-                    <span className="badge-darkpurple rounded-circle notification-icon-badge">
-                      {cart?.cartItems?.data?.items?.length}
-                    </span>
-                  </Link>
-                  <div className="btn-group">
-                    <span
-                      type="button"
-                      className="dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
-                      <img
-                        src={UserImage}
-                        alt="user-image"
-                        className="rounded-circle"
-                      />
-                      <label>{user.userName}</label>
-                    </span>
-                    <div className="dropdown-menu">
-                      <div>
-                        <span className="dropdown-item">
-                          <i className="fa fa-user"></i>
-                          Profile
-                        </span>
-                      </div>
-                      <div>
-                        <span
-                          className="dropdown-item"
-                          onClick={() => {
-                            dispatch(logout());
-
-                            setTimeout(() => {
-                              history.push("/");
-                            }, 1000);
-                          }}
-                        >
-                          <i className="fas fa-sign-out-alt"></i>
-                          LogOut
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <i className="fa fa-bars" onClick={toggle}></i>
-                </>
-              )}
-            </div>
+      {product ? (
+        <div>
+          <div className="SearchBox" id="SeachBox">
+            <input
+              type="text"
+              id="SeachField"
+              autoFocus
+              placeholder="Search Here ..."
+            />
+            <i className="fa fa-search"></i>
           </div>
+          <header>
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-md-3 col-6">
+                  <Link to="/">
+                    <div className="logo">PANDA / TA</div>
+                  </Link>
+                </div>
+                <div className="col-md-4">
+                  <div className="searchbox">
+                    <input
+                      type="text"
+                      placeholder="Search for Products"
+                      onChange={(e) => handleChange(e)}
+                    />
+                    <button className="ripple">Search</button>
+                  </div>
+                  <div className="searchDropdown">
+                    {searchProduct?.map(
+                      ({
+                        _id,
+                        productName,
+                        productPrice,
+                        productImage,
+                        productSubCategory,
+                      }) => (
+                        <Link to={`/product/${_id}`} key={_id}>
+                          <span>{productName}</span>
+                        </Link>
+                      )
+                    )}
+                  </div>
+                </div>
+                <div className="col-md-5 col-6">
+                  {!isPreviewShown && (
+                    <>
+                      <button
+                        className="ripple button-base"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter1"
+                      >
+                        Log in
+                      </button>
+                      <button
+                        className="ripple button-base"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter2"
+                      >
+                        Sign up
+                      </button>
+
+                      <button
+                        className="ripple button-base"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter3"
+                      >
+                        Sign up as seller{" "}
+                      </button>
+
+                      <i className="fa fa-search searc" onClick={search}></i>
+                      <Link to="/wishlist">
+                        <i className="fa fa-heart"></i>
+                      </Link>
+                      <Link to="/cart">
+                        <i className="fa fa-shopping-cart"></i>
+                        <span className="badge-darkpurple rounded-circle notification-icon-badge">
+                          0
+                        </span>
+                      </Link>
+                      <i className="fa fa-bars" onClick={toggle}></i>
+                    </>
+                  )}
+                  {isPreviewShown && (
+                    <>
+                      {((user && user.role === "seller") ||
+                        (user && user.role === "admin")) && (
+                        <Link to="/admin">
+                          <button className="ripple button-base px-4">
+                            Dashboard
+                          </button>
+                        </Link>
+                      )}
+                      <i className="fa fa-search searc" onClick={search}></i>
+                      <Link to="/wishlist">
+                        <i className="fa fa-heart"></i>
+                      </Link>
+                      <Link to="/cart">
+                        <i className="fa fa-shopping-cart"></i>
+                        <span className="badge-darkpurple rounded-circle notification-icon-badge">
+                          {product ? (
+                            cart?.cartItems?.data?.items?.length
+                          ) : (
+                            <Loader />
+                          )}
+                        </span>
+                      </Link>
+                      <div className="btn-group">
+                        <span
+                          type="button"
+                          className="dropdown-toggle"
+                          data-toggle="dropdown"
+                        >
+                          <img
+                            src={UserImage}
+                            alt="user-image"
+                            className="rounded-circle"
+                          />
+                          <label>{user.userName}</label>
+                        </span>
+                        <div className="dropdown-menu">
+                          <div>
+                            <span className="dropdown-item">
+                              <i className="fa fa-user"></i>
+                              Profile
+                            </span>
+                          </div>
+                          <div>
+                            <span
+                              className="dropdown-item"
+                              onClick={() => {
+                                dispatch(logout());
+                                window.location.reload();
+                              }}
+                            >
+                              <i className="fas fa-sign-out-alt"></i>
+                              LogOut
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <i className="fa fa-bars" onClick={toggle}></i>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </header>
+          <div
+            className="modal fade"
+            id="exampleModalCenter1"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <Login />
+          </div>
+          <div
+            className="modal fade"
+            id="exampleModalCenter2"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <Register />
+          </div>
+          <div
+            className="modal fade"
+            id="exampleModalCenter3"
+            tabIndex={-1}
+            role="dialog"
+            aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true"
+          >
+            <RegisterSeller />
+          </div>
+          <div className="Side_Bar" id="sideBar">
+            <Sidebar />
+          </div>{" "}
         </div>
-      </header>
-      <div
-        className="modal fade"
-        id="exampleModalCenter1"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <Login />
-      </div>
-      <div
-        className="modal fade"
-        id="exampleModalCenter2"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <Register />
-      </div>
-      <div
-        className="modal fade"
-        id="exampleModalCenter3"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <RegisterSeller />
-      </div>
-      <div className="Side_Bar" id="sideBar">
-        <Sidebar />
-      </div>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

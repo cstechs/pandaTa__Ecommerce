@@ -5,8 +5,10 @@ import {
   CART_LOAD_FAIL,
   CART_DELETE_FAIL,
   CART_DELETE_SUCCESS,
+  SET_ALERT,
 } from "../types";
 import axios from "axios";
+import { setAlert } from "./alertAction";
 
 export const addItemToCart = (productId, createdBy, quantity) => {
   return async (dispatch) => {
@@ -18,9 +20,16 @@ export const addItemToCart = (productId, createdBy, quantity) => {
         config
       );
       //  console.log(res.data);
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+      // );
+      console.log("res", res.data);
       dispatch({ type: CART_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
       //console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({ type: CART_CREATE_FAIL, payload: err.response.data.message });
     }
   };
@@ -35,6 +44,9 @@ export const getCart = () => {
       dispatch({ type: CART_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       //  console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({ type: CART_LOAD_FAIL, payload: err.response.data.message });
     }
   };
@@ -45,9 +57,15 @@ export const removeCart = () => async (dispatch) => {
   try {
     const res = await axios.delete("/api/cart/empty-cart", config);
     console.log(res.data);
+    dispatch(
+      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    );
     dispatch({ type: CART_DELETE_SUCCESS, payload: res.data });
   } catch (err) {
     console.log(err);
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
     dispatch({ type: CART_DELETE_FAIL, payload: err.response.data.message });
   }
 };

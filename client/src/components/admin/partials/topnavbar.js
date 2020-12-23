@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import SmLogo from "../../../assets/images/admin/logo-sm.png";
 import LeftBar from "./leftsidebar";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/_actions/authAction";
 
 const Navbar = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   function toggle() {
     document.getElementById("leftbar").classList.toggle("hideleftbar");
     document.getElementById("pandlogo").classList.toggle("hidelogo");
@@ -201,7 +206,16 @@ const Navbar = () => {
                 </Link>
                 <span className="dropdown-item notify-item ripple button-base">
                   <i className="fe-log-out" alt="" />
-                  <span>Logout</span>
+                  <span
+                    onClick={() => {
+                      setTimeout(() => {
+                        dispatch(logout());
+                        history.push("/");
+                      }, 1000);
+                    }}
+                  >
+                    Logout
+                  </span>
                 </span>
               </div>
             </li>

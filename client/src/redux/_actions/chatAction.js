@@ -3,8 +3,10 @@ import {
   CHAT_CREATE_SUCCESS,
   CHAT_LOAD_SUCCESS,
   CHAT_LOAD_FAIL,
+  SET_ALERT,
 } from "../types";
 import axios from "axios";
+import { setAlert } from "./alertAction";
 
 export const createChat = (chat) => {
   return async (dispatch) => {
@@ -16,6 +18,9 @@ export const createChat = (chat) => {
       dispatch({ type: CHAT_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
       //   console.log(err);
+      dispatch(
+        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      );
       dispatch({ type: CHAT_CREATE_FAIL, payload: err.response.data.message });
     }
   };
