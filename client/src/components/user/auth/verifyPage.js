@@ -23,7 +23,7 @@ const VerifyPage = (props) => {
     }
     setTimeout(() => {
       history.push("/");
-    }, 2500);
+    }, 3000);
     // eslint-disable-next-line
   }, []);
 

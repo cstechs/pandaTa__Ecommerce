@@ -5,7 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS } from "../../../redux/types";
 
-const Register = ({ history }) => {
+const Register = (props) => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -50,6 +50,10 @@ const Register = ({ history }) => {
     // eslint-disable-next-line
   }, [auth.isAuthenticated, auth.error, auth.msg]);
 
+  const RegisterClose = () => {
+    props.registerHandler();
+  };
+
   const [newUser, setNewUser] = useState({
     userName: "",
     firstName: "",
@@ -89,8 +93,10 @@ const Register = ({ history }) => {
         setAlert("Password and confirm password does not match.", "danger")
       );
     else {
-      console.log(("new", newUser));
       dispatch(register(newUser));
+      setTimeout(() => {
+        props.registerHandler();
+      }, 1000);
     }
   };
   return (
@@ -100,8 +106,7 @@ const Register = ({ history }) => {
           <div className="Exit">
             <i
               className="fas fa-times-circle close"
-              data-dismiss="modal"
-              aria-label="Close"
+              onClick={() => RegisterClose()}
             ></i>
           </div>
           <div className="logo">PANDA / TA</div>
@@ -164,12 +169,6 @@ const Register = ({ history }) => {
             <i className="fab fa-facebook-f"></i>
             <i className="fab fa-google-plus"></i>
             <i className="fab fa-pinterest"></i>
-          </div>
-          <div className="Login">
-            Already have an Account?{" "}
-            <Link to="/" className="ripple button-base">
-              Log in
-            </Link>
           </div>
         </div>
       </div>

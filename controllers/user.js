@@ -127,7 +127,7 @@ exports.update = async function (req, res) {
 exports.destroy = async function (req, res) {
   try {
     const id = req.params.id;
-    const user_id = req.user._id;
+    const user_id = req.params.id;
 
     //Make sure the passed id is that of the logged in user
     if (user_id.toString() !== id.toString())

@@ -3,6 +3,8 @@ import {
   USER_LOAD_FAIL,
   USER_UPDATE_FAIL,
   USER_UPDATE_SUCCESS,
+  USER_DELETE_FAIL,
+  USER_DELETE_SUCCESS,
   SET_ALERT,
 } from "../types";
 import axios from "axios";
@@ -24,7 +26,6 @@ export const getUser = () => async (dispatch) => {
 
 export const updateUser = (user, id) => async (dispatch) => {
   try {
-    console.log("user", user, "idd", id);
     const config = { header: { "Content-Type": "application/json" } };
     const res = await axios.put(`/api/user/` + id, user, config);
     dispatch(
@@ -37,5 +38,23 @@ export const updateUser = (user, id) => async (dispatch) => {
       setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
     );
     dispatch({ type: USER_UPDATE_FAIL, payload: err.message });
+  }
+};
+
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    const config = { header: { "Content-Type": "application/json" } };
+    const res = await axios.delete(`/api/user/` + id, config);
+
+    dispatch(
+      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    );
+    dispatch({ type: USER_DELETE_SUCCESS, payload: res.data });
+  } catch (err) {
+    console.log("err", err.message);
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
+    dispatch({ type: USER_DELETE_FAIL, payload: err.message });
   }
 };

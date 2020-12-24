@@ -33,7 +33,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setQuantity(() =>

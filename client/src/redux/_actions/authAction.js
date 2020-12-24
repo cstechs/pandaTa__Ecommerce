@@ -45,7 +45,10 @@ export const login = (email, password) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+        setAlert(SET_ALERT, {
+          message: "Invalid account credentials",
+          alertType: "danger",
+        })
       );
       dispatch({ type: LOGIN_FAIL, payload: err.response.data.message });
     }
@@ -99,8 +102,9 @@ export const verifyaccount = (token) => {
     try {
       const config = { header: { "Content-Type": "application/json" } };
       const res = await axios.get(`/api/auth/verify/` + token, config);
+
       dispatch(
-        setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+        setAlert(SET_ALERT, { message: res.data, alertType: "success" })
       );
       dispatch({ type: VERIFY_SUCCESS, payload: res.data });
     } catch (err) {

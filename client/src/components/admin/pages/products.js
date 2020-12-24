@@ -27,6 +27,7 @@ const Products = () => {
   // const category = useSelector((state) => state.category);
   // const subCategory = useSelector((state) => state.subCategory);
   const [products, setProduct] = useState(0);
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
 
   const handlePreview = (item) => {
     setPreviewShown(true);
@@ -37,7 +38,7 @@ const Products = () => {
   };
   useEffect(() => {
     dispatch(getProduct());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -128,54 +129,112 @@ const Products = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {product.products.data?.map((item) => (
-                                <tr key={item._id}>
-                                  <td className="productName">
-                                    <Link to={`/product/${item._id}`}>
-                                      <div className="product_image">
-                                        <img
-                                          src={`/${item.productImage}`}
-                                          className="mr-2"
-                                          alt="product-img"
-                                        />
+                              {user.role == "seller" &&
+                                product.products.data?.map((item) => (
+                                  <>
+                                    {user._id === item.createdBy && (
+                                      <tr key={item._id}>
+                                        <td className="productName">
+                                          <Link to={`/product/${item._id}`}>
+                                            <div className="product_image">
+                                              <img
+                                                src={`/${item.productImage}`}
+                                                className="mr-2"
+                                                alt="product-img"
+                                              />
+                                            </div>
+                                            <div className="product_name">
+                                              <p className="m-0 font-13 text-secondary">
+                                                {item.productName}
+                                              </p>
+                                            </div>
+                                          </Link>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className={`${
+                                              item.productQuantity > 50 &&
+                                              "badge badge-success p-1 mt-1 productQuantityBadge"
+                                            } ${
+                                              item.productQuantity < 50 &&
+                                              "badge badge-warning p-1 mt-1 productQuantityBadge"
+                                            }${
+                                              item.productQuantity <= 0 &&
+                                              "badge badge-danger p-1 mt-1 productQuantityBadge"
+                                            }`}
+                                          >
+                                            {item.productQuantity} in stock
+                                          </div>
+                                        </td>
+                                        <td className="pt-2">
+                                          ${item.productPrice}
+                                        </td>
+                                        <td className="pt-2 font-16">
+                                          <i
+                                            className="fas fa-edit"
+                                            onClick={() => handlePreview(item)}
+                                          ></i>
+                                          |
+                                          <i
+                                            className="fas fa-trash-alt text-danger"
+                                            onClick={() => ProductDelete(item)}
+                                          ></i>
+                                        </td>
+                                      </tr>
+                                    )}
+                                  </>
+                                ))}
+                              {user.role == "admin" &&
+                                product.products.data?.map((item) => (
+                                  <tr key={item._id}>
+                                    <td className="productName">
+                                      <Link to={`/product/${item._id}`}>
+                                        <div className="product_image">
+                                          <img
+                                            src={`/${item.productImage}`}
+                                            className="mr-2"
+                                            alt="product-img"
+                                          />
+                                        </div>
+                                        <div className="product_name">
+                                          <p className="m-0 font-13 text-secondary">
+                                            {item.productName}
+                                          </p>
+                                        </div>
+                                      </Link>
+                                    </td>
+                                    <td>
+                                      <div
+                                        className={`${
+                                          item.productQuantity > 50 &&
+                                          "badge badge-success p-1 mt-1 productQuantityBadge"
+                                        } ${
+                                          item.productQuantity < 50 &&
+                                          "badge badge-warning p-1 mt-1 productQuantityBadge"
+                                        }${
+                                          item.productQuantity <= 0 &&
+                                          "badge badge-danger p-1 mt-1 productQuantityBadge"
+                                        }`}
+                                      >
+                                        {item.productQuantity} in stock
                                       </div>
-                                      <div className="product_name">
-                                        <p className="m-0 font-13 text-secondary">
-                                          {item.productName}
-                                        </p>
-                                      </div>
-                                    </Link>
-                                  </td>
-                                  <td>
-                                    <div
-                                      className={`${
-                                        item.productQuantity > 50 &&
-                                        "badge badge-success p-1 mt-1 productQuantityBadge"
-                                      } ${
-                                        item.productQuantity < 50 &&
-                                        "badge badge-warning p-1 mt-1 productQuantityBadge"
-                                      }${
-                                        item.productQuantity <= 0 &&
-                                        "badge badge-danger p-1 mt-1 productQuantityBadge"
-                                      }`}
-                                    >
-                                      {item.productQuantity} in stock
-                                    </div>
-                                  </td>
-                                  <td className="pt-2">${item.productPrice}</td>
-                                  <td className="pt-2 font-16">
-                                    <i
-                                      className="fas fa-edit"
-                                      onClick={() => handlePreview(item)}
-                                    ></i>
-                                    |
-                                    <i
-                                      className="fas fa-trash-alt text-danger"
-                                      onClick={() => ProductDelete(item)}
-                                    ></i>
-                                  </td>
-                                </tr>
-                              ))}
+                                    </td>
+                                    <td className="pt-2">
+                                      ${item.productPrice}
+                                    </td>
+                                    <td className="pt-2 font-16">
+                                      <i
+                                        className="fas fa-edit"
+                                        onClick={() => handlePreview(item)}
+                                      ></i>
+                                      |
+                                      <i
+                                        className="fas fa-trash-alt text-danger"
+                                        onClick={() => ProductDelete(item)}
+                                      ></i>
+                                    </td>
+                                  </tr>
+                                ))}
                             </tbody>
                           </table>
                           {isPreviewShown && (

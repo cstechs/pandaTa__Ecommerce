@@ -15,7 +15,7 @@ import UserCheckout from "./components/user/pages/checkout";
 import UserProduct from "./components/user/pages/product";
 import UserSingleProduct from "./components/user/pages/singleProduct";
 import UserWishlist from "./components/user/pages/wishlist";
-// import UserSellerApplication from './components/user/pages/sellerApplication'
+import UserSellerApplication from "./components/user/pages/sellerApplication";
 import UserSeller from "./components/user/pages/seller";
 import PrivateRoute from "./components/admin/routing/PrivateRoute";
 import AdminPanel from "./components/admin/pages/home";
@@ -63,7 +63,11 @@ function App() {
           <Route exact path="/checkout" component={UserCheckout} />
           <Route exact path="/product" component={UserProduct} />
           <Route exact path="/wishlist" component={UserWishlist} />
-          {/* <Route exact path='/sellerapplication' component={UserSellerApplication}/> */}
+          <Route
+            exact
+            path="/sellerapplication"
+            component={UserSellerApplication}
+          />
           <Route exact path="/seller" component={UserSeller} />
           <Route exact path="/verify/:token" component={VerifyView} />
           <Route exact path="/reset/:token" component={ResetPassword} />

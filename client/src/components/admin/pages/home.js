@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import Navbar from "../partials/topnavbar";
 import Footer from "../partials/footer";
+import { getUser } from "../../../redux/_actions/userAction";
 
 import cardbodyimg1 from "../../../assets/images/admin/current-progress-img-1.png";
 import cardbodyimg2 from "../../../assets/images/admin/current-progress-img-2.png";
@@ -10,9 +11,13 @@ import cardbodyimg3 from "../../../assets/images/admin/current-progress-img-3.pn
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import { Line } from "react-chartjs-2";
 import $ from "jquery";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
   const [chartData, setChartData] = useState({});
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user.users);
+  const [viewers, setViewers] = useState(Number);
 
   const chart = () => {
     setChartData({
@@ -42,6 +47,18 @@ const Home = () => {
     });
   };
   useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setViewers((prev) => {
+      prev = users.filter((x) => x.role === "customer").length;
+      return prev;
+    });
+  }, [users]);
+  console.log(viewers);
+
+  useEffect(() => {
     chart();
     $(".count").each(function () {
       $(this)
@@ -60,6 +77,7 @@ const Home = () => {
         );
     });
   }, []);
+
   return (
     <div className="Dashobard">
       <div id="wrapper">
@@ -85,7 +103,7 @@ const Home = () => {
                     <h4 className="mt-0 font-13">Total Views</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        <span className="count">246</span>K
+                        <span className="count">389{viewers}</span>K
                       </h2>
                       <p className="text-danger mb-0 font-weight-bolder">
                         <i className="fa fa-arrow-down mr-1" />

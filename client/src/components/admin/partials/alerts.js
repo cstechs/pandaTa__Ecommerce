@@ -6,14 +6,14 @@ const Alerts = () => {
 
   return (
     <>
-      {alertsList.message != "" && (
+      {alertsList.message !== "" && (
         <div
           key={alertsList.id}
           className={`alert alert-${alertsList.alertType}`}
         >
-          <i className="fas fa-info-circle" /> {alertsList.message}{" "}
+          <i className="fas fa-info-circle" /> {alertsList.message}
         </div>
-      )}{" "}
+      )}
     </>
     // alertsList.length > 0 &&
     // alertsList.map((alert) => (

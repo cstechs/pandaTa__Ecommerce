@@ -20,6 +20,9 @@ const Header = () => {
   };
 
   const [isPreviewShown, setPreviewShown] = useState(false);
+  const [loginView, setLoginView] = useState(false);
+  const [RegisterView, setRegisterView] = useState(false);
+  const [SellerRegisterView, setSellerRegisterView] = useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const state = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
@@ -41,6 +44,13 @@ const Header = () => {
   useEffect(() => {
     dispatch(getCart());
   }, []);
+
+  const LoginHandler = () => {
+    setLoginView(!loginView);
+  };
+  const RegisterHandler = () => {
+    setRegisterView(!RegisterView);
+  };
 
   if (state.loading === false) {
     window.location.reload();
@@ -120,25 +130,24 @@ const Header = () => {
                     <>
                       <button
                         className="ripple button-base"
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter1"
+                        onClick={() => setLoginView(!loginView)}
                       >
                         Log in
                       </button>
                       <button
                         className="ripple button-base"
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter2"
+                        onClick={() => setRegisterView(!RegisterView)}
                       >
                         Sign up
                       </button>
 
                       <button
                         className="ripple button-base"
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter3"
+                        onClick={() =>
+                          setSellerRegisterView(!SellerRegisterView)
+                        }
                       >
-                        Sign up as seller{" "}
+                        Sign up as seller
                       </button>
 
                       <i className="fa fa-search searc" onClick={search}></i>
@@ -219,36 +228,21 @@ const Header = () => {
               </div>
             </div>
           </header>
-          <div
-            className="modal fade"
-            id="exampleModalCenter1"
-            tabIndex={-1}
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <Login />
-          </div>
-          <div
-            className="modal fade"
-            id="exampleModalCenter2"
-            tabIndex={-1}
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <Register />
-          </div>
-          <div
-            className="modal fade"
-            id="exampleModalCenter3"
-            tabIndex={-1}
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <RegisterSeller />
-          </div>
+          {loginView && (
+            <div className="modal" role="dialog">
+              <Login loginHandler={LoginHandler} />
+            </div>
+          )}
+          {RegisterView && (
+            <div className="modal" role="dialog">
+              <Register registerHandler={RegisterHandler} />
+            </div>
+          )}
+          {SellerRegisterView && (
+            <div className="modal" role="dialog">
+              <RegisterSeller />
+            </div>
+          )}
           <div className="Side_Bar" id="sideBar">
             <Sidebar />
           </div>{" "}

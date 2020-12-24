@@ -40,7 +40,7 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(getCategory());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

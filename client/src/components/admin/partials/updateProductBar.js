@@ -41,6 +41,15 @@ const UpdateProductBar = (props) => {
     productSubCategory,
   } = newProduct;
 
+  console.log("check", newProduct);
+
+  var arr = category?.categories?.data?.find(
+    (z) =>
+      z._id ===
+      subCategory.subCategories?.data?.find((x) => x._id === productSubCategory)
+        ?.categoryId
+  )?.categoryName;
+
   const onChange = (e) =>
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
 
@@ -149,11 +158,27 @@ const UpdateProductBar = (props) => {
                     name="productCategory"
                     value={productCategory}
                     onChange={onCategoryChange}
+                    required
                   >
-                    {category.categories.data?.map(({ _id, categoryName }) => (
-                      <option key={_id} value={_id}>
-                        {categoryName}
-                      </option>
+                    <option>
+                      {
+                        category?.categories?.data?.find(
+                          (z) =>
+                            z._id ===
+                            subCategory.subCategories?.data?.find(
+                              (x) => x._id === productSubCategory
+                            )?.categoryId
+                        )?.categoryName
+                      }
+                    </option>
+                    {category.categories.data?.map((item, index) => (
+                      <>
+                        {index > 0 && (
+                          <option key={item._id} value={item._id}>
+                            {item.categoryName}
+                          </option>
+                        )}
+                      </>
                     ))}
                   </select>
                 </div>

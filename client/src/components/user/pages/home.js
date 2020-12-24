@@ -52,7 +52,7 @@ const Home = () => {
         $("#loader").fadeOut();
       }, 1000);
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

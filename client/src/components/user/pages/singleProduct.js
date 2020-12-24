@@ -170,6 +170,7 @@ const SingleProduct = () => {
                       <i className="fa fa-plus" onClick={() => increment()} />
                     </div>
                     <button
+                      disabled={user ? false : true}
                       className="AddToCart ripple"
                       onClick={() =>
                         addToCart(product?.product?.data._id, user._id, 1)

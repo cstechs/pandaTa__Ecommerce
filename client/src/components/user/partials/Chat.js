@@ -36,6 +36,8 @@ const Chat = ({ ChatHide, product }) => {
     }
   }, [chat]);
 
+  useEffect(() => {}, [chat]);
+
   //   useEffect(() => {
   //     setSendChat(() =>
   //       chat?.chats?.data?.map((item) => {
@@ -95,10 +97,12 @@ const Chat = ({ ChatHide, product }) => {
             {chat.chats?.data?.map((item, index) => (
               <>
                 {/* {console.log("chatlength", item)} */}
-                {product?.product?.data?.createdBy === item.sellerId &&
-                  item.createdBy === user._id && (
-                    <>
-                      {item.sender == 1 && (
+                {product?.product?.data?.createdBy === item.sellerId && (
+                  <>
+                    {console.log("it", item)}
+                    {item.sender == 1 &&
+                      item.sellerId == product?.product?.data?.createdBy &&
+                      item.createdBy == user._id && (
                         <li
                           className="clearfix"
                           id={`${
@@ -112,22 +116,22 @@ const Chat = ({ ChatHide, product }) => {
                           </div>
                         </li>
                       )}
-                      {item.sender == 0 && (
-                        <li
-                          className="clearfix odd"
-                          id={`${
-                            index == chat.chats?.data?.length - 1 && "mydiv"
-                          }`}
-                        >
-                          <div className="conversation-text">
-                            <div className="ctext-wrap">
-                              <p>{item.message}</p>
-                            </div>
+                    {item.sender == 0 && item.createdBy == user._id && (
+                      <li
+                        className="clearfix odd"
+                        id={`${
+                          index == chat.chats?.data?.length - 1 && "mydiv"
+                        }`}
+                      >
+                        <div className="conversation-text">
+                          <div className="ctext-wrap">
+                            <p>{item.message}</p>
                           </div>
-                        </li>
-                      )}
-                    </>
-                  )}
+                        </div>
+                      </li>
+                    )}
+                  </>
+                )}
               </>
             ))}
           </ul>

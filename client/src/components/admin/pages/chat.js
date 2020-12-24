@@ -15,31 +15,28 @@ const Chat = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [checkSender, setCheckSender] = useState(null);
   const dispatch = useDispatch();
-
-  //   console.log(
-  //     "check",
-  //     users.find((x) => x._id === chat?.data?.find((x) => x.sellerId)?.sellerId)
-  //   );
+  const [selectedUser, setSelectedUser] = useState({});
+  const [select, setSelect] = useState(false);
   const arr = users.filter((z) =>
     chat?.data?.find((x) => x.createdBy === z._id)
   );
+  console.log("checking", users[0]);
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getChat());
 
     // $("#mydiv").scrollTop($("#mydiv").height);
-  }, [getChat]);
+  }, [dispatch]);
   const onSubmit = (e) => {
     // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
     // //     dispatch(setAlert('Please Enter fields.', 'danger'));
     // // }
     // else {
     e.preventDefault();
-
     dispatch(createChat(newMessage));
     setNewMessage({ ...newMessage, message: "" });
   };
@@ -50,10 +47,16 @@ const Chat = () => {
     }
   }, [chat]);
 
+  const CheckUser = (user) => {
+    setSelectedUser(user);
+    setSelect(true);
+    console.log("check", selectedUser);
+  };
+
   const [newMessage, setNewMessage] = useState({
     message: "",
     sender: "",
-    createdBy: "",
+    createdBy: selectedUser._id,
     sellerId: user._id,
   });
   const { message } = newMessage;
@@ -61,7 +64,7 @@ const Chat = () => {
     if (user.role === "seller" || user.role === "admin") {
       setCheckSender(1);
       newMessage.sender = checkSender;
-      newMessage.createdBy = user._id;
+      newMessage.createdBy = selectedUser?._id;
       setNewMessage({
         ...newMessage,
         [e.target.name]: e.target.value,
@@ -69,7 +72,7 @@ const Chat = () => {
     } else if (user.role === "customer") {
       setCheckSender(0);
       newMessage.sender = checkSender;
-      newMessage.createdBy = user._id;
+      newMessage.createdBy = selectedUser?._id;
 
       setNewMessage({
         ...newMessage,
@@ -77,6 +80,7 @@ const Chat = () => {
       });
     }
   };
+  useEffect(() => {}, [chat]);
 
   return (
     <div className="Dashobard">
@@ -117,26 +121,33 @@ const Chat = () => {
                         <div className="col">
                           <div data-simplebar style={{ maxHeight: "600px" }}>
                             {arr?.map((item) => (
-                              <div className="text-body mt-3">
-                                <div className="media p-1">
-                                  <img
-                                    src={UserImage}
-                                    className="mr-2 rounded-circle"
-                                    height={42}
-                                    alt="Brandon Smith"
-                                  />
-                                  <div className="media-body">
-                                    <h5 className="mt-0 mb-0 font-14">
-                                      {item.userName}
-                                    </h5>
-                                    <p className="mt-1 mb-0 text-muted font-13">
-                                      <span className="w-75">
-                                        How are you today?
-                                      </span>
-                                    </p>
+                              <>
+                                {item._id != user._id && (
+                                  <div
+                                    className="text-body mt-3"
+                                    onClick={() => CheckUser(item)}
+                                  >
+                                    <div className="media p-1">
+                                      <img
+                                        src={UserImage}
+                                        className="mr-2 rounded-circle"
+                                        height={42}
+                                        alt="Brandon Smith"
+                                      />
+                                      <div className="media-body">
+                                        <h5 className="mt-0 mb-0 font-14">
+                                          {item.userName}
+                                        </h5>
+                                        <p className="mt-1 mb-0 text-muted font-13">
+                                          <span className="w-75">
+                                            How are you today?
+                                          </span>
+                                        </p>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
+                                )}
+                              </>
                             ))}
                           </div>
                         </div>
@@ -144,112 +155,122 @@ const Chat = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-8">
-                  <div className="card">
-                    <div className="card-body py-2 px-3 border-bottom border-light">
-                      <div className="media py-1">
-                        <img
-                          src={UserImage}
-                          className="mr-2 rounded-circle"
-                          height={36}
-                          alt="Brandon Smith"
-                        />
-                        <div className="media-body">
-                          <h5 className="mt-0 mb-0 font-15">
-                            <span className="text-reset">James Zavel</span>
-                          </h5>
-                          <p className="mt-1 mb-0 text-muted font-12">
-                            <small className="mdi mdi-circle text-success" />{" "}
-                            Online
-                          </p>
-                        </div>
-                        <div>
-                          <span className="text-reset font-17 py-1 px-2 d-inline-block">
-                            <i className="fas fa-times" />
-                          </span>
+                {select && (
+                  <div className="col-md-8">
+                    <div className="card">
+                      <div className="card-body py-2 px-3 border-bottom border-light">
+                        <div className="media py-1">
+                          <img
+                            src={UserImage}
+                            className="mr-2 rounded-circle"
+                            height={36}
+                            alt="Brandon Smith"
+                          />
+                          <div className="media-body">
+                            <h5 className="mt-0 mb-0 font-15">
+                              <span className="text-reset">
+                                {selectedUser.userName}
+                              </span>
+                            </h5>
+                            <p className="mt-1 mb-0 text-muted font-12">
+                              <small className="mdi mdi-circle text-success" />{" "}
+                              Online
+                            </p>
+                          </div>
+                          <div>
+                            <span className="text-reset font-17 py-1 px-2 d-inline-block">
+                              <i className="fas fa-times" />
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="card-body">
-                      <ul
-                        className="conversation-list"
-                        data-simplebar
-                        style={{ maxHeight: "390px" }}
-                      >
-                        {chat?.data?.map((item, index) => (
-                          <>
-                            {item.sellerId === user._id && (
-                              <>
-                                {item.sender == 0 && (
-                                  <li
-                                    className="clearfix"
-                                    id={`${
-                                      index == chat?.data?.length - 1 && "mydiv"
-                                    }`}
-                                  >
-                                    <div className="conversation-text">
-                                      <div className="ctext-wrap">
-                                        <p>{item.message}</p>
-                                      </div>
+                      <div className="card-body">
+                        <ul
+                          className="conversation-list"
+                          data-simplebar
+                          style={{ maxHeight: "390px" }}
+                        >
+                          {chat?.data?.map((item, index) => (
+                            <>
+                              {item.sellerId === user._id && (
+                                <>
+                                  {item.sender == 0 &&
+                                    item.createdBy === selectedUser._id && (
+                                      <li
+                                        className="clearfix"
+                                        id={`${
+                                          index == chat?.data?.length - 1 &&
+                                          "mydiv"
+                                        }`}
+                                      >
+                                        <div className="conversation-text">
+                                          <div className="ctext-wrap">
+                                            <p>{item.message}</p>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    )}
+                                  {select &&
+                                    item.sender == 1 &&
+                                    user._id === item.sellerId &&
+                                    item.createdBy === selectedUser._id && (
+                                      <li
+                                        className="clearfix odd"
+                                        id={`${
+                                          index == chat?.data?.length - 1 &&
+                                          "mydiv"
+                                        }`}
+                                      >
+                                        <div className="conversation-text">
+                                          <div className="ctext-wrap">
+                                            <p>{item.message}</p>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    )}
+                                </>
+                              )}
+                            </>
+                          ))}
+                        </ul>
+                        <div className="row">
+                          <div className="col">
+                            <div className="mt-2 p-2">
+                              <form onSubmit={(e) => onSubmit(e)}>
+                                <div className="row">
+                                  <div className="col mb-2 mb-sm-0">
+                                    <input
+                                      type="text"
+                                      className="form-control border-0"
+                                      placeholder="Enter your text"
+                                      required
+                                      name="message"
+                                      value={message}
+                                      onChange={onChange}
+                                    />
+                                  </div>
+                                  <div className="col-sm-auto">
+                                    <div className="btn-group">
+                                      <span className="btn font-17">
+                                        <i className="fe-paperclip" />
+                                      </span>
+                                      <button
+                                        type="submit"
+                                        className="btn text-yellow chat-send btn-block font-17"
+                                      >
+                                        <i className="fe-send" />
+                                      </button>
                                     </div>
-                                  </li>
-                                )}
-                                {item.sender == 1 && (
-                                  <li
-                                    className="clearfix odd"
-                                    id={`${
-                                      index == chat?.data?.length - 1 && "mydiv"
-                                    }`}
-                                  >
-                                    <div className="conversation-text">
-                                      <div className="ctext-wrap">
-                                        <p>{item.message}</p>
-                                      </div>
-                                    </div>
-                                  </li>
-                                )}
-                              </>
-                            )}
-                          </>
-                        ))}
-                      </ul>
-                      <div className="row">
-                        <div className="col">
-                          <div className="mt-2 p-2">
-                            <form onSubmit={(e) => onSubmit(e)}>
-                              <div className="row">
-                                <div className="col mb-2 mb-sm-0">
-                                  <input
-                                    type="text"
-                                    className="form-control border-0"
-                                    placeholder="Enter your text"
-                                    required
-                                    name="message"
-                                    value={message}
-                                    onChange={onChange}
-                                  />
-                                </div>
-                                <div className="col-sm-auto">
-                                  <div className="btn-group">
-                                    <span className="btn font-17">
-                                      <i className="fe-paperclip" />
-                                    </span>
-                                    <button
-                                      type="submit"
-                                      className="btn text-yellow chat-send btn-block font-17"
-                                    >
-                                      <i className="fe-send" />
-                                    </button>
                                   </div>
                                 </div>
-                              </div>
-                            </form>
+                              </form>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

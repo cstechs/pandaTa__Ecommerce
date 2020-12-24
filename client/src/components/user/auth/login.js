@@ -6,7 +6,7 @@ import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS } from "../../../redux/types";
 import Register from "./register";
 
-const Login = () => {
+const Login = (props) => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -36,6 +36,10 @@ const Login = () => {
       //window.location.reload();
     }
   };
+  const LoginClose = () => {
+    console.log("lognclcclicked");
+    props.loginHandler();
+  };
 
   return (
     <>
@@ -45,8 +49,7 @@ const Login = () => {
             <div className="Exit">
               <i
                 className="fas fa-times-circle close"
-                data-dismiss="modal"
-                aria-label="Close"
+                onClick={() => LoginClose()}
               ></i>
             </div>
             <div className="logo">PANDA / TA</div>
@@ -110,16 +113,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="modal fade"
-        id="exampleModalCenter1"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <Register />
       </div>
     </>
   );

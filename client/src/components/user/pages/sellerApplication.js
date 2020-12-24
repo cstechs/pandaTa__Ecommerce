@@ -59,7 +59,6 @@ const SellerApplication = () => {
     pinterestSocialAccountLink,
     twitterSocialAccountLink,
     instagramSocialAccountLink,
-    userName,
     userGender,
     userFirstName,
     userMiddleName,
@@ -73,7 +72,7 @@ const SellerApplication = () => {
     userPhNumber,
   } = newUser;
   const onChange = (e) =>
-    setNewProduct({ ...newUser, [e.target.name]: e.target.value });
+    setNewUser({ ...newUser, [e.target.name]: e.target.value });
   const ApplicationCriteria = (e) => {
     e.preventDefault();
     setapplicationShown(false);
@@ -381,7 +380,7 @@ const SellerApplication = () => {
                       <input
                         type="url"
                         name=""
-                        value={}
+                        value={fbSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
                       />
@@ -394,7 +393,7 @@ const SellerApplication = () => {
                       <input
                         type="url"
                         name=""
-                        value={}
+                        value={pinterestSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
                       />
@@ -406,7 +405,7 @@ const SellerApplication = () => {
                       <input
                         type="url"
                         name=""
-                        value={}
+                        value={twitterSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
                       />
@@ -419,7 +418,7 @@ const SellerApplication = () => {
                       <input
                         type="url"
                         name=""
-                        value={}
+                        value={instagramSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
                       />
@@ -469,7 +468,7 @@ const SellerApplication = () => {
                   <div className="row mt-2">
                     <div className="col-md-3 mt-1">
                       <label>Name</label>
-                      <select required>
+                      <select required value={userGender}>
                         <option>Mr.</option>
                         <option>Mrs.</option>
                       </select>
@@ -478,7 +477,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userFirstName}
                         onChange={onChange}
                         required
                         placeholder="First Name"
@@ -488,7 +487,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userMiddleName}
                         onChange={onChange}
                         required
                         placeholder="Middle Name "
@@ -498,7 +497,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userLastName}
                         onChange={onChange}
                         required
                         placeholder="Last Name"
@@ -509,7 +508,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userTitle}
                         onChange={onChange}
                         required
                         placeholder="eg. CEO, Owner, Manager, Designer, Merchandiser"
@@ -526,7 +525,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userAddress}
                         onChange={onChange}
                         required
                       />
@@ -536,7 +535,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userAppartment}
                         onChange={onChange}
                         required
                       />
@@ -546,7 +545,7 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userCity}
                         onChange={onChange}
                         required
                       />
@@ -556,14 +555,19 @@ const SellerApplication = () => {
                       <input
                         type="text"
                         name=""
-                        value={}
+                        value={userZipCode}
                         onChange={onChange}
                         required
                       />
                     </div>
                     <div className="col-md-4 mt-4">
                       <label>Country</label>
-                      <select name="" value={} required onChange={onChange}>
+                      <select
+                        name=""
+                        value={userCountry}
+                        required
+                        onChange={onChange}
+                      >
                         <option>Select Country</option>
                         <option>Pakistan</option>
                         <option>...</option>
@@ -578,7 +582,7 @@ const SellerApplication = () => {
                       <input
                         type="number"
                         name=""
-                        value={}
+                        value={userPhNumber}
                         required
                         onChange={onChange}
                       />

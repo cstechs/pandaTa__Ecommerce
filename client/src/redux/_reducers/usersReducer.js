@@ -3,6 +3,8 @@ import {
   USER_LOAD_FAIL,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL,
 } from "../types";
 const initState = {
   users: [],
@@ -23,6 +25,14 @@ const userReducer = (state = initState, action) => {
       return { ...state };
     case USER_UPDATE_SUCCESS:
       localStorage.setItem("user", action.payload.user);
+      return {
+        ...state,
+      };
+    case USER_DELETE_FAIL:
+      return {
+        ...state,
+      };
+    case USER_DELETE_SUCCESS:
       return {
         ...state,
       };
