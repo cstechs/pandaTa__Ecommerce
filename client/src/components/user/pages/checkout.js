@@ -40,7 +40,7 @@ const CheckOut = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [dispatch]);
 
   const HandleChange = (e) => {
     setUserProfile({ ...userProfile, [e.target.name]: e.target.value });

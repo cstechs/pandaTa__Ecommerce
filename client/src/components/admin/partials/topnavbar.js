@@ -1,15 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import SmLogo from "../../../assets/images/admin/logo-sm.png";
 import LeftBar from "./leftsidebar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/_actions/authAction";
+import { getUser } from "../../../redux/_actions/userAction";
+import { getChat } from "../../../redux/_actions/chatAction";
 
 const Navbar = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const dispatch = useDispatch();
+  const chat = useSelector((state) => state.chat.chats);
+  const users = useSelector((state) => state.user.users);
   const history = useHistory();
+
+  const totalUsers = users.filter((z) =>
+    chat?.data?.find((x) => x.createdBy === z._id && x.sellerId === user._id)
+  );
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getChat());
+
+    // $("#mydiv").scrollTop($("#mydiv").height);
+  }, [dispatch]);
 
   function toggle() {
     document.getElementById("leftbar").classList.toggle("hideleftbar");
@@ -79,7 +97,7 @@ const Navbar = () => {
               >
                 <i className="fe-message-square noti-icon" alt="" />
                 <span className="badge badge-danger rounded-circle noti-icon-badge">
-                  0
+                  {totalUsers?.length}
                 </span>
               </span>
               <div className="dropdown-menu dropdown-menu-right dropdown-lg">
@@ -94,25 +112,24 @@ const Navbar = () => {
                   </h5>
                 </div>
                 <div className="noti-scroll" data-simplebar>
-                  <span className="dropdown-item notify-item">
-                    <div className="notify-icon bg-primary">
-                      <i className="mdi mdi-comment-account-outline" alt="" />
-                    </div>
-                    <p className="notify-details">
-                      Caleb Flakelar commented on Admin
-                      <small className="text-muted">1 min ago</small>
-                    </p>
-                  </span>
-                  <span className="dropdown-item notify-item">
-                    <div className="notify-icon bg-secondary">
-                      <i className="mdi mdi-heart" alt="" />
-                    </div>
-                    <p className="notify-details">
-                      Carlos Crouch liked
-                      <b>Admin</b>
-                      <small className="text-muted">13 days ago</small>
-                    </p>
-                  </span>
+                  {totalUsers?.map((item, index) => (
+                    <React.Fragment key={item._id}>
+                      {index < 4 && (
+                        <Link to="/admin/chat">
+                          <span className="dropdown-item notify-item">
+                            <div className="notify-icon bg-secondary">
+                              <i className="mdi mdi-heart" alt="" />
+                            </div>
+                            <p className="notify-details">
+                              {item.userName}
+                              {/* <b>Admin</b>
+                        <small className="text-muted">13 days ago</small> */}
+                            </p>
+                          </span>
+                        </Link>
+                      )}
+                    </React.Fragment>
+                  ))}
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all">
                   View all

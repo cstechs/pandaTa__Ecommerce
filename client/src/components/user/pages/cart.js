@@ -2,25 +2,35 @@ import React, { useEffect, useState } from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import { login } from "../../../redux/_actions/authAction";
+// import { login } from "../../../redux/_actions/authAction";
 
-import productimg from "../../../assets/images/user/product.png";
+// import productimg from "../../../assets/images/user/product.png";
 import Banner from "../../../assets/images/user/banner.PNG";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  cartIncrement,
+  addCartQuantity,
+  // cartIncrement,
   getCart,
   removeCart,
+  removeCartItem,
+  subtractCartQuantity,
 } from "../../../redux/_actions/cartAction";
-import CartInput from "./cartInput";
+// import CartInput from "./cartInput";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
 import Loader from "../partials/loader";
+import { getUser } from "../../../redux/_actions/userAction";
 
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const users = useSelector((state) => state.user.users);
+  const history = useHistory();
+
+  if (!user) {
+    history.push("/");
+  }
 
   // console.log("cart", cartItem.data?.items)
   const [quantity, setQuantity] = useState([]);
@@ -33,6 +43,10 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(getCart());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUser());
   }, [dispatch]);
 
   useEffect(() => {
@@ -62,7 +76,7 @@ const Cart = () => {
     //   dispatch(addItemToCart(id, +1));
     //   return [...prev];
     // });
-    dispatch(addItemToCart(id, user._id, +1));
+    dispatch(addCartQuantity(id));
   };
   const handleRemoveQuantity = (index, Quantity, id, total) => {
     // if (Quantity > 0)
@@ -75,11 +89,12 @@ const Cart = () => {
 
     // return [...prev];
     // });
-    dispatch(addItemToCart(id, user._id, -1));
+    dispatch(subtractCartQuantity(id));
   };
 
-  const RemoveCart = () => {
-    dispatch(removeCart());
+  const RemoveCart = (id) => {
+    console.log(id);
+    dispatch(removeCartItem(id));
     window.location.reload();
   };
 
@@ -123,7 +138,9 @@ const Cart = () => {
                                 <td>
                                   <i
                                     className="ti-close"
-                                    onClick={() => RemoveCart()}
+                                    onClick={() =>
+                                      RemoveCart(item?.productId?._id)
+                                    }
                                   ></i>
                                 </td>
                                 <td>
@@ -137,7 +154,7 @@ const Cart = () => {
                                   </div>
                                   <div className="float-left">
                                     <h4>{item?.productId?.productName}</h4>
-                                    <span>Supplier's Name Here</span>
+                                    <span></span>
                                   </div>
                                 </td>
                                 <td>{item?.productId?.productPrice} </td>
@@ -145,9 +162,10 @@ const Cart = () => {
                                   <div className="position-relative">
                                     <input
                                       type="number"
-                                      // value={item?.quantity}
+                                      value={item?.quantity}
                                       className="border-right-0"
-                                      defaultValue={item?.quantity}
+                                      readOnly
+                                      //defaultValue={item?.quantity}
                                     />
                                     <div className="AdjustQuantity">
                                       <i

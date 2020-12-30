@@ -28,6 +28,23 @@ const Products = () => {
   // const subCategory = useSelector((state) => state.subCategory);
   const [products, setProduct] = useState(0);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const lowStock = product?.products?.data?.filter(
+    (x) =>
+      (user.role === "admin" && x.productQuantity < 50) ||
+      (x.productQuantity < 50 && x.createdBy === user._id)
+  )?.length;
+  const outOfStock = product?.products?.data?.filter(
+    (x) =>
+      (user.role === "admin" && x.productQuantity < 0) ||
+      (x.productQuantity < 0 && x.createdBy === user._id)
+  )?.length;
+
+  // console.log(
+  //   "checkuser",
+  //   product?.products?.data?.filter(
+  //     (x) => x.createdBy === user._id && x.productQuantity < 0
+  //   )?.length
+  // );
 
   const handlePreview = (item) => {
     setPreviewShown(true);
@@ -131,7 +148,7 @@ const Products = () => {
                             <tbody>
                               {user.role == "seller" &&
                                 product.products.data?.map((item) => (
-                                  <>
+                                  <React.Fragment key={item._id}>
                                     {user._id === item.createdBy && (
                                       <tr key={item._id}>
                                         <td className="productName">
@@ -182,7 +199,7 @@ const Products = () => {
                                         </td>
                                       </tr>
                                     )}
-                                  </>
+                                  </React.Fragment>
                                 ))}
                               {user.role == "admin" &&
                                 product.products.data?.map((item) => (
@@ -305,7 +322,7 @@ const Products = () => {
                               <h6>Low in Stock</h6>
                             </div>
                             <div className="float-right">
-                              <h4>490 orders</h4>
+                              <h4>{lowStock} orders</h4>
                             </div>
                           </div>
                         </div>
@@ -319,7 +336,7 @@ const Products = () => {
                               <h6>Out of Stock </h6>
                             </div>
                             <div className="float-right">
-                              <h4>42 items</h4>
+                              <h4>{outOfStock} items</h4>
                             </div>
                           </div>
                         </div>

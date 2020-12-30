@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Login from "../auth/login";
 import { logout } from "../../../redux/_actions/authAction";
 import Register from "../auth/register";
@@ -26,7 +26,7 @@ const Header = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const state = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
-  const history = useHistory();
+  //const history = useHistory();
   //console.log(cart?.cartItems?.data?.items?.length);
 
   const dispatch = useDispatch();

@@ -23,7 +23,7 @@ const RelatedProduct = (props) => {
 
   useEffect(() => {
     dispatch(getProductBySubCategoryId(props.products));
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

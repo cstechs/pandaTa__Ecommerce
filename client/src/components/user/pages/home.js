@@ -20,6 +20,8 @@ import { getProduct } from "../../../redux/_actions/productAction";
 import OwlCarousel from "react-owl-carousel";
 import HomeLeft from "../partials/HomeLeft";
 import HomeRight from "../partials/HomeRight";
+import { Link } from "react-router-dom";
+import Loader from "../partials/loader";
 // import { getUser } from "../../../redux/_actions/userAction";
 const Home = () => {
   const [responsive] = useState({
@@ -53,6 +55,10 @@ const Home = () => {
       }, 1000);
     });
   }, [dispatch]);
+
+  if (product && subCategory === undefined) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -109,17 +115,19 @@ const Home = () => {
           margin={8}
         >
           {subCategory.subCategories.data?.map(({ _id, subCategoryName }) => (
-            <div className="item" key={_id}>
-              <img
-                src={
-                  product?.products?.data?.find(
-                    (x) => x.productSubCategory === _id
-                  )?.productImage
-                }
-                alt=""
-              />
-              <p>{subCategoryName}</p>
-            </div>
+            <Link to="/product">
+              <div className="item" key={_id}>
+                <img
+                  src={
+                    product?.products?.data?.find(
+                      (x) => x.productSubCategory === _id
+                    )?.productImage
+                  }
+                  alt=""
+                />
+                <p>{subCategoryName}</p>
+              </div>
+            </Link>
           ))}
         </OwlCarousel>
         <div className="owl-theme">

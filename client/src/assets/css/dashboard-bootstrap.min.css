@@ -5225,6 +5225,8 @@ input[type="submit"].btn-block {
 .pagination {
   display: flex;
   padding-left: 0;
+  justify-content: center;
+  padding: 20px 10px;
   list-style: none;
   border-radius: 0.25rem;
 }
@@ -5232,26 +5234,26 @@ input[type="submit"].btn-block {
 .page-link {
   position: relative;
   display: block;
-  padding: 0.5rem 0.75rem;
+  padding: 9px 15px;
   margin-left: -1px;
   line-height: 1.25;
-  color: #323a46;
+  color: #443344;
   background-color: #fff;
-  border: 1px solid #dee2e6;
+  border: 1px solid #443344;
 }
 
 .page-link:hover {
   z-index: 2;
-  color: #323a46;
+  color: #fff;
   text-decoration: none;
-  background-color: #eceff1;
-  border-color: #dee2e6;
+  background-color: #443344;
+  border-color: #443344;
 }
 
 .page-link:focus {
   z-index: 3;
   outline: 0;
-  box-shadow: 0 0 0 0.15rem rgba(126, 87, 194, 0.25);
+  box-shadow: 0;
 }
 
 .page-item:first-child .page-link {

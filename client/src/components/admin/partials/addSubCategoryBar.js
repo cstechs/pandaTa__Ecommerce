@@ -19,7 +19,7 @@ const AddSubCategoryBar = () => {
 
   useEffect(() => {
     dispatch(getCategory());
-  }, []);
+  }, [dispatch]);
 
   const [newSubCategory, setNewSubCategory] = useState({
     subCategoryName: "",

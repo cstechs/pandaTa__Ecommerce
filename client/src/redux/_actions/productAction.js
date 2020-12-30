@@ -125,9 +125,9 @@ export const getProductBySubCategoryId = (CategoryId) => {
       }
     } catch (err) {
       //  console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      // );
       dispatch({
         type: RELATED_PRODUCT_LOAD_FAIL,
         payload: err.response.data.message,

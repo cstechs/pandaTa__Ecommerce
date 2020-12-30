@@ -1,5 +1,6 @@
 import React from "react";
 import productimg from "../../../assets/images/user/product.png";
+import { Link } from "react-router-dom";
 
 const HomeRight = ({ product }) => {
   return (
@@ -12,65 +13,71 @@ const HomeRight = ({ product }) => {
                 {" "}
                 {index > 6 && index < 11 && (
                   <div className="col-6">
-                    <div className="product">
-                      <img src={item.productImage} alt="" />
-                      <div className="content">
-                        <div className="content-left">
-                          <span className="vendor">Supplier’s Name Here</span>
-                          <span className="product_name">
-                            {item.productName}
-                          </span>
-                          <span className="product_price">
-                            ${item.productPrice}
-                          </span>
-                        </div>
-                        <div className="content-right">
-                          <i className="fa fa-caret-right"></i>
+                    <Link to={`/product/${item._id}`}>
+                      <div className="product">
+                        <img src={item.productImage} alt="" />
+                        <div className="content">
+                          <div className="content-left">
+                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="product_name">
+                              {item.productName}
+                            </span>
+                            <span className="product_price">
+                              ${item.productPrice}
+                            </span>
+                          </div>
+                          <div className="content-right">
+                            <i className="fa fa-caret-right"></i>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 )}
                 {index === 11 && (
                   <div className="col-12">
-                    <div className="product">
-                      <img src={item.productImage} alt="" />
-                      <div className="content">
-                        <div className="content-left">
-                          <span className="vendor">Supplier’s Name Here</span>
-                          <span className="product_name">
-                            {item.productName}
-                          </span>
-                          <span className="product_price">
-                            ${item.productPrice}
-                          </span>
-                        </div>
-                        <div className="content-right">
-                          <i className="fa fa-caret-right"></i>
+                    <Link to={`/product/${item._id}`}>
+                      <div className="product">
+                        <img src={item.productImage} alt="" />
+                        <div className="content">
+                          <div className="content-left">
+                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="product_name">
+                              {item.productName}
+                            </span>
+                            <span className="product_price">
+                              ${item.productPrice}
+                            </span>
+                          </div>
+                          <div className="content-right">
+                            <i className="fa fa-caret-right"></i>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 )}
                 {index > 11 && index < 14 && (
                   <div className="col-6">
-                    <div className="product">
-                      <img src={item.productImage} alt="" />
-                      <div className="content">
-                        <div className="content-left">
-                          <span className="vendor">Supplier’s Name Here</span>
-                          <span className="product_name">
-                            {item.productName}
-                          </span>
-                          <span className="product_price">
-                            ${item.productPrice}
-                          </span>
-                        </div>
-                        <div className="content-right">
-                          <i className="fa fa-caret-right"></i>
+                    <Link to={`/product/${item._id}`}>
+                      <div className="product">
+                        <img src={item.productImage} alt="" />
+                        <div className="content">
+                          <div className="content-left">
+                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="product_name">
+                              {item.productName}
+                            </span>
+                            <span className="product_price">
+                              ${item.productPrice}
+                            </span>
+                          </div>
+                          <div className="content-right">
+                            <i className="fa fa-caret-right"></i>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 )}
               </React.Fragment>

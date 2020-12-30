@@ -8,6 +8,7 @@ import Footer from "../partials/footer";
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import { getChat, createChat } from "../../../redux/_actions/chatAction";
 import { getUser } from "../../../redux/_actions/userAction";
+import Warning from "../partials/warning";
 
 const Chat = () => {
   const chat = useSelector((state) => state.chat.chats);
@@ -17,14 +18,22 @@ const Chat = () => {
   const dispatch = useDispatch();
   const [selectedUser, setSelectedUser] = useState({});
   const [select, setSelect] = useState(false);
-  const arr = users.filter((z) =>
-    chat?.data?.find((x) => x.createdBy === z._id)
-  );
-  console.log("checking", users[0]);
+
+  const [messagedUser, setmessagedUser] = useState([]);
 
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    setmessagedUser(() =>
+      users.filter((z) =>
+        chat?.data?.find(
+          (x) => x.createdBy === z._id && x.sellerId === user._id
+        )
+      )
+    );
+  }, [users]);
 
   useEffect(() => {
     dispatch(getChat());
@@ -50,7 +59,25 @@ const Chat = () => {
   const CheckUser = (user) => {
     setSelectedUser(user);
     setSelect(true);
-    console.log("check", selectedUser);
+  };
+
+  const handleSelect = () => {
+    setSelect(false);
+  };
+
+  const handleChange = (e) => {
+    let temp = messagedUser.filter((item) =>
+      item.userName.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    if (e.target.value === "") {
+      temp = users.filter((z) =>
+        chat?.data?.find(
+          (x) => x.createdBy === z._id && x.sellerId === user._id
+        )
+      );
+    }
+
+    setmessagedUser(temp);
   };
 
   const [newMessage, setNewMessage] = useState({
@@ -60,6 +87,7 @@ const Chat = () => {
     sellerId: user._id,
   });
   const { message } = newMessage;
+
   const onChange = (e) => {
     if (user.role === "seller" || user.role === "admin") {
       setCheckSender(1);
@@ -114,13 +142,14 @@ const Chat = () => {
                           <input
                             type="text"
                             placeholder="People, groups & messages..."
+                            onChange={(e) => handleChange(e)}
                           />
                         </div>
                       </form>
                       <div className="row">
                         <div className="col">
                           <div data-simplebar style={{ maxHeight: "600px" }}>
-                            {arr?.map((item) => (
+                            {messagedUser?.map((item) => (
                               <>
                                 {item._id != user._id && (
                                   <div
@@ -179,7 +208,10 @@ const Chat = () => {
                           </div>
                           <div>
                             <span className="text-reset font-17 py-1 px-2 d-inline-block">
-                              <i className="fas fa-times" />
+                              <i
+                                className="fas fa-times"
+                                onClick={() => handleSelect()}
+                              />
                             </span>
                           </div>
                         </div>
@@ -277,6 +309,7 @@ const Chat = () => {
           <Footer />
         </div>
       </div>
+      <Warning />
     </div>
   );
 };

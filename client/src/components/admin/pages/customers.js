@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Navbar from "../partials/topnavbar";
@@ -10,11 +10,26 @@ import { deleteUser, getUser } from "../../../redux/_actions/userAction";
 
 const Customers = () => {
   const users = useSelector((state) => state.user.users);
+  const [searchedUsers, setsearchedUsers] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-  console.log(users);
+
+  useEffect(() => {
+    setsearchedUsers(users);
+  }, [users]);
+
+  const handleChange = (e) => {
+    let temp = searchedUsers.filter((item) =>
+      item.userName.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    if (e.target.value === "") {
+      temp = users;
+    }
+    setsearchedUsers(temp);
+  };
+
   return (
     <div className="Dashobard">
       <div id="wrapper">
@@ -30,7 +45,7 @@ const Customers = () => {
                         <li className="breadcrumb-item">
                           <Link to="/admin">PANDA / TA</Link>
                         </li>
-                        <li class="breadcrumb-item active">Customer</li>
+                        <li className="breadcrumb-item active">Customer</li>
                       </ol>
                     </div>
                     <h4 className="page-title">Customers</h4>
@@ -41,7 +56,11 @@ const Customers = () => {
                 <div className="col-12">
                   <div className="card">
                     <form className="CustomerSearchBox">
-                      <input type="text" placeholder="Search Here..." />
+                      <input
+                        type="text"
+                        placeholder="Search Here..."
+                        onChange={(e) => handleChange(e)}
+                      />
                       <button type="submit">
                         <i className="fa fa-search"></i>
                       </button>
@@ -51,8 +70,8 @@ const Customers = () => {
               </div>
               <div className="row mt-1">
                 {/* CARD */}
-                {users?.map((item) => (
-                  <>
+                {searchedUsers?.map((item) => (
+                  <React.Fragment key={item._id}>
                     {item.role === "customer" && (
                       <div className="col-lg-4">
                         <div className="text-center customer-card">
@@ -91,7 +110,7 @@ const Customers = () => {
                         </div>
                       </div>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
             </div>

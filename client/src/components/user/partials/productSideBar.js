@@ -1,47 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import businessimg from "../../../assets/images/user/businessLogo.png";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 
-const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
-  function categoryDropDownToggle() {
-    document.getElementById("categoryShowIcon").classList.toggle("show");
-    document.getElementById("categoryHideIcon").classList.toggle("hide");
-    document.getElementById("categoryDropDown").classList.toggle("hide");
-  }
-
-  function materialDropDownToggle() {
-    document.getElementById("materialShowIcon").classList.toggle("show");
-    document.getElementById("materialHideIcon").classList.toggle("hide");
-    document.getElementById("materialDropDown").classList.toggle("hide");
-  }
-
-  // function finishDropDownToggle() {
-  //   document.getElementById("finishShowIcon").classList.toggle("show");
-  //   document.getElementById("finishHideIcon").classList.toggle("hide");
-  //   document.getElementById("finishDropDown").classList.toggle("hide");
-  // }
-
-  // function styleDropDownToggle() {
-  //   document.getElementById("styleShowIcon").classList.toggle("show");
-  //   document.getElementById("styleHideIcon").classList.toggle("hide");
-  //   document.getElementById("styleDropDown").classList.toggle("hide");
-  // }
-
+const ProductSideBar = ({
+  subCategory,
+  user,
+  Productidsetter,
+  Catidsetter,
+}) => {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
+  const [categoryDropDown, setcategoryDropDown] = useState(true);
+  const [subcategoryDropDown, setSubcategoryDropDown] = useState([
+    true,
+    true,
+    true,
+    true,
+  ]);
 
   useEffect(() => {
     dispatch(getCategory());
-  }, []);
+  }, [dispatch]);
+
+  const HandleCategoryDropDown = () => {
+    setcategoryDropDown(!categoryDropDown);
+  };
+  const HandleSubCategoryDropDown = (index) => {
+    let val = !subcategoryDropDown[index];
+    setSubcategoryDropDown((prev) => {
+      prev.splice(index, 1, val);
+      return [...prev];
+    });
+  };
 
   function HandleTick(val) {
     Productidsetter(val);
   }
+  function HandleCatTick(val) {
+    Catidsetter(val);
+  }
 
   return (
-    <React.Fragment key={category.categories.data?.map((item) => item._id)}>
+    <React.Fragment>
       {user && user.role === "seller" && (
         <div className="sellerProfilePortion">
           <div className="businessImage">
@@ -72,29 +74,44 @@ const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
       )}
       <div className="BrowseByCategoryPortion">
         <h4 className="title">BROWSE BY CATEGORY</h4>
-        <div className="dropTogggle" onClick={categoryDropDownToggle}>
-          <i className="fa fa-plus" id="categoryShowIcon"></i>
-          <i className="fa fa-minus" id="categoryHideIcon"></i>
-        </div>
+        {!categoryDropDown && (
+          <div className="dropTogggle">
+            <i
+              className="fas fa-plus-square"
+              onClick={() => HandleCategoryDropDown()}
+            />
+          </div>
+        )}
+        {categoryDropDown && (
+          <div className="dropTogggle">
+            <i
+              className="fas fa-minus"
+              onClick={() => HandleCategoryDropDown()}
+            />
+          </div>
+        )}
+
         <div className="underLine w-100 mt-2"></div>
-        <ul style={{ maxHeight: "165px" }} id="categoryDropDown">
-          <li>
-            <label>
-              All categories
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-          </li>
-          {category.categories.data?.map(({ _id, categoryName }) => (
-            <li key={_id}>
+        {categoryDropDown === true && (
+          <ul style={{ maxHeight: "165px" }} id="categoryDropDown">
+            <li>
               <label>
-                {categoryName}
+                All categories
                 <input type="checkbox" />
                 <span className="checkmark"></span>
               </label>
             </li>
-          ))}
-        </ul>
+            {category.categories.data?.map(({ _id, categoryName }) => (
+              <li key={_id}>
+                <label>
+                  {categoryName}
+                  <input type="checkbox" onClick={() => HandleCatTick(_id)} />
+                  <span className="checkmark"></span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className="BrowseByCategoryPortion">
         <h4 className="title">FILTER PRODUCTS</h4>
@@ -105,28 +122,44 @@ const ProductSideBar = ({ subCategory, user, Productidsetter }) => {
             {index < 3 && (
               <div className="filterPortion">
                 <h5 className="mb-2">{item.categoryName}</h5>
-                <div className="dropTogggle" onClick={materialDropDownToggle}>
-                  <i className="fa fa-plus" id="materialShowIcon"></i>
-                  <i className="fa fa-minus" id="materialHideIcon"></i>
-                </div>
-                <ul style={{ maxHeight: "165px" }} id="materialDropDown">
-                  {subCategory.subCategories.data?.map((subitem, index) => (
-                    <>
-                      {subitem.categoryId === item._id && (
-                        <li>
-                          <label>
-                            {subitem.subCategoryName}
-                            <input
-                              type="checkbox"
-                              onClick={() => HandleTick(subitem._id)}
-                            />
-                            <span className="checkmark"></span>
-                          </label>
-                        </li>
-                      )}
-                    </>
-                  ))}{" "}
-                </ul>
+
+                {subcategoryDropDown[index] && (
+                  <div
+                    className="dropTogggle"
+                    onClick={() => HandleSubCategoryDropDown(index)}
+                  >
+                    <i className="fa fa-minus" />{" "}
+                  </div>
+                )}
+                {!subcategoryDropDown[index] && (
+                  <div
+                    className="dropTogggle"
+                    onClick={() => HandleSubCategoryDropDown(index)}
+                  >
+                    <i className="fa fa-plus-square" />{" "}
+                  </div>
+                )}
+
+                {subcategoryDropDown[index] && (
+                  <ul style={{ maxHeight: "165px" }}>
+                    {subCategory.subCategories.data?.map((subitem, index) => (
+                      <React.Fragment key={subitem._id}>
+                        {subitem.categoryId === item._id && (
+                          <li>
+                            <label>
+                              {subitem.subCategoryName}
+                              <input
+                                type="checkbox"
+                                onClick={() => HandleTick(subitem._id)}
+                              />
+                              <span className="checkmark"></span>
+                            </label>
+                          </li>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </ul>
+                )}
               </div>
             )}
           </React.Fragment>

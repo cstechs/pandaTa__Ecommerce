@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
-import $ from "jquery";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 
 const SellerApplication = () => {

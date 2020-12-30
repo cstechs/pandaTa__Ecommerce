@@ -22,6 +22,7 @@ const chatReducer = (state = initState, action) => {
         loading: false,
       };
     case CHAT_CREATE_SUCCESS:
+      console.log("res", action.payload);
       return {
         ...state,
         chats: action.payload.data,

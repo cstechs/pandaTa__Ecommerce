@@ -12,17 +12,28 @@ import RelatedProduct from "../partials/relatedProducts";
 // import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import Chat from "../partials/Chat";
 import Loader from "../partials/loader";
+import { getUser } from "../../../redux/_actions/userAction";
 
 const SingleProduct = () => {
   const product = useSelector((state) => state.product);
   // const chat = useSelector((state) => state.chat);
+  const users = useSelector((state) => state.user.users);
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  var oldwishList = JSON.parse(localStorage.getItem("WishList")) || [];
+  const [newWishList, setNewWishList] = useState({});
+
+  // console.log("wish", oldwishList);
   // const [checkSender, setCheckSender] = useState(null);
   const arr = subCategory?.subCategories?.data?.filter(
     (x) => x._id === product?.product?.data.productSubCategory
   );
+  const subId = window.location.pathname.split("/")[2];
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   // const SenderCheckFunction = () => {
   //   if (user.role === "seller") {
@@ -75,9 +86,11 @@ const SingleProduct = () => {
     setStartChatShown(false);
   };
   useEffect(() => {
-    dispatch(getProductById(window.location.pathname.split("/")[2]));
     dispatch(getSubCategory());
   }, [RelatedProductShown]);
+  useEffect(() => {
+    dispatch(getProductById(subId));
+  }, [subId]);
 
   const increment = () => {
     setquantity(quantity + 1);
@@ -88,8 +101,22 @@ const SingleProduct = () => {
     }
   };
 
-  const addToCart = (e, user, quantity) => {
+  const addToCart = (e, user) => {
     dispatch(addItemToCart(e, user, quantity));
+  };
+
+  const addToWishList = () => {
+    // console.log(wishList);
+    var newData = product?.product?.data;
+    console.log("new", newData);
+    if (localStorage.getItem("WishList") == null) {
+      localStorage.setItem("WishList", "[]");
+    }
+    var oldData = JSON.parse(localStorage.getItem("WishList"));
+    console.log("olddata", oldData);
+    oldData.push(newData);
+    console.log("olddata", oldData);
+    localStorage.setItem("WishList", JSON.stringify(oldData));
   };
 
   // const onSubmit = (e) => {
@@ -105,6 +132,10 @@ const SingleProduct = () => {
   useEffect(() => {
     dispatch(getChat());
   }, [getChat]);
+
+  if (product && users && subCategory === undefined) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -173,13 +204,16 @@ const SingleProduct = () => {
                       disabled={user ? false : true}
                       className="AddToCart ripple"
                       onClick={() =>
-                        addToCart(product?.product?.data._id, user._id, 1)
+                        addToCart(product?.product?.data._id, user._id)
                       }
                     >
                       Add To Cart
                     </button>
                     <button className="AddToWishlist">
-                      <i className="fa fa-heart" />
+                      <i
+                        className="fa fa-heart"
+                        onClick={() => addToWishList()}
+                      />
                     </button>
                     <hr />
                     <h6>
@@ -189,7 +223,11 @@ const SingleProduct = () => {
                     </h6>
                     <h6 className="mt-3">
                       <span className="mr-2 font-14">Supplier's Name : </span>
-                      Supplier’s Name Here
+                      {
+                        users.find(
+                          (x) => x._id === product?.product?.data?.createdBy
+                        )?.userName
+                      }
                     </h6>
                     {user && (
                       <button className="chatButton" onClick={() => ChatShow()}>

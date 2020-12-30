@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
 
 import productimg from "../../../assets/images/user/product.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../../redux/_actions/userAction";
 
 const Product = () => {
   const wish = useSelector((state) => state.wishlist);
-  console.log("wish", wish.wishLists);
+  const users = useSelector((state) => state.user.users);
+  const dispatch = useDispatch();
+  const [wishList, setWishList] = useState(
+    JSON.parse(localStorage.getItem("WishList"))
+  );
+  console.log(wishList);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <>
       <div className="component">
@@ -26,22 +37,31 @@ const Product = () => {
       <div className="wishList">
         <div className="container-fluid">
           <div className="row">
-            {wish.wishLists.map((item) => (
+            {wishList.map((item) => (
               <div className="col-md-3 col-6">
-                <div className="product">
-                  <i className="fa fa-heart"></i>
-                  <img src={productimg} alt="" />
-                  <div className="content">
-                    <div className="content-left">
-                      <span className="vendor">Supplier’s Name Here</span>
-                      <span className="product_name">Product Name Here</span>
-                      <span className="product_price">$29,354.75</span>
-                    </div>
-                    <div className="content-right">
-                      <i className="fa fa-caret-right"></i>
+                <Link to={`/product/${item._id}`}>
+                  <div className="product">
+                    {/* <i className="fa fa-heart"></i> */}
+                    <img src={item.productImage} alt="" />
+                    <div className="content">
+                      <div className="content-left">
+                        <span className="vendor">
+                          {
+                            users.find((x) => x._id === item.createdBy)
+                              ?.userName
+                          }
+                        </span>
+                        <span className="product_name">{item.productName}</span>
+                        <span className="product_price">
+                          {item.productPrice}
+                        </span>
+                      </div>
+                      <div className="content-right">
+                        <i className="fa fa-caret-right"></i>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>

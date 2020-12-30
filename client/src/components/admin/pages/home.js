@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Navbar from "../partials/topnavbar";
 import Footer from "../partials/footer";
@@ -11,13 +11,12 @@ import cardbodyimg3 from "../../../assets/images/admin/current-progress-img-3.pn
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import { Line } from "react-chartjs-2";
 import $ from "jquery";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
   const [chartData, setChartData] = useState({});
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.user.users);
-  const [viewers, setViewers] = useState(Number);
+  // const users = useSelector((state) => state.user.users);
 
   const chart = () => {
     setChartData({
@@ -49,14 +48,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-
-  useEffect(() => {
-    setViewers((prev) => {
-      prev = users.filter((x) => x.role === "customer").length;
-      return prev;
-    });
-  }, [users]);
-  console.log(viewers);
 
   useEffect(() => {
     chart();
@@ -103,7 +94,7 @@ const Home = () => {
                     <h4 className="mt-0 font-13">Total Views</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        <span className="count">389{viewers}</span>K
+                        <span className="count">389</span>K
                       </h2>
                       <p className="text-danger mb-0 font-weight-bolder">
                         <i className="fa fa-arrow-down mr-1" />
@@ -197,24 +188,6 @@ const Home = () => {
               <div className="row">
                 <div className="col-lg-8">
                   <div className="card-box">
-                    <div className="dropdown float-right">
-                      <a
-                        className=" arrow-none card-drop"
-                        data-toggle="dropdown"
-                        aria-expanded="false"
-                        href="#"
-                      >
-                        <i className="mdi mdi-dots-vertical" />
-                      </a>
-                      <div className="dropdown-menu dropdown-menu-right">
-                        <a className="dropdown-item" href="#">
-                          Settings
-                        </a>
-                        <a className="dropdown-item" href="#">
-                          Action
-                        </a>
-                      </div>
-                    </div>
                     <h4 className="header-title">Referrer</h4>
                     <div className="table-responsive mt-3">
                       <table className="table mb-0">
@@ -286,24 +259,6 @@ const Home = () => {
                 <div className="col-xl-4 col-lg-4">
                   <div className="card">
                     <div className="card-body">
-                      <div className="dropdown float-right">
-                        <a
-                          className=" arrow-none card-drop"
-                          data-toggle="dropdown"
-                          aria-expanded="false"
-                          href="#"
-                        >
-                          <i className="mdi mdi-dots-vertical" />
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                          <a className="dropdown-item" href="#">
-                            Settings
-                          </a>
-                          <a className="dropdown-item" href="#">
-                            Action
-                          </a>
-                        </div>
-                      </div>
                       <h4 className="header-title mb-3">Inbox</h4>
                       <div
                         className="inbox-widget"

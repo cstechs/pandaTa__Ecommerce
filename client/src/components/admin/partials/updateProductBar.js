@@ -6,22 +6,16 @@ import { setAlert } from "../../../redux/_actions/alertAction";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getSubCategoryByCategoryId } from "../../../redux/_actions/subCategoryAction";
-import { getCategoryBySubCategoryId } from "../../../redux/_actions/categoryAction";
+// import { getCategoryBySubCategoryId } from "../../../redux/_actions/categoryAction";
 
 const UpdateProductBar = (props) => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: "image/jpeg, image/png",
   });
-
-  // const product = useSelector(state => state.product);
   const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
-  //console.log("cat", category?.categories?.data);
-  //console.log("sub", subCategory?.subCategories?.data);
-  //   {
-  //     console.log(props.productId);
-  //   }
+
   const [newProduct, setNewProduct] = useState({
     productName: props.products.productName,
     productQuantity: props.products.productQuantity,
@@ -41,14 +35,12 @@ const UpdateProductBar = (props) => {
     productSubCategory,
   } = newProduct;
 
-  console.log("check", newProduct);
-
-  var arr = category?.categories?.data?.find(
-    (z) =>
-      z._id ===
-      subCategory.subCategories?.data?.find((x) => x._id === productSubCategory)
-        ?.categoryId
-  )?.categoryName;
+  // var arr = category?.categories?.data?.find(
+  //   (z) =>
+  //     z._id ===
+  //     subCategory.subCategories?.data?.find((x) => x._id === productSubCategory)
+  //       ?.categoryId
+  // );
 
   const onChange = (e) =>
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -65,6 +57,12 @@ const UpdateProductBar = (props) => {
     dispatch(getSubCategory());
   }, []);
 
+  // useEffect(() => {
+  //   if (arr) {
+  //     dispatch(getCategoryBySubCategoryId(arr._id));
+  //     setNewProduct((prev) => ({ ...prev, productCategory: arr._id }));
+  //   }
+  // }, []);
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -85,7 +83,6 @@ const UpdateProductBar = (props) => {
       data.append("productDescription", newProduct.productDescription);
       data.append("productSubCategory", newProduct.productSubCategory);
       data.append("productImage", newProduct.productImage);
-      console.log("data", data);
       dispatch(updateProduct(data, props.products._id));
     }
   };
@@ -159,6 +156,15 @@ const UpdateProductBar = (props) => {
                     value={productCategory}
                     onChange={onCategoryChange}
                     required
+                    defaultValue={
+                      category?.categories?.data?.find(
+                        (z) =>
+                          z._id ===
+                          subCategory.subCategories?.data?.find(
+                            (x) => x._id === productSubCategory
+                          )?.categoryId
+                      )?.categoryName
+                    }
                   >
                     <option>
                       {

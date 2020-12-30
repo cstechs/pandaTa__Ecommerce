@@ -39,6 +39,7 @@ import VerifyView from "./components/user/auth/verifyPage";
 import Alerts from "./components/admin/partials/alerts";
 
 import { getProduct } from "./redux/_actions/productAction";
+import Loader from "./components/user/partials/loader";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -51,6 +52,9 @@ function App() {
   useEffect(() => {
     dispatch(getProduct());
   }, [dispatch]);
+  if (product === undefined) {
+    return <Loader />;
+  }
 
   return (
     <>
