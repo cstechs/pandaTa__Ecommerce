@@ -4,7 +4,6 @@ import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
 
-import productimg from "../../../assets/images/user/product.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../redux/_actions/userAction";
 
