@@ -8,12 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../redux/_actions/userAction";
 
 const Product = () => {
-  const wish = useSelector((state) => state.wishlist);
   const users = useSelector((state) => state.user.users);
   const dispatch = useDispatch();
-  const [wishList, setWishList] = useState(
-    JSON.parse(localStorage.getItem("WishList"))
-  );
+  const [wishList] = useState(JSON.parse(localStorage.getItem("WishList")));
   console.log(wishList);
 
   useEffect(() => {
