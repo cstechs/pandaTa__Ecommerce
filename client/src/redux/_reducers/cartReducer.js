@@ -29,7 +29,7 @@ const cartReducer = (state = initState, action) => {
     case CART_CREATE_SUCCESS:
       return {
         ...state,
-        cartItems: action.payload,
+        cartItems: action.payload.data,
       };
     case CART_CREATE_FAIL:
       return {
@@ -44,10 +44,8 @@ const cartReducer = (state = initState, action) => {
       };
 
     case CART_INCREMENT_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
-        cartItems: action.payload,
       };
     case CART_INCREMENT_FAIL:
       return {

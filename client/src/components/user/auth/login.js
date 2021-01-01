@@ -26,18 +26,25 @@ const Login = (props) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    if (email === "" || password === "" || role === "") {
       dispatch(setAlert("Please enter all the fields.", "danger"));
+      console.log("hello");
     } else {
-      dispatch(login(email, password));
-
+      if (role === "customer") {
+        dispatch(login(email, password));
+      } else if (role === "seller") {
+        //dispatch(login(email, password));
+        console.log("hehe");
+      } else {
+        dispatch(setAlert("Invalid Credantials", "danger"));
+      }
       //window.location.reload();
     }
   };
   const LoginClose = () => {
-    console.log("lognclcclicked");
     props.loginHandler();
   };
 
@@ -71,6 +78,17 @@ const Login = (props) => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
               />
+              <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <option defaultValue disabled>
+                  Select Role
+                </option>
+                <option name="customer" value="customer">
+                  Customer
+                </option>
+                <option name="seller" value="seller">
+                  Seller
+                </option>
+              </select>
               <div className="remember">
                 <span>
                   <label className="check">

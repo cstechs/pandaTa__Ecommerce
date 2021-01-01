@@ -75,21 +75,21 @@ export const removeCart = () => async (dispatch) => {
   }
 };
 
-export const subtractCartQuantity = (productId) => async (dispatch) => {
+export const subtractCartQuantity = (productId, cartId) => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.patch(
       "/api/cart/subtractcartquantity",
-      { productId },
+      { productId, cartId },
       config
     );
-    console.log(res.data);
+
+    dispatch(getCart());
     dispatch(
       setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
     );
     dispatch({ type: CART_DECREMENT_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log(err);
     dispatch(
       setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
     );
@@ -97,21 +97,22 @@ export const subtractCartQuantity = (productId) => async (dispatch) => {
   }
 };
 
-export const addCartQuantity = (productId) => async (dispatch) => {
+export const addCartQuantity = (productId, cartId) => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.patch(
       "/api/cart/addquantitycart",
-      { productId },
+      { productId, cartId },
       config
     );
 
     // dispatch(
     //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
     // );
+
+    dispatch(getCart());
     dispatch({ type: CART_INCREMENT_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log(err);
     dispatch(
       setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
     );
@@ -119,12 +120,13 @@ export const addCartQuantity = (productId) => async (dispatch) => {
   }
 };
 
-export const removeCartItem = (id) => async (dispatch) => {
+export const removeCartItem = (cartId, id) => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
+  console.log("cartID", cartId, "id", id);
   try {
     const res = await axios.delete(
-      "/api/cart/removeproductcart/" + id,
-      { id },
+      "/api/cart/removeproductcart/" + cartId,
+      { data: { id: id } },
       config
     );
     console.log("deleted", res);

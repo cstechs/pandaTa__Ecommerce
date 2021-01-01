@@ -4,6 +4,8 @@ import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
+import { useDispatch } from "react-redux";
+import { sellerregister } from "../../../redux/_actions/sellerAction";
 
 const SellerApplication = () => {
   const [applicationShown, setapplicationShown] = useState(true);
@@ -12,6 +14,7 @@ const SellerApplication = () => {
   const [contactInfoShown, setcontactInfoShown] = useState(false);
   const [sendCodeShown, setsendCodeShown] = useState(false);
   const [thanksShown, setthanksShown] = useState(false);
+  const dispatch = useDispatch();
 
   const [newUser, setNewUser] = useState({
     userEmail: "",
@@ -40,7 +43,6 @@ const SellerApplication = () => {
     userCountry: "",
     userPhNumber: "",
     userpassword: "",
-    role: "customer",
   });
 
   const {
@@ -58,9 +60,11 @@ const SellerApplication = () => {
     twitterSocialAccountLink,
     instagramSocialAccountLink,
     userGender,
+    userName,
     userFirstName,
     userMiddleName,
     userLastName,
+    userpassword,
     userTitle,
     userAddress,
     userAppartment,
@@ -71,6 +75,8 @@ const SellerApplication = () => {
   } = newUser;
   const onChange = (e) =>
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
+  const handleOnUploadFile = (e) =>
+    setNewUser({ ...newUser, [e.target.name]: e.target.files[0] });
   const ApplicationCriteria = (e) => {
     e.preventDefault();
     setapplicationShown(false);
@@ -113,8 +119,75 @@ const SellerApplication = () => {
 
   const onsubmit = (e) => {
     e.preventDefault();
-    setcontactInfoShown(false);
-    setsendCodeShown(true);
+    if (
+      userEmail === "" ||
+      userImage === "" ||
+      hearAboutPandata === "" ||
+      businessName === "" ||
+      businessType === "" ||
+      businessMainSaleChannel === "" ||
+      businessYearEstablish === "" ||
+      businessIdentityType === "" ||
+      businessIdNumber === "" ||
+      userGender === "" ||
+      userName === "" ||
+      userFirstName === "" ||
+      userMiddleName === "" ||
+      userLastName === "" ||
+      userpassword === "" ||
+      userTitle === "" ||
+      userAddress === "" ||
+      userAppartment === "" ||
+      userCity === "" ||
+      userZipCode === "" ||
+      userPhNumber === ""
+    ) {
+      console.log("chai peelo");
+    } else if (
+      fbSocialAccountLink === pinterestSocialAccountLink &&
+      fbSocialAccountLink === twitterSocialAccountLink &&
+      fbSocialAccountLink === instagramSocialAccountLink
+    ) {
+      console.log("gg");
+    } else {
+      console.log("user", newUser);
+      const data = new FormData();
+      data.append("userEmail", newUser.userEmail);
+      data.append("userImage", newUser.userImage);
+      data.append("hearAboutPandata", newUser.hearAboutPandata);
+      data.append("businessName", newUser.businessName);
+      data.append("businessType", newUser.businessType);
+      data.append("businessMainSaleChannel", newUser.businessMainSaleChannel);
+      data.append("businessYearEstablish", newUser.businessYearEstablish);
+      data.append("businessIdentityType", newUser.businessIdentityType);
+      data.append("businessIdNumber", newUser.businessIdNumber);
+      data.append("fbSocialAccountLink", newUser.fbSocialAccountLink);
+      data.append(
+        "pinterestSocialAccountLink",
+        newUser.pinterestSocialAccountLink
+      );
+      data.append("twitterSocialAccountLink", newUser.twitterSocialAccountLink);
+      data.append(
+        "instagramSocialAccountLink",
+        newUser.instagramSocialAccountLink
+      );
+      data.append("userGender", newUser.userGender);
+      data.append("userName", newUser.userName);
+      data.append("userFirstName", newUser.userFirstName);
+      data.append("userMiddleName", newUser.userMiddleName);
+      data.append("userLastName", newUser.userLastName);
+      data.append("userpassword", newUser.userpassword);
+      data.append("userTitle", newUser.userTitle);
+      data.append("userAddress", newUser.userAddress);
+      data.append("userAppartment", newUser.userAppartment);
+      data.append("userCity", newUser.userCity);
+      data.append("userZipCode", newUser.userZipCode);
+      data.append("userCountry", newUser.userCountry);
+      data.append("userPhNumber", newUser.userPhNumber);
+      dispatch(sellerregister(data));
+      setcontactInfoShown(false);
+      setsendCodeShown(true);
+    }
   };
 
   return (
@@ -130,7 +203,7 @@ const SellerApplication = () => {
         <li className="breadcrumb-item active">Seller Application</li>
       </ol>
       <div className="sellerApplication">
-        <form onSubmit={onsubmit}>
+        <form onSubmit={onsubmit} encType="multipart/form-data">
           {applicationShown && (
             <>
               <div className="head">
@@ -168,8 +241,7 @@ const SellerApplication = () => {
                         <input
                           type="file"
                           name="userImage"
-                          value={userImage}
-                          onChange={onChange}
+                          onChange={handleOnUploadFile}
                         />
                       </label>
                     </div>
@@ -377,7 +449,7 @@ const SellerApplication = () => {
                       </label>
                       <input
                         type="url"
-                        name=""
+                        name="fbSocialAccountLink"
                         value={fbSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
@@ -390,7 +462,7 @@ const SellerApplication = () => {
                       </label>
                       <input
                         type="url"
-                        name=""
+                        name="pinterestSocialAccountLink"
                         value={pinterestSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
@@ -402,7 +474,7 @@ const SellerApplication = () => {
                       </label>
                       <input
                         type="url"
-                        name=""
+                        name="twitterSocialAccountLink"
                         value={twitterSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
@@ -415,7 +487,7 @@ const SellerApplication = () => {
                       </label>
                       <input
                         type="url"
-                        name=""
+                        name="instagramSocialAccountLink"
                         value={instagramSocialAccountLink}
                         onChange={onChange}
                         placeholder="paste url here"
@@ -466,7 +538,12 @@ const SellerApplication = () => {
                   <div className="row mt-2">
                     <div className="col-md-3 mt-1">
                       <label>Name</label>
-                      <select required value={userGender}>
+                      <select
+                        required
+                        value={userGender}
+                        name="userGender"
+                        onChange={onChange}
+                      >
                         <option>Mr.</option>
                         <option>Mrs.</option>
                       </select>
@@ -474,7 +551,7 @@ const SellerApplication = () => {
                     <div className="col-md-3 mt-4">
                       <input
                         type="text"
-                        name=""
+                        name="userFirstName"
                         value={userFirstName}
                         onChange={onChange}
                         required
@@ -484,7 +561,7 @@ const SellerApplication = () => {
                     <div className="col-md-3 mt-4">
                       <input
                         type="text"
-                        name=""
+                        name="userMiddleName"
                         value={userMiddleName}
                         onChange={onChange}
                         required
@@ -494,55 +571,75 @@ const SellerApplication = () => {
                     <div className="col-md-3 mt-4">
                       <input
                         type="text"
-                        name=""
+                        name="userLastName"
                         value={userLastName}
                         onChange={onChange}
                         required
                         placeholder="Last Name"
                       />
                     </div>
+                    <div className="col-md-6 mt-4">
+                      <input
+                        type="text"
+                        name="userName"
+                        value={userName}
+                        onChange={onChange}
+                        required
+                        placeholder="User Name "
+                      />
+                    </div>
+                    <div className="col-md-6 mt-4">
+                      <input
+                        type="password"
+                        name="userpassword"
+                        value={userpassword}
+                        onChange={onChange}
+                        required
+                        placeholder="Enter Password"
+                      />
+                    </div>
                     <div className="col-12 mt-3">
                       <label>Title</label>
                       <input
                         type="text"
-                        name=""
+                        name="userTitle"
                         value={userTitle}
                         onChange={onChange}
                         required
                         placeholder="eg. CEO, Owner, Manager, Designer, Merchandiser"
                       />
                     </div>
-                    <div className="col-12 mt-4">
+                    <div className="col-12 mt-2">
                       <label className="font-15">
                         BUSINESS MAILING ADDRESS
                       </label>
                       <div className="underLine w-100"></div>
                     </div>
-                    <div className="col-md-4 mt-2">
+                    <div className="col-md-4">
                       <label>Street Address</label>
                       <input
                         type="text"
-                        name=""
+                        name="userAddress"
                         value={userAddress}
                         onChange={onChange}
                         required
                       />
                     </div>
-                    <div className="col-md-4 mt-2">
+                    <div className="col-md-4">
                       <label>Apt / Suite / Other</label>
                       <input
                         type="text"
-                        name=""
+                        name="userAppartment"
                         value={userAppartment}
                         onChange={onChange}
                         required
                       />
                     </div>
-                    <div className="col-md-4 mt-2">
+                    <div className="col-md-4">
                       <label>City</label>
                       <input
                         type="text"
-                        name=""
+                        name="userCity"
                         value={userCity}
                         onChange={onChange}
                         required
@@ -552,7 +649,7 @@ const SellerApplication = () => {
                       <label>Zip / Postal Code</label>
                       <input
                         type="text"
-                        name=""
+                        name="userZipCode"
                         value={userZipCode}
                         onChange={onChange}
                         required
@@ -561,7 +658,7 @@ const SellerApplication = () => {
                     <div className="col-md-4 mt-4">
                       <label>Country</label>
                       <select
-                        name=""
+                        name="userCountry"
                         value={userCountry}
                         required
                         onChange={onChange}
@@ -579,7 +676,7 @@ const SellerApplication = () => {
                       <label>Phone Number</label>
                       <input
                         type="number"
-                        name=""
+                        name="userPhNumber"
                         value={userPhNumber}
                         required
                         onChange={onChange}

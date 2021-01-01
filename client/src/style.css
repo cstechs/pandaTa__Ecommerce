@@ -90,9 +90,12 @@ body ::-webkit-scrollbar-thumb {
 .modal {
   width: 35% !important;
   margin: auto;
-  overflow: hidden !important;
+  overflow-y: scroll !important;
 }
 
+.modal::-webkit-scrollbar {
+  width: 0px;
+}
 .terms {
   color: #838996;
   font-size: 13px;
@@ -155,6 +158,9 @@ h2 {
   height: 160px;
   margin-top: -80px;
   margin-left: -80px;
+}
+.infinite-scroll-component__outerdiv {
+  width: 100%;
 }
 .breadcrumb {
   padding-left: 35px !important;

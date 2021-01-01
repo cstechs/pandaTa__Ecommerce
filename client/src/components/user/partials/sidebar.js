@@ -5,8 +5,9 @@ import Login from "../auth/login";
 import Register from "../auth/register";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
+import { register } from "../../../redux/_actions/authAction";
 
-const Sidebar = () => {
+const Sidebar = ({ LoginHandler, RegisterHandler }) => {
   function toggle() {
     document.getElementById("sideBar").classList.toggle("Toggleshow");
   }
@@ -35,6 +36,12 @@ const Sidebar = () => {
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
 
+  const Login = () => {
+    LoginHandler();
+  };
+  const Register = () => {
+    RegisterHandler();
+  };
   useEffect(() => {
     if (state.isAuthenticated) {
       setPreviewShown(true);
@@ -86,39 +93,22 @@ const Sidebar = () => {
       <div id="Account">
         {!isPreviewShown && (
           <>
-            <button
-              className="ripple button-base"
-              data-toggle="modal"
-              data-target="#exampleModalCenter1"
-            >
+            <button className="ripple button-base" onClick={() => Login()}>
               Log in
             </button>
-            <button
-              className="ripple button-base"
-              data-toggle="modal"
-              data-target="#exampleModalCenter2"
-            >
+            <button className="ripple button-base" onClick={() => Register()}>
               Sign up
             </button>
-            <Link to="sellerapplication/">
+            <Link to="/sellerapplication">
               <button className="ripple button-base">Sign up as seller</button>
             </Link>
           </>
         )}
 
         {isPreviewShown && (
-          <>
-            <button
-              className="ripple button-base"
-              data-toggle="modal"
-              data-target="#exampleModalCenter1"
-            >
-              Request Quote
-            </button>
-            <Link to="admin/">
-              <button className="ripple button-base">Dashboard</button>
-            </Link>
-          </>
+          <Link to="admin/">
+            <button className="ripple button-base">Dashboard</button>
+          </Link>
         )}
         <p>
           <a href="http://cstechsoftwares.com/">
@@ -134,12 +124,6 @@ const Sidebar = () => {
             <i className="fab fa-instagram"></i>
           </a>
         </p>
-      </div>
-      <div className="modal" role="dialog">
-        <Login />
-      </div>
-      <div className="modal" role="dialog">
-        <Register />
       </div>
     </>
   );

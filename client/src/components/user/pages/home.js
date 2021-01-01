@@ -115,7 +115,7 @@ const Home = () => {
           margin={8}
         >
           {subCategory.subCategories.data?.map(({ _id, subCategoryName }) => (
-            <Link to="/product">
+            <Link to="/product" key={_id}>
               <div className="item" key={_id}>
                 <img
                   src={

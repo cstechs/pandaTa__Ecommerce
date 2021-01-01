@@ -8,7 +8,6 @@ import Sidebar from "./sidebar";
 import { getCart } from "../../../redux/_actions/cartAction";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getProduct } from "../../../redux/_actions/productAction";
-import RegisterSeller from "../auth/registerSeller";
 import Loader from "./loader";
 const Header = () => {
   const toggle = () => {
@@ -26,12 +25,16 @@ const Header = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const state = useSelector((state) => state.auth);
   const cart = useSelector((state) => state.cart);
+  const cartItem = useSelector((state) => state.cart.cartItems);
   //const history = useHistory();
   //console.log(cart?.cartItems?.data?.items?.length);
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);
   const [searchProduct, setSearchProduct] = useState([]);
+
+  const wishList = JSON.parse(localStorage.getItem("WishList"));
+
   const handleChange = (e) => {
     let temp = product?.products?.data?.filter((item) =>
       item.productName.toLowerCase().includes(e.target.value.toLowerCase())
@@ -44,6 +47,9 @@ const Header = () => {
   useEffect(() => {
     dispatch(getCart());
   }, []);
+  if (user) {
+    var userCart = cartItem?.data?.find((x) => x.createdBy === user._id);
+  }
 
   const LoginHandler = () => {
     setLoginView(!loginView);
@@ -55,6 +61,8 @@ const Header = () => {
   if (state.loading === false) {
     window.location.reload();
   }
+
+  useEffect(() => {}, [wishList?.length]);
 
   useEffect(() => {
     if (user) {
@@ -140,15 +148,11 @@ const Header = () => {
                       >
                         Sign up
                       </button>
-
-                      <button
-                        className="ripple button-base"
-                        onClick={() =>
-                          setSellerRegisterView(!SellerRegisterView)
-                        }
-                      >
-                        Sign up as seller
-                      </button>
+                      <Link to="/sellerapplication">
+                        <button className="ripple button-base">
+                          Sign up as seller
+                        </button>
+                      </Link>
 
                       <i className="fa fa-search searc" onClick={search}></i>
                       <Link to="/wishlist">
@@ -176,15 +180,14 @@ const Header = () => {
                       <i className="fa fa-search searc" onClick={search}></i>
                       <Link to="/wishlist">
                         <i className="fa fa-heart"></i>
+                        <span className="badge-darkpurple rounded-circle notification-icon-badge">
+                          {wishList?.length || 0}
+                        </span>
                       </Link>
                       <Link to="/cart">
                         <i className="fa fa-shopping-cart"></i>
                         <span className="badge-darkpurple rounded-circle notification-icon-badge">
-                          {product ? (
-                            cart?.cartItems?.data?.items?.length
-                          ) : (
-                            <Loader />
-                          )}
+                          {(product && userCart?.items?.length) || 0}
                         </span>
                       </Link>
                       <div className="btn-group">
@@ -238,14 +241,12 @@ const Header = () => {
               <Register registerHandler={RegisterHandler} />
             </div>
           )}
-          {SellerRegisterView && (
-            <div className="modal" role="dialog">
-              <RegisterSeller />
-            </div>
-          )}
           <div className="Side_Bar" id="sideBar">
-            <Sidebar />
-          </div>{" "}
+            <Sidebar
+              LoginHandler={LoginHandler}
+              RegisterHandler={RegisterHandler}
+            />
+          </div>
         </div>
       ) : (
         <Loader />

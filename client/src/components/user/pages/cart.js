@@ -27,6 +27,9 @@ const Cart = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const users = useSelector((state) => state.user.users);
   const history = useHistory();
+  const userCart = cartItem?.data?.find((x) => x.createdBy === user._id);
+
+  // console.log("carts", userCart?.createdBy);
 
   if (!user) {
     history.push("/");
@@ -40,10 +43,6 @@ const Cart = () => {
   // }
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getUser());
@@ -66,7 +65,7 @@ const Cart = () => {
   //     // dispatch(cartIncrement(_id,quantity))
   //   };
 
-  const handleAddQuantity = (index, Quantity, id, total) => {
+  const handleAddQuantity = (id) => {
     // setQuantity((prev) => {
     //   prev.splice(index, 1, {
     //     itemQuantity: Quantity + 1,
@@ -76,9 +75,10 @@ const Cart = () => {
     //   dispatch(addItemToCart(id, +1));
     //   return [...prev];
     // });
-    dispatch(addCartQuantity(id));
+    // console.log(id);
+    dispatch(addCartQuantity(id, userCart?.createdBy));
   };
-  const handleRemoveQuantity = (index, Quantity, id, total) => {
+  const handleRemoveQuantity = (id, quantity) => {
     // if (Quantity > 0)
     //   setQuantity((prev) => {
     //     prev.splice(index, 1, {
@@ -89,13 +89,20 @@ const Cart = () => {
 
     // return [...prev];
     // });
-    dispatch(subtractCartQuantity(id));
+    if (quantity > 1) {
+      dispatch(subtractCartQuantity(id, userCart?.createdBy));
+    }
   };
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+  // useEffect(() => {
+  //   dispatch(getCart());
+  // }, []);
 
   const RemoveCart = (id) => {
-    console.log(id);
-    dispatch(removeCartItem(id));
-    window.location.reload();
+    dispatch(removeCartItem(userCart?.createdBy, id));
+    // window.location.reload();
   };
 
   return (
@@ -129,77 +136,77 @@ const Cart = () => {
                       </tr>
                     </thead>
                     {
-                      // cartItem?.data?.createdBy === user._id &&
-                      cartItem?.data?.items &&
-                        cartItem?.data?.items?.map((item, index) => {
-                          return (
-                            <tbody key={item._id}>
-                              <tr>
-                                <td>
-                                  <i
-                                    className="ti-close"
-                                    onClick={() =>
-                                      RemoveCart(item?.productId?._id)
-                                    }
-                                  ></i>
-                                </td>
-                                <td>
-                                  <div className="float-left">
-                                    <div className="imageBox">
-                                      <img
-                                        src={item?.productId?.productImage}
-                                        alt="ProductImage"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="float-left">
-                                    <h4>{item?.productId?.productName}</h4>
-                                    <span></span>
-                                  </div>
-                                </td>
-                                <td>{item?.productId?.productPrice} </td>
-                                <td>
-                                  <div className="position-relative">
-                                    <input
-                                      type="number"
-                                      value={item?.quantity}
-                                      className="border-right-0"
-                                      readOnly
-                                      //defaultValue={item?.quantity}
+                      userCart?.items?.map((item, index) => {
+                        return (
+                          <tbody key={item._id}>
+                            <tr>
+                              <td>
+                                <i
+                                  className="ti-close"
+                                  onClick={() =>
+                                    RemoveCart(item?.productId?._id)
+                                  }
+                                ></i>
+                              </td>
+                              <td>
+                                <div className="float-left">
+                                  <div className="imageBox">
+                                    <img
+                                      src={item?.productId?.productImage}
+                                      alt="ProductImage"
                                     />
-                                    <div className="AdjustQuantity">
-                                      <i
-                                        className="fa fa-plus border-bottom-0"
-                                        onClick={() =>
-                                          handleAddQuantity(
-                                            index,
-                                            quantity[index]?.itemQuantity,
-                                            item?.productId?._id,
-                                            item.total
-                                          )
-                                        }
-                                      />
-                                      <i
-                                        className="fa fa-minus"
-                                        onClick={() =>
-                                          handleRemoveQuantity(
-                                            index,
-                                            quantity[index].itemQuantity,
-                                            item?.productId?._id,
-                                            item.total
-                                          )
-                                        }
-                                      />
-                                    </div>
                                   </div>
-                                </td>
-                                <td>
-                                  <p>{item.total}</p>
-                                </td>
-                              </tr>
-                            </tbody>
-                          );
-                        })
+                                </div>
+                                <div className="float-left">
+                                  <h4>{item?.productId?.productName}</h4>
+                                  <span></span>
+                                </div>
+                              </td>
+                              <td>{item?.productId?.productPrice} </td>
+                              <td>
+                                <div className="position-relative">
+                                  <input
+                                    type="number"
+                                    value={item?.quantity}
+                                    className="border-right-0"
+                                    readOnly
+                                    //defaultValue={item?.quantity}
+                                  />
+                                  <div className="AdjustQuantity">
+                                    <i
+                                      className="fa fa-plus border-bottom-0"
+                                      onClick={() =>
+                                        handleAddQuantity(
+                                          // index,
+                                          // quantity[index]?.itemQuantity,
+                                          item?.productId?._id
+                                          // item.total
+                                        )
+                                      }
+                                    />
+                                    <i
+                                      className="fa fa-minus"
+                                      onClick={() =>
+                                        handleRemoveQuantity(
+                                          // index,
+                                          // quantity[index].itemQuantity,
+                                          // item?.productId?._id,
+                                          // item.total
+                                          item?.productId?._id,
+                                          item?.quantity
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <p>{item.total}</p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        );
+                      })
                       // ) : (
                       //   null
                       // )
@@ -209,13 +216,15 @@ const Cart = () => {
                     <div className="float-right">
                       <p>
                         Subtotal
-                        <span>{cartItem?.data?.subTotal}</span>
+                        <span>{userCart?.subTotal || 0}</span>
                       </p>
+
                       <p>
                         Shipping<span>$0.00</span>
                       </p>
                       <p>
-                        Total Amount<span>{cartItem?.data?.subTotal}</span>
+                        Total Amount
+                        <span>{userCart?.subTotal || 0}</span>
                       </p>
                     </div>
                   </div>

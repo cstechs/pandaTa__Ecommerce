@@ -76,10 +76,7 @@ const ProductSideBar = ({
         <h4 className="title">BROWSE BY CATEGORY</h4>
         {!categoryDropDown && (
           <div className="dropTogggle">
-            <i
-              className="fas fa-plus-square"
-              onClick={() => HandleCategoryDropDown()}
-            />
+            <i className="fe-plus" onClick={() => HandleCategoryDropDown()} />
           </div>
         )}
         {categoryDropDown && (
@@ -136,7 +133,7 @@ const ProductSideBar = ({
                     className="dropTogggle"
                     onClick={() => HandleSubCategoryDropDown(index)}
                   >
-                    <i className="fa fa-plus-square" />{" "}
+                    <i className="fe-plus" />{" "}
                   </div>
                 )}
 

@@ -6354,7 +6354,7 @@ a.close.disabled {
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;
-  border: 0 solid transparent;
+  border: 1 solid #e2e2e2;
   border-radius: 0.2rem;
   outline: 0;
 }

@@ -1383,6 +1383,14 @@ li.menuitem-active > a:not(.collapsed) > span.menu-arrow {
   right: 2px;
   text-align: center;
 }
+
+@media screen and (max-width: 763px) {
+.notification-icon-badge {
+  font-size: 9px;
+  padding: 1px 4px;
+  margin-top: -3px;
+}
+}
 .notification-list .noti-title {
   background-color: transparent;
   padding: 15px 20px;

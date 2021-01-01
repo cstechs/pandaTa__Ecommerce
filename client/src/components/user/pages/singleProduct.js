@@ -118,6 +118,7 @@ const SingleProduct = () => {
     console.log("olddata", oldData);
     localStorage.setItem("WishList", JSON.stringify(oldData));
   };
+  useEffect(() => {}, [addToWishList]);
 
   // const onSubmit = (e) => {
   //   e.preventDefault();

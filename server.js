@@ -10,6 +10,7 @@ const subCategory = require("./routes/subCategory");
 const cart = require("./routes/cart");
 const product = require("./routes/product");
 const user = require("./routes/user");
+const seller = require("./routes/seller");
 const chat = require("./routes/chat");
 const wish = require("./routes/wish");
 const sanitize = require("express-mongo-sanitize");
@@ -61,6 +62,7 @@ app.use("/api/chat", chat);
 app.use("/api/wish", wish);
 app.use("/api/auth", auth);
 app.use("/api/user", user);
+app.use("/api/seller", seller);
 
 //Redirect all other urls to client(frontend)
 app.get("*", (req, res) => {

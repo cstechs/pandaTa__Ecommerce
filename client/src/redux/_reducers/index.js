@@ -8,6 +8,7 @@ import cartReducer from "./cartReducer";
 import chatReducer from "./chatReducer";
 import wishlistReducer from "./wishlistReducer";
 import userReducer from "./usersReducer";
+import sellerReducer from "./sellerReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   chat: chatReducer,
   wishlist: wishlistReducer,
   user: userReducer,
+  seller: sellerReducer,
 });

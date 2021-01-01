@@ -51,7 +51,7 @@ const Productitems = ({ product, proId, catId }) => {
   // );
 
   return (
-    <InfiniteScroll dataLength={product.length} className="row">
+    <InfiniteScroll dataLength={product.length} className="row w-100">
       {product?.map(
         ({
           _id,

@@ -34,6 +34,19 @@
   font-weight: 600;
 }
 
+.Login select {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 4%;
+  outline: none !important;
+  border: 1px solid #c1c8d8;
+  padding: 8px;
+  color: #43425d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .Login input[type="submit"] {
   background: #43425d;
   padding: 10px 0;

@@ -1,6 +1,7 @@
 //const cartRepository = require('./repository.js')
 const Product = require("../models/Product");
 const car = require("../middleware/db");
+const { data } = require("jquery");
 
 exports.addItemToCart = async (req, res) => {
   const { productId, createdBy } = req.body;
@@ -156,10 +157,12 @@ exports.getCart = async (req, res) => {
 // };
 
 exports.removeProductCart = async (req, res) => {
-  var productId = req.params.id;
+  var cartId = req.params.id;
+  console.log("cart", cartId);
 
   try {
-    let cart = await car.cart();
+    let cart = await car.cart1(cartId);
+
     let productDetails = await Product.findById(productId);
 
     let indexFound = cart.items.findIndex(
@@ -197,9 +200,10 @@ exports.removeProductCart = async (req, res) => {
 };
 
 exports.subtractQuantityCart = async (req, res) => {
-  const { productId } = req.body;
+  const { productId, cartId } = req.body;
   try {
-    let cart = await car.cart();
+    let cart = await car.cart1(cartId);
+    //let cart = await car.cart();
     let quantity = await cart.items.quantity;
     let productDetails = await Product.findById({ _id: productId });
 
@@ -292,13 +296,14 @@ exports.subtractQuantityCart = async (req, res) => {
 };
 
 exports.addQuantityCart = async (req, res) => {
-  const { productId } = req.body;
+  const { productId, cartId } = req.body;
 
   try {
-    let cart = await car.cart();
+    let cart = await car.cart1(cartId);
+
     let quantity = await cart.items[0].quantity;
     let productDetails = await Product.findById({ _id: productId });
-    console.log("cart", cart, "qua", quantity, "pro", productDetails);
+
     if (!productDetails) {
       return res.status(500).json({
         type: "Not Found",
