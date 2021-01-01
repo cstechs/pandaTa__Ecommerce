@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-import ProductSideBar from "../partials/productSideBar";
+import SellerSideBar from "../partials/sellerSideBar";
 import productimg from "../../../assets/images/user/product.png";
 // import businessimg from "../../../assets/images/user/businessLogo.png";
 // import UserImage from "../../../assets/images/admin/users/user-2.jpg";
@@ -36,11 +36,6 @@ const Category = () => {
   // }
 
   // const category = useSelector((state) => state.category);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCategory());
-  }, [dispatch]);
 
   return (
     <>
@@ -62,7 +57,7 @@ const Category = () => {
           <div className="row">
             <div className="col-md-3">
               <div className="SideBar">
-                <ProductSideBar />
+                <SellerSideBar />
               </div>
             </div>
             <div className="col-md-9">

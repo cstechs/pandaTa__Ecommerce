@@ -14,7 +14,7 @@ import Chat from "../partials/Chat";
 import Loader from "../partials/loader";
 import { getUser } from "../../../redux/_actions/userAction";
 
-const SingleProduct = () => {
+const SingleProduct = (props) => {
   const product = useSelector((state) => state.product);
   // const chat = useSelector((state) => state.chat);
   const users = useSelector((state) => state.user.users);
@@ -29,11 +29,10 @@ const SingleProduct = () => {
   const arr = subCategory?.subCategories?.data?.filter(
     (x) => x._id === product?.product?.data.productSubCategory
   );
-  const subId = window.location.pathname.split("/")[2];
-
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
+  useEffect(() => {}, []);
 
   // const SenderCheckFunction = () => {
   //   if (user.role === "seller") {
@@ -89,8 +88,10 @@ const SingleProduct = () => {
     dispatch(getSubCategory());
   }, [RelatedProductShown]);
   useEffect(() => {
+    var subId = window.location.pathname.split("/")[2];
+
     dispatch(getProductById(subId));
-  }, [subId]);
+  }, []);
 
   const increment = () => {
     setquantity(quantity + 1);

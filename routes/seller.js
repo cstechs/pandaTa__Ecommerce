@@ -4,9 +4,11 @@ const multer = require("multer");
 
 const router = express.Router();
 
-const upload = multer().single("profileImage");
+const upload = multer().single("userImage");
 
 router.post("/register", upload, Seller.register);
 router.post("/login", Seller.login);
+router.get("/verify/:token", Seller.verify);
+router.get("/", Seller.index);
 
 module.exports = router;

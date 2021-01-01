@@ -102,16 +102,23 @@ export const verifyaccount = (token) => {
     try {
       const config = { header: { "Content-Type": "application/json" } };
       const res = await axios.get(`/api/auth/verify/` + token, config);
-
+      console.log("hi", res);
       dispatch(
         setAlert(SET_ALERT, { message: res.data, alertType: "success" })
       );
       dispatch({ type: VERIFY_SUCCESS, payload: res.data });
-    } catch (err) {
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
-      dispatch({ type: VERIFY_FAIL, payload: err.message });
+    } catch {
+      try {
+        const config = { header: { "Content-Type": "application/json" } };
+        const res = await axios.get(`/api/seller/verify/` + token, config);
+        console.log("hi", res);
+        dispatch(
+          setAlert(SET_ALERT, { message: res.data, alertType: "success" })
+        );
+        dispatch({ type: VERIFY_SUCCESS, payload: res.data });
+      } catch (err) {
+        console.log("hehe");
+      }
     }
   };
 };

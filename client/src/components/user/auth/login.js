@@ -5,10 +5,15 @@ import { Link } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS } from "../../../redux/types";
 import Register from "./register";
+import { getUser } from "../../../redux/_actions/userAction";
+import { sellerlogin } from "../../../redux/_actions/sellerAction";
 
 const Login = (props) => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const users = useSelector((state) => state.user.users);
+  const sellers = useSelector((state) => state.seller.sellers);
+  console.log("sellers", sellers);
 
   useEffect(() => {
     if (state.error === "Invalid Creds..") {
@@ -24,28 +29,39 @@ const Login = (props) => {
     // eslint-disable-next-line
   }, [state.isAuthenticated, state.error]);
 
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("customer");
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "" || role === "") {
       dispatch(setAlert("Please enter all the fields.", "danger"));
       console.log("hello");
     } else {
-      if (role === "customer") {
+      if (
+        role === "customer" &&
+        users.find((user) => user.email === email)?.role === "customer"
+      ) {
         dispatch(login(email, password));
-      } else if (role === "seller") {
-        //dispatch(login(email, password));
-        console.log("hehe");
       } else {
-        dispatch(setAlert("Invalid Credantials", "danger"));
+        dispatch(sellerlogin(email, password));
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
       //window.location.reload();
     }
   };
   const LoginClose = () => {
     props.loginHandler();
+  };
+  const RegisterShow = () => {
+    props.registerHandler();
   };
 
   return (
@@ -125,6 +141,10 @@ const Login = (props) => {
                 data-toggle="modal"
                 data-target="#exampleModalCenter1"
                 className="ripple button-base"
+                onClick={() => {
+                  LoginClose();
+                  RegisterShow();
+                }}
               >
                 Register
               </button>

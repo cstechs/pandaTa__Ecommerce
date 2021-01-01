@@ -32,33 +32,44 @@ const Product = () => {
       <div className="wishList">
         <div className="container-fluid">
           <div className="row">
-            {wishList.map((item) => (
-              <div className="col-md-3 col-6">
-                <Link to={`/product/${item._id}`}>
-                  <div className="product">
-                    {/* <i className="fa fa-heart"></i> */}
-                    <img src={item.productImage} alt="" />
-                    <div className="content">
-                      <div className="content-left">
-                        <span className="vendor">
-                          {
-                            users.find((x) => x._id === item.createdBy)
-                              ?.userName
-                          }
-                        </span>
-                        <span className="product_name">{item.productName}</span>
-                        <span className="product_price">
-                          {item.productPrice}
-                        </span>
-                      </div>
-                      <div className="content-right">
-                        <i className="fa fa-caret-right"></i>
+            {wishList ? (
+              wishList?.map((item) => (
+                <div className="col-md-3 col-6">
+                  <Link to={`/product/${item._id}`}>
+                    <div className="product">
+                      {/* <i className="fa fa-heart"></i> */}
+                      <img src={item.productImage} alt="" />
+                      <div className="content">
+                        <div className="content-left">
+                          <span className="vendor">
+                            {
+                              users.find((x) => x._id === item.createdBy)
+                                ?.userName
+                            }
+                          </span>
+                          <span className="product_name">
+                            {item.productName}
+                          </span>
+                          <span className="product_price">
+                            {item.productPrice}
+                          </span>
+                        </div>
+                        <div className="content-right">
+                          <i className="fa fa-caret-right"></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <div className="NoItem">
+                <p> No items In wishlist </p>
+                <Link to="/product" className="btn btn-purple">
+                  Add Item
                 </Link>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>

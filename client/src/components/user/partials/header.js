@@ -233,7 +233,10 @@ const Header = () => {
           </header>
           {loginView && (
             <div className="modal" role="dialog">
-              <Login loginHandler={LoginHandler} />
+              <Login
+                loginHandler={LoginHandler}
+                registerHandler={RegisterHandler}
+              />
             </div>
           )}
           {RegisterView && (

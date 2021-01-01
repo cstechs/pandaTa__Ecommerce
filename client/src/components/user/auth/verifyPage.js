@@ -21,9 +21,9 @@ const VerifyPage = (props) => {
       statusMessage = state.error;
       dispatch({ type: CLEAR_ERRORS });
     }
-    setTimeout(() => {
-      history.push("/");
-    }, 3000);
+    // setTimeout(() => {
+    //   history.push("/");
+    // }, 3000);
     // eslint-disable-next-line
   }, []);
 

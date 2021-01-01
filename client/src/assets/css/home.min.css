@@ -2039,7 +2039,25 @@
 .wishList .product:hover {
   border: 2px solid #e0e0e0;
 }
-
+.wishList .NoItem {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.wishList .NoItem p {
+  font-size: 27px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.wishList .NoItem a {
+  width: 150px;
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
 @media screen and (max-width: 1010px) {
   .wishList {
     width: 99%;
@@ -2929,6 +2947,7 @@ header .dropdown-item {
 header .dropdown-item:hover {
   background: #2f2f44;
   color: #f5f5f5;
+  cursor: pointer;
 }
 header .dropdown-item i {
   color: #f5f5f5;

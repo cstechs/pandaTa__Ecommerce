@@ -44,6 +44,7 @@ import Loader from "./components/user/partials/loader";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
+const user = JSON.parse(localStorage.getItem("user"));
 
 function App() {
   const product = useSelector((state) => state.product);
@@ -64,6 +65,7 @@ function App() {
           {/* USER PANEL ROUTES */}
           <Route exact path="/" component={UserPanel} />
           <Route exact path="/cart" component={UserCart} />
+
           <Route exact path="/checkout" component={UserCheckout} />
           <Route exact path="/product" component={UserProduct} />
           <Route exact path="/wishlist" component={UserWishlist} />
@@ -75,15 +77,20 @@ function App() {
           <Route exact path="/seller" component={UserSeller} />
           <Route exact path="/verify/:token" component={VerifyView} />
           <Route exact path="/reset/:token" component={ResetPassword} />
-          {product?.products?.data?.map(({ _id }) => (
-            <Route
-              exact
-              key={_id}
-              s
-              path={`/product/${_id}`}
-              component={UserSingleProduct}
-            />
-          ))}
+
+          {product?.products?.data ? (
+            product?.products?.data?.map(({ _id }) => (
+              <Route
+                exact
+                key={_id}
+                s
+                path={`/product/${_id}`}
+                component={UserSingleProduct}
+              />
+            ))
+          ) : (
+            <Loader />
+          )}
           {/* ADMIN PANEL ROUTES */}
           <PrivateRoute exact path="/admin" component={AdminPanel} />
           {/* <Route exact path='/admin/panel' component={AdminPanel}/> */}

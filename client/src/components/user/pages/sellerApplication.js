@@ -142,13 +142,7 @@ const SellerApplication = () => {
       userZipCode === "" ||
       userPhNumber === ""
     ) {
-      console.log("chai peelo");
-    } else if (
-      fbSocialAccountLink === pinterestSocialAccountLink &&
-      fbSocialAccountLink === twitterSocialAccountLink &&
-      fbSocialAccountLink === instagramSocialAccountLink
-    ) {
-      console.log("gg");
+      console.log("chai peelo", newUser);
     } else {
       console.log("user", newUser);
       const data = new FormData();

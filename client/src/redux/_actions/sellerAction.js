@@ -27,15 +27,16 @@ export const sellerregister = (seller) => {
   };
 };
 
-export const sellerlogin = (email, password) => {
+export const sellerlogin = (userEmail, userpassword) => {
   return async (dispatch) => {
     try {
       const config = { header: { "Content-Type": "application/json" } };
       const res = await axios.post(
         `/api/seller/login`,
-        { email, password },
+        { userEmail, userpassword },
         config
       );
+      console.log("seller", res);
       dispatch({ type: SELLER_LOGIN_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch(

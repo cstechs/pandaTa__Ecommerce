@@ -26,14 +26,13 @@ const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const users = useSelector((state) => state.user.users);
+  const state = useSelector((state) => state.auth);
   const history = useHistory();
-  const userCart = cartItem?.data?.find((x) => x.createdBy === user._id);
-
-  // console.log("carts", userCart?.createdBy);
-
   if (!user) {
     history.push("/");
   }
+  const userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
+  // console.log("carts", userCart?.createdBy);
 
   // console.log("cart", cartItem.data?.items)
   const [quantity, setQuantity] = useState([]);

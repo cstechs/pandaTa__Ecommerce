@@ -64,7 +64,14 @@ const Productitems = ({ product, proId, catId }) => {
           <React.Fragment key={_id}>
             {check.length === 0 && catcheck.length === 0 && (
               <div className="col-md-4 col-6" key={_id}>
-                <Link to={`/product/${_id}`}>
+                <Link
+                  to={{
+                    pathname: `/product/${_id}`,
+                    state: {
+                      _id: _id,
+                    },
+                  }}
+                >
                   <div className="product">
                     <div className="productimgPortion">
                       <img src={`/${productImage}`} alt={productName} />
