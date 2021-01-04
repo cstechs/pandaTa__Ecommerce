@@ -8,6 +8,7 @@ const {
   removeProduct,
   updateProduct,
   getProductBySubCategoryId,
+  getProductsByCreatedBy,
 } = require("../controllers/product");
 const router = express.Router();
 router.post(
@@ -19,6 +20,7 @@ router.post(
 router.get("/", getProduct);
 router.get("/:id", getProductById);
 router.delete("/:id", removeProduct);
+router.get("/getProductsByCreatedBy/:id", getProductsByCreatedBy);
 router.patch(
   "/:id",
   multerInstance.upload.single("productImage"),

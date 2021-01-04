@@ -150,10 +150,10 @@ const Chat = () => {
                         <div className="col">
                           <div data-simplebar style={{ maxHeight: "600px" }}>
                             {messagedUser?.map((item) => (
-                              <>
+                              <React.Fragment key={item._id}>
                                 {item._id != user._id && (
                                   <div
-                                    className="text-body mt-3"
+                                    className="text-body mt-3 cursor-pointer"
                                     onClick={() => CheckUser(item)}
                                   >
                                     <div className="media p-1">
@@ -176,7 +176,7 @@ const Chat = () => {
                                     </div>
                                   </div>
                                 )}
-                              </>
+                              </React.Fragment>
                             ))}
                           </div>
                         </div>
@@ -209,7 +209,7 @@ const Chat = () => {
                           <div>
                             <span className="text-reset font-17 py-1 px-2 d-inline-block">
                               <i
-                                className="fas fa-times"
+                                className="fas fa-times cursor-pointer"
                                 onClick={() => handleSelect()}
                               />
                             </span>
@@ -223,7 +223,7 @@ const Chat = () => {
                           style={{ maxHeight: "390px" }}
                         >
                           {chat?.data?.map((item, index) => (
-                            <>
+                            <React.Fragment key={item._id}>
                               {item.sellerId === user._id && (
                                 <>
                                   {item.sender == 0 &&
@@ -262,7 +262,7 @@ const Chat = () => {
                                     )}
                                 </>
                               )}
-                            </>
+                            </React.Fragment>
                           ))}
                         </ul>
                         <div className="row">

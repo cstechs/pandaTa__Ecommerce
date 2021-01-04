@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
@@ -9,33 +9,54 @@ import productimg from "../../../assets/images/user/product.png";
 // import businessimg from "../../../assets/images/user/businessLogo.png";
 // import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getCategory } from "../../../redux/_actions/categoryAction";
+import {
+  getSellerById,
+  getSellerProducts,
+} from "../../../redux/_actions/sellerAction";
+import Loader from "../partials/loader";
+import SellerProductitems from "../partials/sellerproductitems";
 
 const Category = () => {
-  // function categoryDropDownToggle() {
-  //   document.getElementById("categoryShowIcon").classList.toggle("show");
-  //   document.getElementById("categoryHideIcon").classList.toggle("hide");
-  //   document.getElementById("categoryDropDown").classList.toggle("hide");
-  // }
+  const dispatch = useDispatch();
+  const seller = useSelector((state) => state.seller.seller);
+  const sellerProducts = useSelector((state) => state.seller.sellerproducts);
+  const subCategory = useSelector((state) => state.subCategory);
+  const [proId, setProId] = useState([]);
+  const [catId, setCatId] = useState([]);
 
-  // function materialDropDownToggle() {
-  //   document.getElementById("materialShowIcon").classList.toggle("show");
-  //   document.getElementById("materialHideIcon").classList.toggle("hide");
-  //   document.getElementById("materialDropDown").classList.toggle("hide");
-  // }
+  const { id } = useParams();
 
-  // function finishDropDownToggle() {
-  //   document.getElementById("finishShowIcon").classList.toggle("show");
-  //   document.getElementById("finishHideIcon").classList.toggle("hide");
-  //   document.getElementById("finishDropDown").classList.toggle("hide");
-  // }
+  useEffect(() => {
+    dispatch(getSellerById(id));
+    dispatch(getSellerProducts(id));
+  }, [dispatch]);
 
-  // function styleDropDownToggle() {
-  //   document.getElementById("styleShowIcon").classList.toggle("show");
-  //   document.getElementById("styleHideIcon").classList.toggle("hide");
-  //   document.getElementById("styleDropDown").classList.toggle("hide");
-  // }
+  if (!seller) {
+    return <Loader />;
+  }
 
-  // const category = useSelector((state) => state.category);
+  function ProductIdSetter(productId) {
+    if (proId.find((val) => val === productId)) {
+      let arr = proId.findIndex((val) => val === productId);
+      setProId((prev) => {
+        prev.splice(arr, 1);
+        return [...prev];
+      });
+    } else {
+      setProId((prev) => [...prev, productId]);
+    }
+  }
+  function CatIdSetter(productId) {
+    if (catId.find((val) => val === productId)) {
+      let arr = catId.findIndex((val) => val === productId);
+      setCatId((prev) => {
+        prev.splice(arr, 1);
+        return [...prev];
+      });
+    } else {
+      setCatId((prev) => [...prev, productId]);
+    }
+  }
 
   return (
     <>
@@ -50,292 +71,62 @@ const Category = () => {
         <li className="breadcrumb-item">
           <Link to="/">Sellers</Link>
         </li>
-        <li className="breadcrumb-item active">Jena & Jeel</li>
+        <li className="breadcrumb-item active">{seller.userName}</li>
       </ol>
       <div className="seller">
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3">
               <div className="SideBar">
-                <SellerSideBar />
+                <SellerSideBar
+                  seller={seller}
+                  subCategory={subCategory}
+                  Productidsetter={ProductIdSetter}
+                  Catidsetter={CatIdSetter}
+                />
               </div>
             </div>
             <div className="col-md-9">
               <div className="products">
                 <div className="container-fluid">
                   <div className="row">
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
+                    {/* {sellerProducts.length !== 0 ? (
+                      sellerProducts.map((product) => (
+                        <div className="col-md-4 col-6">
+                          <div className="product">
+                            <img src={`/${product.productImage}`} alt="" />
+                            <div className="content">
+                              <div className="content-left">
+                                <span className="vendor">
+                                  {seller.userName}
+                                </span>
+                                <span className="product_name">
+                                  {product.productName}
+                                </span>
+                                <span className="product_price">
+                                  ${product.productPrice}
+                                </span>
+                              </div>
+                              <div className="content-right">
+                                <i className="fa fa-caret-right"></i>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
+                      ))
+                    ) : (
+                      <div className="mt-5 pt-5 w-100">
+                        <div className="empty mt-5 pt-5">
+                          No Products by Seller
                         </div>
                       </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-4 col-6">
-                      <div className="product">
-                        <img src={productimg} alt="" />
-                        <div className="content">
-                          <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
-                            <span className="product_name">
-                              Product Name Here
-                            </span>
-                            <span className="product_price">$29,354.75</span>
-                          </div>
-                          <div className="content-right">
-                            <i className="fa fa-caret-right"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    )} */}
+                    <SellerProductitems
+                      product={sellerProducts}
+                      proId={proId}
+                      catId={catId}
+                      seller={seller}
+                    />
                   </div>
                 </div>
               </div>

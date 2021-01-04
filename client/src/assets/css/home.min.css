@@ -1078,6 +1078,7 @@
   color: #535353;
   font-size: 15px;
   font-weight: 600;
+  word-wrap: break-word;
   font-family: "Raleway";
   margin: 0;
 }
@@ -2224,6 +2225,7 @@
   border: 1px solid #6b6b6b;
   background: transparent;
   margin-top: 0 !important;
+  cursor: pointer;
 }
 
 .sellerApplication .next_button {
@@ -2231,6 +2233,7 @@
   border: 1px solid #43425d;
   color: white;
   float: right;
+  cursor: pointer;
 }
 
 .sellerApplication #confirmAccount input {

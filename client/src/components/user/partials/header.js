@@ -46,9 +46,14 @@ const Header = () => {
   };
   useEffect(() => {
     dispatch(getCart());
-  }, []);
+  }, [dispatch]);
   if (user) {
     var userCart = cartItem?.data?.find((x) => x.createdBy === user._id);
+  }
+  var cartLength = userCart?.items?.length;
+
+  if (cartLength === undefined) {
+    cartLength = 0;
   }
 
   const LoginHandler = () => {
@@ -62,7 +67,7 @@ const Header = () => {
     window.location.reload();
   }
 
-  useEffect(() => {}, [wishList?.length]);
+  useEffect(() => {}, [wishList]);
 
   useEffect(() => {
     if (user) {
@@ -87,6 +92,10 @@ const Header = () => {
       }
     };
   }, [user]);
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
   return (
     <>
       {product ? (
@@ -187,7 +196,7 @@ const Header = () => {
                       <Link to="/cart">
                         <i className="fa fa-shopping-cart"></i>
                         <span className="badge-darkpurple rounded-circle notification-icon-badge">
-                          {(product && userCart?.items?.length) || 0}
+                          {product && cartLength}
                         </span>
                       </Link>
                       <div className="btn-group">

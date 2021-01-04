@@ -27,6 +27,7 @@ const cartReducer = (state = initState, action) => {
         loading: false,
       };
     case CART_CREATE_SUCCESS:
+      console.log("check", action.payload);
       return {
         ...state,
         cartItems: action.payload.data,
@@ -64,6 +65,8 @@ const cartReducer = (state = initState, action) => {
         error: action.payload,
       };
     case CART_REMOVE_ITEM_SUCCESS:
+      return { ...state, cartItems: action.payload.data };
+    case CART_REMOVE_ITEM_FAIL:
       return { ...state };
     case CLEAR_ERRORS:
       return {

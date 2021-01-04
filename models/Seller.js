@@ -43,6 +43,9 @@ const SellerSchema = mongoose.Schema(
     userPhNumber: {
       type: String,
     },
+    userBio: {
+      type: String,
+    },
     userpassword: {
       type: String,
     },

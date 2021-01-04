@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../redux/_actions/authAction";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
-import { CLEAR_ERRORS } from "../../../redux/types";
+import { CLEAR_ERRORS, SET_ALERT } from "../../../redux/types";
 import Register from "./register";
 import { getUser } from "../../../redux/_actions/userAction";
 import { sellerlogin } from "../../../redux/_actions/sellerAction";
@@ -41,18 +41,30 @@ const Login = (props) => {
     e.preventDefault();
     if (email === "" || password === "" || role === "") {
       dispatch(setAlert("Please enter all the fields.", "danger"));
-      console.log("hello");
     } else {
       if (
         role === "customer" &&
         users.find((user) => user.email === email)?.role === "customer"
       ) {
         dispatch(login(email, password));
-      } else {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else if (
+        role === "seller" &&
+        sellers.find((seller) => seller.userEmail === email)?.role === "seller"
+      ) {
         dispatch(sellerlogin(email, password));
         setTimeout(() => {
           window.location.reload();
         }, 2000);
+      } else {
+        dispatch(
+          setAlert(SET_ALERT, {
+            message: "Invalid account credentials",
+            alertType: "danger",
+          })
+        );
       }
       //window.location.reload();
     }

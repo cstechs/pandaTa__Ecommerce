@@ -25,8 +25,7 @@ import { getUser } from "../../../redux/_actions/userAction";
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-  const users = useSelector((state) => state.user.users);
-  const state = useSelector((state) => state.auth);
+
   const history = useHistory();
   if (!user) {
     history.push("/");
@@ -101,6 +100,7 @@ const Cart = () => {
 
   const RemoveCart = (id) => {
     dispatch(removeCartItem(userCart?.createdBy, id));
+
     // window.location.reload();
   };
 

@@ -19,7 +19,48 @@ const UpdateProfile = () => {
     password: user.password,
   });
 
+  const [newSeller, setNewSeller] = useState({
+    _id: user._id,
+    userFirstName: user.userFirstName,
+    userMiddleName: user.userMiddleName,
+    userLastName: user.userLastName,
+    sellerUserName: user.userName,
+    userEmail: user.userEmail,
+    userBio: user.userBio,
+    userTitle: user.userTitle,
+    userAddress: user.userAddress,
+    userAppartment: user.userAppartment,
+    userCity: user.userCity,
+    userZipCode: user.userZipCode,
+    userCountry: user.userCountry,
+    userPhNumber: user.userPhNumber,
+    userpassword: user.userpassword,
+    businessName: user.businessName,
+    businessType: user.businessType,
+    businessMainSaleChannel: user.businessMainSaleChannel,
+    businessYearEstablish: user.businessYearEstablish,
+    businessIdentityType: user.businessIdentityType,
+    businessIdNumber: user.businessIdNumber,
+    fbSocialAccountLink: user.fbSocialAccountLink,
+    pinterestSocialAccountLink: user.pinterestSocialAccountLink,
+    twitterSocialAccountLink: user.twitterSocialAccountLink,
+    instagramSocialAccountLink: user.instagramSocialAccountLink,
+    hearAboutPandata: user.hearAboutPandata,
+    userImage: user.userImage,
+  });
+
   const { userName, firstName, lastName } = newUser;
+
+  const {
+    sellerUserName,
+    userFirstName,
+    userLastName,
+    userEmail,
+    userPhNumber,
+    userCity,
+    userCountry,
+    userBio,
+  } = newSeller;
 
   // const HandleChange = (e) => {
   //   setNewUser((prev)=> {return{ {...prev, [e.target.name]: e.target.value }});
@@ -27,6 +68,10 @@ const UpdateProfile = () => {
 
   const HandleChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
+  };
+
+  const HandleSellerChange = (e) => {
+    setNewSeller({ ...newSeller, [e.target.name]: e.target.value });
   };
 
   const Submit = (e) => {
@@ -79,17 +124,32 @@ const UpdateProfile = () => {
                             <div className="row mt-3 pl-2">
                               <div className="col-12">
                                 <label>User Name</label>
-                                <input type="text" placeholder="User Name" />
+                                <input
+                                  type="text"
+                                  value={sellerUserName}
+                                  name="sellerUserName"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                />
                               </div>
                             </div>
                             <div className="row mt-3 pl-2">
                               <div className="col-md-6">
                                 <label>First Name</label>
-                                <input type="text" placeholder="First Name" />
+                                <input
+                                  type="text"
+                                  value={userFirstName}
+                                  name="userFirstName"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                />
                               </div>
                               <div className="col-md-6">
                                 <label>Last Name</label>
-                                <input type="text" placeholder="Last Name" />
+                                <input
+                                  type="text"
+                                  value={userLastName}
+                                  name="userLastName"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                />
                               </div>
                             </div>
                             <div className="row mt-3 pl-2">
@@ -97,29 +157,48 @@ const UpdateProfile = () => {
                                 <label>Email</label>
                                 <input
                                   type="email"
-                                  placeholder="user@cstechsoftwares.com"
+                                  value={user.userEmail}
                                   disabled
                                 />
                               </div>
                               <div className="col-md-6">
                                 <label>Phone Number</label>
-                                <input type="number" placeholder="+92" />
+                                <input
+                                  type="number"
+                                  value={userPhNumber}
+                                  name="userPhNumber"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                />
                               </div>
                             </div>
                             <div className="row mt-3 pl-2">
                               <div className="col-md-6">
                                 <label>City</label>
-                                <input type="text" placeholder="City Name" />
+                                <input
+                                  type="text"
+                                  value={userCity}
+                                  name="userCity"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                />
                               </div>
                               <div className="col-md-6">
                                 <label>Country</label>
-                                <input type="text" placeholder="Country Name" />
+                                <input
+                                  type="text"
+                                  value={userCountry}
+                                  name="userCountry"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                />
                               </div>
                             </div>
                             <div className="row mt-2 pl-2">
                               <div className="col-12">
                                 <label>Bio</label>
-                                <textarea placeholder="Enter Bio"></textarea>
+                                <textarea
+                                  value={userBio}
+                                  name="userBio"
+                                  onChange={(e) => HandleSellerChange(e)}
+                                ></textarea>
                               </div>
                             </div>
                             <div className="row mt-2 mb-5">

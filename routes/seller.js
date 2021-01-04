@@ -10,5 +10,6 @@ router.post("/register", upload, Seller.register);
 router.post("/login", Seller.login);
 router.get("/verify/:token", Seller.verify);
 router.get("/", Seller.index);
+router.get("/getSellerById/:id", Seller.getSellerById);
 
 module.exports = router;

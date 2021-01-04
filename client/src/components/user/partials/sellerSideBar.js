@@ -3,39 +3,46 @@ import { useSelector, useDispatch } from "react-redux";
 import businessimg from "../../../assets/images/user/businessLogo.png";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getCategory } from "../../../redux/_actions/categoryAction";
+import { Link } from "react-router-dom";
 
-const SellerSideBar = ({ subCategory, user, Productidsetter, Catidsetter }) => {
-  //   const category = useSelector((state) => state.category);
-  //   const dispatch = useDispatch();
-  //   const [categoryDropDown, setcategoryDropDown] = useState(true);
-  //   const [subcategoryDropDown, setSubcategoryDropDown] = useState([
-  //     true,
-  //     true,
-  //     true,
-  //     true,
-  //   ]);
+const SellerSideBar = ({
+  seller,
+  subCategory,
 
-  //   useEffect(() => {
-  //     dispatch(getCategory());
-  //   }, [dispatch]);
+  Productidsetter,
+  Catidsetter,
+}) => {
+  const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
+  const [categoryDropDown, setcategoryDropDown] = useState(true);
+  const [subcategoryDropDown, setSubcategoryDropDown] = useState([
+    true,
+    true,
+    true,
+    true,
+  ]);
 
-  //   const HandleCategoryDropDown = () => {
-  //     setcategoryDropDown(!categoryDropDown);
-  //   };
-  //   const HandleSubCategoryDropDown = (index) => {
-  //     let val = !subcategoryDropDown[index];
-  //     setSubcategoryDropDown((prev) => {
-  //       prev.splice(index, 1, val);
-  //       return [...prev];
-  //     });
-  //   };
+  useEffect(() => {
+    dispatch(getCategory());
+  }, [dispatch]);
 
-  //   function HandleTick(val) {
-  //     Productidsetter(val);
-  //   }
-  //   function HandleCatTick(val) {
-  //     Catidsetter(val);
-  //   }
+  const HandleCategoryDropDown = () => {
+    setcategoryDropDown(!categoryDropDown);
+  };
+  const HandleSubCategoryDropDown = (index) => {
+    let val = !subcategoryDropDown[index];
+    setSubcategoryDropDown((prev) => {
+      prev.splice(index, 1, val);
+      return [...prev];
+    });
+  };
+
+  function HandleTick(val) {
+    Productidsetter(val);
+  }
+  function HandleCatTick(val) {
+    Catidsetter(val);
+  }
 
   return (
     <React.Fragment>
@@ -43,33 +50,48 @@ const SellerSideBar = ({ subCategory, user, Productidsetter, Catidsetter }) => {
         <div className="businessImage">
           <img src={businessimg} alt="BussinessLogo" />
         </div>
-        <h1>Jena & Jeel</h1>
-        <p className="mb-3">NEW YORK, NY • USA</p>
-        <button className="btn btn-darkpurple ripple px-3">Contact</button>
-        <button className="btn btn-darkpurple-outline ripple px-3 ml-2">
-          Follow
-        </button>
-        <p className="text-darkpurple mt-3 font-14">
-          Cilek is wonderful serenity has taken possession of my entire as soul,
-          is like these sweet mornings of spring which I enjoy with my whole
-          heart. I am alone standards.
+        <h1>{seller.businessName}</h1>
+        <p className="mb-3">
+          {seller.userCity},{seller.userCountry}
+        </p>
+
+        <p className="text-darkpurple mt-3 font-13 text-left">
+          {seller.userBio}
         </p>
         <p className="mt-3 font-14">MEET THE OWNER</p>
         <div className="underLine w-100"></div>
         <div className="sellerImage">
           <img src={UserImage} alt="sellerImage" />
         </div>
-        <h1 className="font-20 mt-2">Gregory Wadsworth</h1>
+        <h1 className="font-20 mt-2">{seller.userName}</h1>
         <p className="mt-2">
-          <i className="fa fa-heart text-darkpurple mr-3 font-24"></i>
-          <i className="fa fa-link text-darkpurple font-24"></i>
+          {seller.fbSocialAccountLink !== "" && (
+            <Link to={`${seller.fbSocialAccountLink}`}>
+              <i className="fab fa-facebook-f text-darkpurple mr-2 font-18"></i>
+            </Link>
+          )}
+          {seller.pinterestSocialAccountLink !== "" && (
+            <Link to={`${seller.pinterestSocialAccountLink}`}>
+              <i className="fab fa-pinterest text-darkpurple mr-2 font-18"></i>
+            </Link>
+          )}
+          {seller.twitterSocialAccountLink !== "" && (
+            <Link to={`${seller.twitterSocialAccountLink}`}>
+              <i className="fab fa-twitter text-darkpurple mr-2 font-18"></i>
+            </Link>
+          )}
+          {seller.instagramSocialAccountLink !== "" && (
+            <Link to={`${seller.instagramSocialAccountLink}`}>
+              <i className="fab fa-instagram text-darkpurple mr-2 font-18"></i>
+            </Link>
+          )}
         </p>
       </div>
-      {/* <div className="BrowseByCategoryPortion">
+      <div className="BrowseByCategoryPortion">
         <h4 className="title">BROWSE BY CATEGORY</h4>
         {!categoryDropDown && (
-          <div className="dropTogggle">
-            <i className="fe-plus" onClick={() => HandleCategoryDropDown()} />
+          <div className="dropTogggle" onClick={() => HandleCategoryDropDown()}>
+            <i className="fe-plus" />
           </div>
         )}
         {categoryDropDown && (
@@ -102,8 +124,8 @@ const SellerSideBar = ({ subCategory, user, Productidsetter, Catidsetter }) => {
             ))}
           </ul>
         )}
-      </div> */}
-      {/* <div className="BrowseByCategoryPortion">
+      </div>
+      <div className="BrowseByCategoryPortion">
         <h4 className="title">FILTER PRODUCTS</h4>
         <div className="underLine w-100 mt-2"></div>
 
@@ -154,7 +176,7 @@ const SellerSideBar = ({ subCategory, user, Productidsetter, Catidsetter }) => {
             )}
           </React.Fragment>
         ))}
-      </div> */}
+      </div>
     </React.Fragment>
   );
 };

@@ -36,6 +36,7 @@ const SellerApplication = () => {
     userMiddleName: "",
     userLastName: "",
     userTitle: "",
+    userBio: "",
     userAddress: "",
     userAppartment: "",
     userCity: "",
@@ -66,6 +67,7 @@ const SellerApplication = () => {
     userLastName,
     userpassword,
     userTitle,
+    userBio,
     userAddress,
     userAppartment,
     userCity,
@@ -170,6 +172,7 @@ const SellerApplication = () => {
       data.append("userFirstName", newUser.userFirstName);
       data.append("userMiddleName", newUser.userMiddleName);
       data.append("userLastName", newUser.userLastName);
+      data.append("userBio", newUser.userBio);
       data.append("userpassword", newUser.userpassword);
       data.append("userTitle", newUser.userTitle);
       data.append("userAddress", newUser.userAddress);
@@ -247,8 +250,9 @@ const SellerApplication = () => {
                         name="hearAboutPandata"
                         value={hearAboutPandata}
                       >
+                        <option>Select Platform</option>
                         <option>Google</option>
-                        <option value="...">Online Advertising </option>
+                        <option>Online Advertising </option>
                         <option>Social Media</option>
                         <option>Press</option>
                         <option>Others</option>
@@ -538,6 +542,7 @@ const SellerApplication = () => {
                         name="userGender"
                         onChange={onChange}
                       >
+                        <option>Select Gender</option>
                         <option>Mr.</option>
                         <option>Mrs.</option>
                       </select>
@@ -592,7 +597,7 @@ const SellerApplication = () => {
                         placeholder="Enter Password"
                       />
                     </div>
-                    <div className="col-12 mt-3">
+                    <div className="col-md-6 mt-3">
                       <label>Title</label>
                       <input
                         type="text"
@@ -601,6 +606,16 @@ const SellerApplication = () => {
                         onChange={onChange}
                         required
                         placeholder="eg. CEO, Owner, Manager, Designer, Merchandiser"
+                      />
+                    </div>
+                    <div className="col-md-6 mt-3">
+                      <label>Bio</label>
+                      <input
+                        type="text"
+                        name="userBio"
+                        value={userBio}
+                        onChange={onChange}
+                        placeholder="Enter Bio"
                       />
                     </div>
                     <div className="col-12 mt-2">

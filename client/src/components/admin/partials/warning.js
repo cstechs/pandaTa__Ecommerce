@@ -3,7 +3,7 @@ import React from "react";
 const Warning = () => {
   return (
     <div className="logoutBox" id="logoutBox">
-      <div class="content">
+      <div className="content">
         <div className="iconBg">
           <i className="fa fa-question"></i>
         </div>

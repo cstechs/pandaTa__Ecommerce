@@ -3,13 +3,21 @@ import {
   SELLER_LOGIN_SUCCESS,
   SELLER_REGISTER_FAIL,
   SELLER_REGISTER_SUCCESS,
+  SELLER_LOAD_SUCCESS,
+  SELLER_LOAD_FAIL,
+  SINGLE_SELLER_LOAD_SUCCESS,
+  SINGLE_SELLER_LOAD_FAIL,
+  SINGLE_SELLER_PRODUCTS_LOAD_SUCCESS,
+  SINGLE_SELLER_PRODUCTS_LOAD_FAIL,
 } from "../types";
 
 const initState = {
   sellers: [],
+  seller: null,
   error: null,
   loading: true,
   token: null,
+  sellerproducts: [],
 };
 
 const sellerReducer = (state = initState, action) => {
@@ -22,13 +30,37 @@ const sellerReducer = (state = initState, action) => {
       return {
         ...state,
         token: action.payload.token,
-        sellers: action.payload.seller,
+        seller: action.payload.seller,
       };
     case SELLER_LOGIN_FAIL:
       return { ...state };
     case SELLER_REGISTER_SUCCESS:
       return { ...state };
     case SELLER_REGISTER_FAIL:
+      return { ...state };
+    case SELLER_LOAD_SUCCESS:
+      return {
+        ...state,
+        sellers: action.payload.sellers,
+      };
+    case SELLER_LOAD_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case SINGLE_SELLER_LOAD_SUCCESS:
+      return {
+        ...state,
+        seller: action.payload.data,
+      };
+    case SINGLE_SELLER_LOAD_FAIL:
+      return { ...state, error: action.payload };
+    case SINGLE_SELLER_PRODUCTS_LOAD_SUCCESS:
+      return {
+        ...state,
+        sellerproducts: action.payload.data,
+      };
+    case SINGLE_SELLER_PRODUCTS_LOAD_FAIL:
       return { ...state };
     default:
       return { ...state };

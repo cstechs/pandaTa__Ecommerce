@@ -20,6 +20,7 @@ exports.register = async (req, res, next) => {
     userLastName,
     userName,
     userEmail,
+    userBio,
     userTitle,
     userAddress,
     userAppartment,
@@ -70,6 +71,7 @@ exports.register = async (req, res, next) => {
     userLastName,
     userName,
     userEmail,
+    userBio,
     userTitle,
     userAddress,
     userAppartment,
@@ -198,6 +200,16 @@ exports.verify = async (req, res) => {
       });
     });
   } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getSellerById = async (req, res) => {
+  try {
+    let id = req.params.id;
+    const seller = await Seller.findById(id);
+    res.status(200).json({ success: true, data: seller });
+  } catch (err) {
     res.status(500).json({ message: error.message });
   }
 };

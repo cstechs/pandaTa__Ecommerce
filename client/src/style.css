@@ -187,6 +187,14 @@ h2 {
   background: #43425d;
   color: white;
 }
+.empty {
+  width: 100%;
+  text-align: center;
+  margin-top: 35px;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
 @media screen and (max-width: 1194px) {
   .modal {
     width: 55% !important;

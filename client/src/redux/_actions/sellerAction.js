@@ -4,6 +4,12 @@ import {
   SELLER_REGISTER_FAIL,
   SELLER_REGISTER_SUCCESS,
   SET_ALERT,
+  SELLER_LOAD_SUCCESS,
+  SELLER_LOAD_FAIL,
+  SINGLE_SELLER_LOAD_SUCCESS,
+  SINGLE_SELLER_LOAD_FAIL,
+  SINGLE_SELLER_PRODUCTS_LOAD_FAIL,
+  SINGLE_SELLER_PRODUCTS_LOAD_SUCCESS,
 } from "../types";
 import axios from "axios";
 import { setAlert } from "./alertAction";
@@ -48,4 +54,50 @@ export const sellerlogin = (userEmail, userpassword) => {
       dispatch({ type: SELLER_LOGIN_FAIL, payload: err.response.data.message });
     }
   };
+};
+
+export const getSellers = () => async (dispatch) => {
+  try {
+    const config = { header: { "Content-Type": "application/json" } };
+    const res = await axios.get(`/api/seller`, config);
+
+    dispatch({ type: SELLER_LOAD_SUCCESS, payload: res.data });
+  } catch (err) {
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
+    dispatch({ type: SELLER_LOAD_FAIL, payload: err.response.data.message });
+  }
+};
+
+export const getSellerById = (id) => async (dispatch) => {
+  try {
+    const config = { header: { "Content-Type": "application/json" } };
+    const res = await axios.get(`/api/seller/getSellerById/` + id, config);
+
+    dispatch({ type: SINGLE_SELLER_LOAD_SUCCESS, payload: res.data });
+  } catch (err) {
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
+    dispatch({ type: SINGLE_SELLER_LOAD_FAIL, payload: err.message });
+  }
+};
+
+export const getSellerProducts = (id) => async (dispatch) => {
+  try {
+    console.log("ie", id);
+    const config = { header: { "Content-Type": "application/json" } };
+    const res = await axios.get(
+      `/api/product/getProductsByCreatedBy/` + id,
+      config
+    );
+
+    dispatch({ type: SINGLE_SELLER_PRODUCTS_LOAD_SUCCESS, payload: res.data });
+  } catch (err) {
+    dispatch(
+      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    );
+    dispatch({ type: SINGLE_SELLER_PRODUCTS_LOAD_FAIL, payload: err.message });
+  }
 };

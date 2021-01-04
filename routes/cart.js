@@ -14,6 +14,6 @@ router.get("/", getCart);
 //router.delete("/empty-cart", emptyCart);
 router.patch("/subtractcartquantity", subtractQuantityCart);
 router.patch("/addquantitycart", addQuantityCart);
-router.delete("/removeproductcart/:id", removeProductCart);
+router.delete("/removeproductcart/:createdby/:productId", removeProductCart);
 
 module.exports = router;

@@ -3,7 +3,7 @@ import { createChat, getChat } from "../../../redux/_actions/chatAction";
 import { useSelector, useDispatch } from "react-redux";
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 
-const Chat = ({ ChatHide, product }) => {
+const Chat = ({ ChatHide, product, seller }) => {
   const ChatHandler = () => {
     ChatHide();
   };
@@ -11,7 +11,6 @@ const Chat = ({ ChatHide, product }) => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [checkSender, setCheckSender] = useState(null);
   const dispatch = useDispatch();
-  console.log("pro", product);
 
   const onSubmit = (e) => {
     // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
@@ -88,18 +87,17 @@ const Chat = ({ ChatHide, product }) => {
           height={38}
           alt="Brandon Smith"
         />
-        <span>Supplier’s Name</span>
+        <span>{seller.userName}</span>
         <i className="ti-close" onClick={() => ChatHandler()}></i>
       </div>
       <div className="body">
         <div className="messageBox">
           <ul className="conversation-list mt-2">
             {chat.chats?.data?.map((item, index) => (
-              <>
+              <React.Fragment key={item._id}>
                 {/* {console.log("chatlength", item)} */}
                 {product?.product?.data?.createdBy === item.sellerId && (
-                  <>
-                    {console.log("it", item)}
+                  <React.Fragment key={index}>
                     {item.sender == 1 &&
                       item.sellerId == product?.product?.data?.createdBy &&
                       item.createdBy == user._id && (
@@ -130,9 +128,9 @@ const Chat = ({ ChatHide, product }) => {
                         </div>
                       </li>
                     )}
-                  </>
+                  </React.Fragment>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </ul>
         </div>

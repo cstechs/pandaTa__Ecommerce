@@ -133,3 +133,13 @@ exports.getProductBySubCategoryId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getProductsByCreatedBy = async (req, res) => {
+  try {
+    let id = req.params.id;
+    const product = await Product.find({ createdBy: id });
+    res.status(200).json({ success: true, data: product });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

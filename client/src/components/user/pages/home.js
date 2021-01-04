@@ -22,6 +22,7 @@ import HomeLeft from "../partials/HomeLeft";
 import HomeRight from "../partials/HomeRight";
 import { Link } from "react-router-dom";
 import Loader from "../partials/loader";
+import { getSellers } from "../../../redux/_actions/sellerAction";
 // import { getUser } from "../../../redux/_actions/userAction";
 const Home = () => {
   const [responsive] = useState({
@@ -40,6 +41,7 @@ const Home = () => {
   });
   const subCategory = useSelector((state) => state.subCategory);
   const product = useSelector((state) => state.product);
+  const Sellers = useSelector((state) => state.seller.sellers);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,6 +57,10 @@ const Home = () => {
       }, 1000);
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getSellers());
+  }, []);
 
   if (product && subCategory === undefined) {
     return <Loader />;
@@ -137,64 +143,50 @@ const Home = () => {
         </div>
       </div>
       {/* topseller portion */}
+
       <div className="topseller">
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
               <h2>Our Seller</h2>
             </div>
-            <div className="col-md-3 col-6">
-              <div className="user">
-                <span></span>
-                <div className="imgCircle">
-                  <img src={UserImage} alt="" />
-                </div>
-                <h5>Publisher Name</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <button>VIEW PROFILE</button>
-              </div>
-            </div>
-            <div className="col-md-3 col-6">
-              <div className="user">
-                <span></span>
-                <div className="imgCircle">
-                  <img src={UserImage} alt="" />
-                </div>
-                <h5>Publisher Name</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <button>VIEW PROFILE</button>
-              </div>
-            </div>
-            <div className="col-md-3 col-6">
-              <div className="user">
-                <span></span>
-                <div className="imgCircle">
-                  <img src={UserImage} alt="" />
-                </div>
-                <h5>Publisher Name</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <button>VIEW PROFILE</button>
-              </div>
-            </div>
-            <div className="col-md-3 col-6">
-              <div className="user">
-                <span></span>
-                <div className="imgCircle">
-                  <img src={UserImage} alt="" />
-                </div>
-                <h5>Publisher Name</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                <button>VIEW PROFILE</button>
-              </div>
-            </div>
+            {Sellers.length !== 0 ? (
+              <>
+                {Sellers?.map((seller, index) => (
+                  <div className="col-md-3 col-6">
+                    <div className="user">
+                      <span></span>
+                      <div className="imgCircle">
+                        <img src={seller.userImage} alt="" />
+                      </div>
+                      <h5>{seller.userName}</h5>
+                      <p className="text-break">{seller.userBio}</p>
+                      <button>
+                        <Link
+                          to={`/seller/${seller._id}`}
+                          className="text-decoration-none text-white"
+                        >
+                          VIEW PROFILE
+                        </Link>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </>
+            ) : (
+              <div className="empty">No Sellers</div>
+            )}
           </div>
         </div>
-        <p>
-          <span>
-            Explore More <i className="fa fa-caret-right"></i>
-          </span>
-        </p>
+        {Sellers.length !== 0 && (
+          <p>
+            <span>
+              Explore More <i className="fa fa-caret-right"></i>
+            </span>
+          </p>
+        )}
       </div>
+
       {/* whyBecomeBuyer portion */}
       <div className="whyBecomeBuyer">
         <div className="container-fluid">

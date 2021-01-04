@@ -13,16 +13,17 @@ import RelatedProduct from "../partials/relatedProducts";
 import Chat from "../partials/Chat";
 import Loader from "../partials/loader";
 import { getUser } from "../../../redux/_actions/userAction";
+import { getSellerById } from "../../../redux/_actions/sellerAction";
 
 const SingleProduct = (props) => {
   const product = useSelector((state) => state.product);
   // const chat = useSelector((state) => state.chat);
   const users = useSelector((state) => state.user.users);
+  const seller = useSelector((state) => state.seller.seller);
+
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-  var oldwishList = JSON.parse(localStorage.getItem("WishList")) || [];
-  const [newWishList, setNewWishList] = useState({});
 
   // console.log("wish", oldwishList);
   // const [checkSender, setCheckSender] = useState(null);
@@ -32,7 +33,11 @@ const SingleProduct = (props) => {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (product?.product?.data) {
+      dispatch(getSellerById(product?.product?.data?.createdBy));
+    }
+  }, [product?.product?.data]);
 
   // const SenderCheckFunction = () => {
   //   if (user.role === "seller") {
@@ -109,7 +114,7 @@ const SingleProduct = (props) => {
   const addToWishList = () => {
     // console.log(wishList);
     var newData = product?.product?.data;
-    console.log("new", newData);
+
     if (localStorage.getItem("WishList") == null) {
       localStorage.setItem("WishList", "[]");
     }
@@ -225,11 +230,7 @@ const SingleProduct = (props) => {
                     </h6>
                     <h6 className="mt-3">
                       <span className="mr-2 font-14">Supplier's Name : </span>
-                      {
-                        users.find(
-                          (x) => x._id === product?.product?.data?.createdBy
-                        )?.userName
-                      }
+                      {seller?.userName}
                     </h6>
                     {user && (
                       <button className="chatButton" onClick={() => ChatShow()}>
@@ -256,7 +257,7 @@ const SingleProduct = (props) => {
             {/* chat */}
             {StartChatShown && (
               <div className="chatBox">
-                <Chat ChatHide={ChatHide} product={product} />
+                <Chat ChatHide={ChatHide} product={product} seller={seller} />
               </div>
             )}
           </div>

@@ -27,15 +27,15 @@ export const addProduct = (product) => {
         config
       );
       //  console.log(res.data);
-      dispatch(
-        setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+      // );
       dispatch({ type: PRODUCT_SUCCESS, payload: res.data });
     } catch (err) {
       //   console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      // );
       dispatch({ type: PRODUCT_FAIL, payload: err.response.data.message });
     }
   };
@@ -70,9 +70,9 @@ export const getProductById = (productId) => {
       dispatch({ type: PRODUCT_SINGLE_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       //  console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      // );
       dispatch({
         type: PRODUCT_SINGLE_LOAD_FAIL,
         payload: err.response?.data?.message,
@@ -91,16 +91,15 @@ export const updateProduct = (product, productId) => {
         config
       );
       //  console.log(res.data);
-      dispatch(
-        setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+      // );
       dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: res?.data });
       window.location.reload();
     } catch (err) {
-      console.log(err.message);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      // );
       dispatch({
         type: PRODUCT_UPDATE_FAIL,
         payload: err?.response?.data?.message,
@@ -117,7 +116,7 @@ export const getProductBySubCategoryId = (CategoryId) => {
         "/api/product/getProductBySubCategoryId/" + CategoryId,
         config
       );
-      console.log(res.data);
+
       if (res.data === []) {
         dispatch({ type: RELATED_PRODUCT_EMPTY_SET, payload: res.data });
       } else {
@@ -141,16 +140,16 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     const res = await axios.delete("/api/product/" + id, { id }, config);
     console.log(res.data);
-    dispatch(
-      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    // );
     dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: res.data });
     window.location.reload();
   } catch (err) {
     // console.log(err);
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    // );
     dispatch({
       type: PRODUCT_DELETE_FAIL,
       payload: err?.response?.data?.message,

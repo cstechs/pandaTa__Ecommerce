@@ -157,11 +157,11 @@ exports.getCart = async (req, res) => {
 // };
 
 exports.removeProductCart = async (req, res) => {
-  var cartId = req.params.id;
-  console.log("cart", cartId);
+  const { createdby, productId } = req.params;
+  //console.log("createdby", createdby, "cartid", productid);
 
   try {
-    let cart = await car.cart1(cartId);
+    let cart = await car.cart1(createdby);
 
     let productDetails = await Product.findById(productId);
 

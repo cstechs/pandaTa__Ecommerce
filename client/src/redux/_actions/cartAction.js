@@ -28,7 +28,7 @@ export const addItemToCart = (productId, createdBy, quantity) => {
       dispatch(
         setAlert(SET_ALERT, { message: res.data.mgs, alertType: "success" })
       );
-
+      dispatch(getCart());
       dispatch({ type: CART_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
       //console.log(err);
@@ -85,14 +85,14 @@ export const subtractCartQuantity = (productId, cartId) => async (dispatch) => {
     );
 
     dispatch(getCart());
-    dispatch(
-      setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+    // );
     dispatch({ type: CART_DECREMENT_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    // );
     dispatch({ type: CART_DECREMENT_FAIL, payload: err.response.data.message });
   }
 };
@@ -113,27 +113,26 @@ export const addCartQuantity = (productId, cartId) => async (dispatch) => {
     dispatch(getCart());
     dispatch({ type: CART_INCREMENT_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+    // );
     dispatch({ type: CART_INCREMENT_FAIL, payload: err.response.data.message });
   }
 };
 
-export const removeCartItem = (cartId, id) => async (dispatch) => {
+export const removeCartItem = (CreatedBy, Cartid) => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
-  console.log("cartID", cartId, "id", id);
+
   try {
     const res = await axios.delete(
-      "/api/cart/removeproductcart/" + cartId,
-      { data: { id: id } },
+      "/api/cart/removeproductcart/" + CreatedBy + "/" + Cartid,
       config
     );
-    console.log("deleted", res);
 
     // dispatch(
     //   setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
     // );
+    dispatch(getCart());
     dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: res.data });
   } catch (err) {
     console.log(err);

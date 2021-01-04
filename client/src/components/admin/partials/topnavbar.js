@@ -177,16 +177,6 @@ const Navbar = () => {
                       </small>
                     </p>
                   </span>
-                  <span className="dropdown-item notify-item">
-                    <div className="notify-icon bg-secondary">
-                      <i className="mdi mdi-heart" alt="" />
-                    </div>
-                    <p className="notify-details">
-                      Carlos Crouch liked
-                      <b>Admin</b>
-                      <small className="text-muted">13 days ago</small>
-                    </p>
-                  </span>
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all">
                   View all
@@ -221,7 +211,7 @@ const Navbar = () => {
                   <i className="fe-settings" alt="" />
                   <span>Settings</span>
                 </Link>
-                <span className="dropdown-item notify-item ripple button-base">
+                <span className="dropdown-item notify-item ripple button-base cursor-pointer">
                   <i className="fe-log-out" alt="" />
                   <span
                     onClick={() => {

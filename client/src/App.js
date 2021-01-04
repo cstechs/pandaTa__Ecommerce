@@ -40,18 +40,20 @@ import Alerts from "./components/admin/partials/alerts";
 
 import { getProduct } from "./redux/_actions/productAction";
 import Loader from "./components/user/partials/loader";
+import { getSellers } from "./redux/_actions/sellerAction";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
-const user = JSON.parse(localStorage.getItem("user"));
 
 function App() {
   const product = useSelector((state) => state.product);
+  const Sellers = useSelector((state) => state.seller.sellers);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProduct());
+    dispatch(getSellers());
   }, [dispatch]);
   if (product === undefined) {
     return <Loader />;
@@ -74,16 +76,28 @@ function App() {
             path="/sellerapplication"
             component={UserSellerApplication}
           />
-          <Route exact path="/seller" component={UserSeller} />
+          {/* <Route exact path="/seller" component={UserSeller} /> */}
           <Route exact path="/verify/:token" component={VerifyView} />
           <Route exact path="/reset/:token" component={ResetPassword} />
+
+          {Sellers ? (
+            Sellers?.map(({ _id }) => (
+              <Route
+                exact
+                key={_id}
+                path={`/seller/:id`}
+                component={UserSeller}
+              />
+            ))
+          ) : (
+            <Loader />
+          )}
 
           {product?.products?.data ? (
             product?.products?.data?.map(({ _id }) => (
               <Route
                 exact
                 key={_id}
-                s
                 path={`/product/${_id}`}
                 component={UserSingleProduct}
               />

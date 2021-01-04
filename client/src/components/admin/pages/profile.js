@@ -55,14 +55,11 @@ const Profile = () => {
                                 </div>
                               </div>
                               <div className="col-md-10">
-                                <h2 className="mt-3">UserName</h2>
-                                <h4 className="mt-1">City , Country</h4>
-                                <p className="Bio mt-1">
-                                  Cilek is wonderful serenity has taken
-                                  possession of my entire as soul, is like these
-                                  sweet mornings of spring which I enjoy with my
-                                  whole heart. I am alone standards.
-                                </p>
+                                <h2 className="mt-3">{user.userName}</h2>
+                                <h4 className="mt-1">
+                                  {user.userCity} , {user.userCountry}
+                                </h4>
+                                <p className="Bio mt-1">{user.userBio}</p>
                               </div>
                             </div>
                             <div className="row mt-3 pl-2 mb-5">
@@ -70,19 +67,23 @@ const Profile = () => {
                                 <label>First Name</label>
                                 <input
                                   type="text"
-                                  value="First Name"
+                                  value={user.userFirstName}
                                   disabled
                                 />
                               </div>
                               <div className="col-12 mt-2">
                                 <label>Last Name</label>
-                                <input type="text" value="Last Name" disabled />
+                                <input
+                                  type="text"
+                                  value={user.userLastName}
+                                  disabled
+                                />
                               </div>
                               <div className="col-12 mt-2">
                                 <label>Email Address</label>
                                 <input
                                   type="email"
-                                  value="Email Address"
+                                  value={user.userEmail}
                                   disabled
                                 />
                               </div>
@@ -90,7 +91,7 @@ const Profile = () => {
                                 <label>Phone Number</label>
                                 <input
                                   type="number"
-                                  value="03323423523"
+                                  value={user.userPhNumber}
                                   disabled
                                 />
                               </div>

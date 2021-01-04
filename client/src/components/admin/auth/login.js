@@ -4,10 +4,14 @@ import { login } from "../../../redux/_actions/authAction";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS } from "../../../redux/types";
+import { getUser } from "../../../redux/_actions/userAction";
 
 const Login = ({ history }) => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const users = useSelector((state) => state.user.users);
+
+  console.log(users);
 
   useEffect(() => {
     if (state.isAuthenticated) {
@@ -25,6 +29,9 @@ const Login = ({ history }) => {
     }
     // eslint-disable-next-line
   }, [state.isAuthenticated, state.error]);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +40,7 @@ const Login = ({ history }) => {
     e.preventDefault();
     if (email === "" || password === "") {
       dispatch(setAlert("Please enter all the fields.", "danger"));
-    } else {
+    } else if (users.find((user) => user.email === email)?.role === "admin") {
       dispatch(login(email, password));
     }
   };

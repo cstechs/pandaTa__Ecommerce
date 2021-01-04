@@ -10412,7 +10412,9 @@ a.text-blue:hover {
 .text-reset {
   color: inherit !important;
 }
-
+.cursor-pointer {
+  cursor: pointer !important;
+}
 .visible {
   visibility: visible !important;
 }
