@@ -73,9 +73,12 @@ const Productitems = ({ product, proId, catId }) => {
                   }}
                 >
                   <div className="product">
-                    <div className="productimgPortion">
-                      <img src={`/${productImage}`} alt={productName} />
-                    </div>
+                    <div
+                      className="image-portion"
+                      style={{
+                        backgroundImage: `url(${productImage})`,
+                      }}
+                    ></div>
                     <div className="content">
                       <div className="content-left">
                         <span className="vendor">
@@ -100,9 +103,12 @@ const Productitems = ({ product, proId, catId }) => {
               <div className="col-md-4 col-6" key={_id}>
                 <Link to={`/product/${_id}`}>
                   <div className="product">
-                    <div className="productimgPortion">
-                      <img src={`/${productImage}`} alt={productName} />
-                    </div>
+                    <div
+                      className="image-portion"
+                      style={{
+                        backgroundImage: `url(${productImage})`,
+                      }}
+                    ></div>
                     <div className="content">
                       <div className="content-left">
                         <span className="vendor">

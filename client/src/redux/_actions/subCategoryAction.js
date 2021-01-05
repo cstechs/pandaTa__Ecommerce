@@ -46,10 +46,6 @@ export const getSubCategory = () => {
       // console.log(res.data);
       dispatch({ type: SUBCATEGORY_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
-      console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
       dispatch({
         type: SUBCATEGORY_LOAD_FAIL,
         payload: err.response.data.message,
@@ -73,10 +69,6 @@ export const getSubCategoryByCategoryId = (CategoryId) => {
         dispatch({ type: SUBCATEGORY_LOAD_SUCCESS, payload: res.data });
       }
     } catch (err) {
-      //  console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
       dispatch({
         type: SUBCATEGORY_LOAD_FAIL,
         payload: err.response.data.message,

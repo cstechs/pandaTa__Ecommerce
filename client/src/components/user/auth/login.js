@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../redux/_actions/authAction";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS, SET_ALERT } from "../../../redux/types";
 import Register from "./register";
@@ -9,25 +9,10 @@ import { getUser } from "../../../redux/_actions/userAction";
 import { sellerlogin } from "../../../redux/_actions/sellerAction";
 
 const Login = (props) => {
-  const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const history = useHistory();
   const users = useSelector((state) => state.user.users);
   const sellers = useSelector((state) => state.seller.sellers);
-  console.log("sellers", sellers);
-
-  useEffect(() => {
-    if (state.error === "Invalid Creds..") {
-      dispatch(setAlert(state.error, "danger"));
-      dispatch({ type: CLEAR_ERRORS });
-    } else if (state.error?.toString().startsWith("The email address")) {
-      dispatch(setAlert(state.error, "danger"));
-      dispatch({ type: CLEAR_ERRORS });
-    } else if (state.error === "Your account has not been verified.") {
-      dispatch(setAlert(state.error, "danger"));
-      dispatch({ type: CLEAR_ERRORS });
-    }
-    // eslint-disable-next-line
-  }, [state.isAuthenticated, state.error]);
 
   useEffect(() => {
     dispatch(getUser());
@@ -46,22 +31,22 @@ const Login = (props) => {
         role === "customer" &&
         users.find((user) => user.email === email)?.role === "customer"
       ) {
-        dispatch(login(email, password));
         setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+          history.push("/");
+        }, 300);
+        dispatch(login(email, password));
       } else if (
         role === "seller" &&
         sellers.find((seller) => seller.userEmail === email)?.role === "seller"
       ) {
-        dispatch(sellerlogin(email, password));
         setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+          history.push("/");
+        }, 300);
+        dispatch(sellerlogin(email, password));
       } else {
         dispatch(
           setAlert(SET_ALERT, {
-            message: "Invalid account credentials",
+            message: "This Account Is Associated with another role",
             alertType: "danger",
           })
         );

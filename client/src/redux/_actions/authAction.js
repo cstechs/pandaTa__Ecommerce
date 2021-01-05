@@ -26,7 +26,10 @@ export const register = (user) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+        setAlert(SET_ALERT, {
+          message: err.response.data.message,
+          alertType: "danger",
+        })
       );
       dispatch({ type: REGISTER_FAIL, payload: err.response.data });
     }
@@ -42,11 +45,12 @@ export const login = (email, password) => {
         { email, password },
         config
       );
+
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch(
         setAlert(SET_ALERT, {
-          message: "Invalid account credentials",
+          message: err.response.data.message,
           alertType: "danger",
         })
       );

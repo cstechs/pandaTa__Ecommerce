@@ -123,14 +123,16 @@ const Home = () => {
           {subCategory.subCategories.data?.map(({ _id, subCategoryName }) => (
             <Link to="/product" key={_id}>
               <div className="item" key={_id}>
-                <img
-                  src={
-                    product?.products?.data?.find(
-                      (x) => x.productSubCategory === _id
-                    )?.productImage
-                  }
-                  alt=""
-                />
+                <div
+                  className="image-portion"
+                  style={{
+                    backgroundImage: `url(${
+                      product?.products?.data?.find(
+                        (x) => x.productSubCategory === _id
+                      )?.productImage
+                    })`,
+                  }}
+                ></div>
                 <p>{subCategoryName}</p>
               </div>
             </Link>
@@ -153,12 +155,15 @@ const Home = () => {
             {Sellers.length !== 0 ? (
               <>
                 {Sellers?.map((seller, index) => (
-                  <div className="col-md-3 col-6">
+                  <div key={seller._id} className="col-md-3 col-sm-6">
                     <div className="user">
                       <span></span>
-                      <div className="imgCircle">
-                        <img src={seller.userImage} alt="" />
-                      </div>
+                      <div
+                        className="imgCircle"
+                        style={{
+                          backgroundImage: `url(${seller.userImage})`,
+                        }}
+                      ></div>
                       <h5>{seller.userName}</h5>
                       <p className="text-break">{seller.userBio}</p>
                       <button>

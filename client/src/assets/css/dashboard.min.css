@@ -5,7 +5,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900);
 .alert-danger {
   padding: 0.7rem;
-  position: absolute;
+  position: fixed;
   width: 100%;
   z-index: 1000;
   background: red;
@@ -15,7 +15,7 @@
 
 .alert-success {
   padding: 0.7rem;
-  position: absolute;
+  position: fixed;
   width: 100%;
   z-index: 1000;
   background: green;
@@ -1378,18 +1378,18 @@ li.menuitem-active > a:not(.collapsed) > span.menu-arrow {
 }
 .notification-icon-badge {
   position: absolute;
-  font-size: 12px;
-  padding: 1px 6px;
-  right: 2px;
+  font-size: 11px;
+  padding: 2px 6px;
+  right: 5px;
   text-align: center;
 }
 
 @media screen and (max-width: 763px) {
-.notification-icon-badge {
-  font-size: 9px;
-  padding: 1px 4px;
-  margin-top: -3px;
-}
+  .notification-icon-badge {
+    font-size: 9px;
+    padding: 1px 4px;
+    margin-top: -3px;
+  }
 }
 .notification-list .noti-title {
   background-color: transparent;

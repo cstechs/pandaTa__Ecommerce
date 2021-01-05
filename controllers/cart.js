@@ -100,10 +100,11 @@ exports.addItemToCart = async (req, res) => {
       };
       cart = await car.addItem(cartData);
       // let data = await cart.save();
-      res.json(cart);
+      res
+        .status(200)
+        .json({ cart: cart, mgs: "Item Successfully added to cart" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).json({
       type: "Invalid",
       msg: "Something Went Wrong",
@@ -180,11 +181,11 @@ exports.removeProductCart = async (req, res) => {
         cart.items.splice(indexFound, 1);
         if (cart.items.length == 0) {
           cart.subTotal = 0;
+        } else {
+          cart.subTotal = cart.items
+            .map((item) => item.total)
+            .reduce((acc, next) => acc + next);
         }
-      } else {
-        cart.subTotal = cart.items
-          .map((item) => item.total)
-          .reduce((acc, next) => acc + next);
       }
       await cart.save();
 

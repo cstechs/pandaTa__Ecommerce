@@ -39,41 +39,6 @@ const SingleProduct = (props) => {
     }
   }, [product?.product?.data]);
 
-  // const SenderCheckFunction = () => {
-  //   if (user.role === "seller") {
-  //     setCheckSender(1);
-  //   } else {
-  //     setCheckSender(0);
-  //   }
-  // };
-  // const [newMessage, setNewMessage] = useState({
-  //   message: "",
-  //   sender: "",
-  //   createdBy: "",
-  //   sellerId: "",
-  // });
-  // const { message } = newMessage;
-
-  // const onChange = (e) => {
-  //   if (user.role == "seller") {
-  //     setCheckSender(1);
-  //     newMessage.sender = checkSender;
-  //     newMessage.createdBy = user._id;
-  //     setNewMessage({
-  //       ...newMessage,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //   } else {
-  //     setCheckSender(0);
-  //     newMessage.sender = checkSender;
-  //     newMessage.createdBy = user._id;
-  //     setNewMessage({
-  //       ...newMessage,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //   }
-  // };
-
   const [RelatedProductShown, setRelatedProductShown] = useState(false);
   const [StartChatShown, setStartChatShown] = useState(false);
   const [products, setProduct] = useState(0);
@@ -99,7 +64,9 @@ const SingleProduct = (props) => {
   }, []);
 
   const increment = () => {
-    setquantity(quantity + 1);
+    if (quantity != product?.product?.data.productQuantity) {
+      setquantity(quantity + 1);
+    }
   };
   const decrement = () => {
     if (quantity != 1) {
@@ -119,10 +86,12 @@ const SingleProduct = (props) => {
       localStorage.setItem("WishList", "[]");
     }
     var oldData = JSON.parse(localStorage.getItem("WishList"));
-    console.log("olddata", oldData);
-    oldData.push(newData);
-    console.log("olddata", oldData);
-    localStorage.setItem("WishList", JSON.stringify(oldData));
+    if (oldData.find((data) => data._id === newData._id)) {
+      return null;
+    } else {
+      oldData.push(newData);
+      localStorage.setItem("WishList", JSON.stringify(oldData));
+    }
   };
   useEffect(() => {}, [addToWishList]);
 
@@ -202,37 +171,52 @@ const SingleProduct = (props) => {
                       Stock )
                     </h6>
                     <p>{product?.product?.data.productDescription}</p>
-                    <div className="Quantity">
-                      <i className="fa fa-minus" onClick={() => decrement()} />
-                      <span> {quantity} </span>
-                      <i className="fa fa-plus" onClick={() => increment()} />
-                    </div>
-                    <button
-                      disabled={user ? false : true}
-                      className="AddToCart ripple"
-                      onClick={() =>
-                        addToCart(product?.product?.data._id, user._id)
-                      }
-                    >
-                      Add To Cart
-                    </button>
-                    <button className="AddToWishlist">
-                      <i
-                        className="fa fa-heart"
-                        onClick={() => addToWishList()}
-                      />
-                    </button>
+                    {user && user.role === "customer" && (
+                      <>
+                        <div className="Quantity">
+                          <i
+                            className="fa fa-minus"
+                            onClick={() => decrement()}
+                          />
+                          <span> {quantity} </span>
+                          <i
+                            className="fa fa-plus"
+                            onClick={() => increment()}
+                          />
+                        </div>
+                        <button
+                          disabled={user ? false : true}
+                          className="AddToCart ripple"
+                          onClick={() =>
+                            addToCart(product?.product?.data._id, user._id)
+                          }
+                        >
+                          Add To Cart
+                        </button>
+                        <button className="AddToWishlist">
+                          <i
+                            className="fa fa-heart"
+                            onClick={() => addToWishList()}
+                          />
+                        </button>
+                      </>
+                    )}
                     <hr />
                     <h6>
                       <span className="mr-2 font-14">
-                        Category :{arr?.map((item) => item.subCategoryName)}
+                        Category : {arr?.map((item) => item.subCategoryName)}
                       </span>
                     </h6>
                     <h6 className="mt-3">
                       <span className="mr-2 font-14">Supplier's Name : </span>
-                      {seller?.userName}
+                      <Link
+                        to={`/seller/${seller?._id}`}
+                        className="text-decoration-underline text-primary font-16"
+                      >
+                        {seller?.userName}
+                      </Link>
                     </h6>
-                    {user && (
+                    {user && user.role === "customer" && (
                       <button className="chatButton" onClick={() => ChatShow()}>
                         <i className="fa fa-comments" />
                         Start Chat

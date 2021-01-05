@@ -19,7 +19,10 @@ export const createChat = (chat) => {
     } catch (err) {
       //   console.log(err);
       dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+        setAlert(SET_ALERT, {
+          message: err.response.message,
+          alertType: "danger",
+        })
       );
       dispatch({ type: CHAT_CREATE_FAIL, payload: err.response.data.message });
     }

@@ -5,10 +5,6 @@ import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import SellerSideBar from "../partials/sellerSideBar";
-import productimg from "../../../assets/images/user/product.png";
-// import businessimg from "../../../assets/images/user/businessLogo.png";
-// import UserImage from "../../../assets/images/admin/users/user-2.jpg";
-import { getCategory } from "../../../redux/_actions/categoryAction";
 import {
   getSellerById,
   getSellerProducts,

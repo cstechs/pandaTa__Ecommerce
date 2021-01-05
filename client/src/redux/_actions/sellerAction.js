@@ -26,7 +26,10 @@ export const sellerregister = (seller) => {
       dispatch({ type: SELLER_REGISTER_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+        setAlert(SET_ALERT, {
+          message: err.response.data.message,
+          alertType: "danger",
+        })
       );
       dispatch({ type: SELLER_REGISTER_FAIL, payload: err.response.data });
     }
@@ -42,12 +45,15 @@ export const sellerlogin = (userEmail, userpassword) => {
         { userEmail, userpassword },
         config
       );
-      console.log("seller", res);
+
       dispatch({ type: SELLER_LOGIN_SUCCESS, payload: res.data });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (err) {
       dispatch(
         setAlert(SET_ALERT, {
-          message: "Invalid account credentials",
+          message: err.response.data.message,
           alertType: "danger",
         })
       );
@@ -63,9 +69,9 @@ export const getSellers = () => async (dispatch) => {
 
     dispatch({ type: SELLER_LOAD_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: err.response.message, alertType: "danger" })
+    // );
     dispatch({ type: SELLER_LOAD_FAIL, payload: err.response.data.message });
   }
 };
@@ -77,9 +83,9 @@ export const getSellerById = (id) => async (dispatch) => {
 
     dispatch({ type: SINGLE_SELLER_LOAD_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: err.response.message, alertType: "danger" })
+    // );
     dispatch({ type: SINGLE_SELLER_LOAD_FAIL, payload: err.message });
   }
 };
@@ -95,9 +101,9 @@ export const getSellerProducts = (id) => async (dispatch) => {
 
     dispatch({ type: SINGLE_SELLER_PRODUCTS_LOAD_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+    // dispatch(
+    //   setAlert(SET_ALERT, { message: err.response.message, alertType: "danger" })
+    // );
     dispatch({ type: SINGLE_SELLER_PRODUCTS_LOAD_FAIL, payload: err.message });
   }
 };

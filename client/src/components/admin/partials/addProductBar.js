@@ -11,11 +11,6 @@ const AddProductBar = () => {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: "image/jpeg, image/png",
   });
-  const acceptedFileItems = acceptedFiles.map((file) => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   function toggle() {
@@ -214,9 +209,6 @@ const AddProductBar = () => {
                     <h4>Drop files here or click to upload.</h4>
                     <span>(Only *.jpeg and *.png images will be accepted)</span>
                   </div>
-                  <aside>
-                    <ul>{acceptedFileItems}</ul>
-                  </aside>
                 </div>
               </div>
               <div className="text-right mt-2">

@@ -8,7 +8,12 @@ import "./assets/css/home.min.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import setAuthToken from "./utils/setAuthToken";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
 import UserPanel from "./components/user/pages/home";
 import UserCart from "./components/user/pages/cart";
 import UserCheckout from "./components/user/pages/checkout";
@@ -49,6 +54,7 @@ if (localStorage.token) {
 function App() {
   const product = useSelector((state) => state.product);
   const Sellers = useSelector((state) => state.seller.sellers);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,6 +71,7 @@ function App() {
         <Alerts />
         <Switch>
           {/* USER PANEL ROUTES */}
+
           <Route exact path="/" component={UserPanel} />
           <Route exact path="/cart" component={UserCart} />
 

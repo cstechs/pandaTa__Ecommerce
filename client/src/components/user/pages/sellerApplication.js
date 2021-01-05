@@ -3,17 +3,18 @@ import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
-import UserImage from "../../../assets/images/admin/users/user-2.jpg";
+import addImageIcon from "../../../assets/images/addPhoto.png";
 import { useDispatch } from "react-redux";
 import { sellerregister } from "../../../redux/_actions/sellerAction";
+import { setAlert } from "../../../redux/_actions/alertAction";
+import { SET_ALERT } from "../../../redux/types";
 
 const SellerApplication = () => {
   const [applicationShown, setapplicationShown] = useState(true);
   const [companyProfileShown, setcompanyProfileShown] = useState(false);
   const [webAndSocialMediaShown, setwebAndSocialMediaShown] = useState(false);
   const [contactInfoShown, setcontactInfoShown] = useState(false);
-  const [sendCodeShown, setsendCodeShown] = useState(false);
-  const [thanksShown, setthanksShown] = useState(false);
+  const [fileImage, setfileImage] = useState(null);
   const dispatch = useDispatch();
 
   const [newUser, setNewUser] = useState({
@@ -77,18 +78,46 @@ const SellerApplication = () => {
   } = newUser;
   const onChange = (e) =>
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-  const handleOnUploadFile = (e) =>
+  const handleOnUploadFile = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.files[0] });
+    setfileImage(URL.createObjectURL(e.target.files[0]));
+  };
+
   const ApplicationCriteria = (e) => {
     e.preventDefault();
-    setapplicationShown(false);
-    setcompanyProfileShown(true);
+    if (userEmail === "" || userImage === "" || hearAboutPandata === "") {
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please Fill Out All Fields",
+          alertType: "danger",
+        })
+      );
+    } else {
+      setapplicationShown(false);
+      setcompanyProfileShown(true);
+    }
   };
 
   const companyProfile = (e) => {
     e.preventDefault();
-    setcompanyProfileShown(false);
-    setwebAndSocialMediaShown(true);
+    if (
+      businessName === "" ||
+      businessType === "" ||
+      businessMainSaleChannel === "" ||
+      businessYearEstablish === "" ||
+      businessIdentityType === "" ||
+      businessIdNumber === ""
+    ) {
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please Fill Out All Fields",
+          alertType: "danger",
+        })
+      );
+    } else {
+      setcompanyProfileShown(false);
+      setwebAndSocialMediaShown(true);
+    }
   };
 
   const companyprofileBack = (e) => {
@@ -99,8 +128,22 @@ const SellerApplication = () => {
 
   const webAndSocialMedia = (e) => {
     e.preventDefault();
-    setwebAndSocialMediaShown(false);
-    setcontactInfoShown(true);
+    if (
+      fbSocialAccountLink === "" &&
+      twitterSocialAccountLink === "" &&
+      pinterestSocialAccountLink === "" &&
+      instagramSocialAccountLink === ""
+    ) {
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please Fill Out Atleast One Field",
+          alertType: "danger",
+        })
+      );
+    } else {
+      setwebAndSocialMediaShown(false);
+      setcontactInfoShown(true);
+    }
   };
   const webAndSocialMediaBack = (e) => {
     e.preventDefault();
@@ -113,24 +156,15 @@ const SellerApplication = () => {
     setwebAndSocialMediaShown(true);
   };
 
-  const sendCode = (e) => {
-    e.preventDefault();
-    setsendCodeShown(false);
-    setthanksShown(true);
-  };
+  // const sendCode = (e) => {
+  //   e.preventDefault();
+  //   setsendCodeShown(false);
+  //   setthanksShown(true);
+  // };
 
   const onsubmit = (e) => {
     e.preventDefault();
     if (
-      userEmail === "" ||
-      userImage === "" ||
-      hearAboutPandata === "" ||
-      businessName === "" ||
-      businessType === "" ||
-      businessMainSaleChannel === "" ||
-      businessYearEstablish === "" ||
-      businessIdentityType === "" ||
-      businessIdNumber === "" ||
       userGender === "" ||
       userName === "" ||
       userFirstName === "" ||
@@ -144,7 +178,12 @@ const SellerApplication = () => {
       userZipCode === "" ||
       userPhNumber === ""
     ) {
-      console.log("chai peelo", newUser);
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please Fill Out All Fields",
+          alertType: "danger",
+        })
+      );
     } else {
       console.log("user", newUser);
       const data = new FormData();
@@ -183,7 +222,6 @@ const SellerApplication = () => {
       data.append("userPhNumber", newUser.userPhNumber);
       dispatch(sellerregister(data));
       setcontactInfoShown(false);
-      setsendCodeShown(true);
     }
   };
 
@@ -230,11 +268,24 @@ const SellerApplication = () => {
                     <div className="col-md-4">
                       <label>Your Account</label>
                       <div className="underLine"></div>
-                      <div className="accountImage">
-                        <img src={UserImage} alt="" />
-                      </div>
+                      {fileImage ? (
+                        <div
+                          className="accountImage"
+                          style={{
+                            backgroundImage: `url(${fileImage})`,
+                          }}
+                        ></div>
+                      ) : (
+                        <div className="accountImage d-flex justify-content-center align-items-center border">
+                          <img
+                            src={addImageIcon}
+                            className="w-50 d-block m-auto"
+                          />
+                        </div>
+                      )}
                       <label className="changePic">
-                        Change Photo
+                        Add Photo
+                        <span className="text-danger font-16">*</span>
                         <input
                           type="file"
                           name="userImage"
@@ -243,7 +294,10 @@ const SellerApplication = () => {
                       </label>
                     </div>
                     <div className="col-md-4">
-                      <label>How did you hear about Panda/ta</label>
+                      <label>
+                        How did you hear about Panda/ta
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <div className="underLine"></div>
                       <select
                         onChange={onChange}
@@ -261,12 +315,14 @@ const SellerApplication = () => {
                   </div>
                   <div className="row mt-2">
                     <div className="col-md-4">
-                      <label>Email</label>
+                      <label>
+                        Email
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="email"
                         name="userEmail"
                         value={userEmail}
-                        required
                         onChange={onChange}
                         placeholder="xyz@gmail.com"
                       />
@@ -316,88 +372,91 @@ const SellerApplication = () => {
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-12 mt-4">
-                      <label>Business Name</label>
+                      <label>
+                        Business Name
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="businessName"
                         value={businessName}
-                        required
                         onChange={onChange}
                         placeholder="xxyz@gmail.com"
                       />
                     </div>
                     <div className="col-md-4 mt-4 pt-1">
+                      <label>
+                        Business Type
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <select
                         name="businessType"
                         value={businessType}
-                        required
                         onChange={onChange}
                       >
                         <option>Business Type</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option>123</option>
+                        <option>456</option>
+                        <option>789</option>
                       </select>
                     </div>
                     <div className="col-md-4 mt-4 pt-1">
+                      <label>
+                        Business Main Channel
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <select
                         name="businessMainSaleChannel"
                         value={businessMainSaleChannel}
-                        required
                         onChange={onChange}
                       >
                         <option>Main Sales Channel</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option>123</option>
+                        <option>456</option>
+                        <option>789</option>
                       </select>
                     </div>
                     <div className="col-md-4 mt-4 pt-1">
+                      <label>
+                        Business Year Establish
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <select
                         name="businessYearEstablish"
                         value={businessYearEstablish}
-                        required
                         onChange={onChange}
                       >
                         <option>Year Established</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option>123</option>
+                        <option>456</option>
+                        <option>789</option>
                       </select>
                     </div>
                     <div className="col-md-6 mt-4">
-                      <label>Busienss Identity type</label>
+                      <label>
+                        Busienss Identity type
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <select
                         name="businessIdentityType"
                         value={businessIdentityType}
-                        required
                         onChange={onChange}
                       >
                         <option>Retail Business License</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option>123</option>
+                        <option>456</option>
+                        <option>789</option>
                       </select>
                     </div>
                     <div className="col-md-6 mt-4">
-                      <label>Business ID Number</label>
+                      <label>
+                        Business ID Number
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="number"
                         name="businessIdNumber"
                         value={businessIdNumber}
-                        required
                         onChange={onChange}
                         placeholder="eg. 32756158421584"
                       />
@@ -535,9 +594,11 @@ const SellerApplication = () => {
                 <div className="container-fluid">
                   <div className="row mt-2">
                     <div className="col-md-3 mt-1">
-                      <label>Name</label>
+                      <label>
+                        Gender
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <select
-                        required
                         value={userGender}
                         name="userGender"
                         onChange={onChange}
@@ -548,68 +609,88 @@ const SellerApplication = () => {
                       </select>
                     </div>
                     <div className="col-md-3 mt-4">
+                      <label>
+                        First Name
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userFirstName"
                         value={userFirstName}
                         onChange={onChange}
-                        required
                         placeholder="First Name"
                       />
                     </div>
                     <div className="col-md-3 mt-4">
+                      <label>
+                        Middle Name
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userMiddleName"
                         value={userMiddleName}
                         onChange={onChange}
-                        required
                         placeholder="Middle Name "
                       />
                     </div>
                     <div className="col-md-3 mt-4">
+                      <label>
+                        Last Name
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userLastName"
                         value={userLastName}
                         onChange={onChange}
-                        required
                         placeholder="Last Name"
                       />
                     </div>
                     <div className="col-md-6 mt-4">
+                      <label>
+                        UserName
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userName"
                         value={userName}
                         onChange={onChange}
-                        required
                         placeholder="User Name "
                       />
                     </div>
                     <div className="col-md-6 mt-4">
+                      <label>
+                        Password
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="password"
                         name="userpassword"
                         value={userpassword}
                         onChange={onChange}
-                        required
                         placeholder="Enter Password"
                       />
                     </div>
                     <div className="col-md-6 mt-3">
-                      <label>Title</label>
+                      <label>
+                        Title
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userTitle"
                         value={userTitle}
                         onChange={onChange}
-                        required
                         placeholder="eg. CEO, Owner, Manager, Designer, Merchandiser"
                       />
                     </div>
                     <div className="col-md-6 mt-3">
-                      <label>Bio</label>
+                      <label>
+                        Bio
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userBio"
@@ -621,79 +702,86 @@ const SellerApplication = () => {
                     <div className="col-12 mt-2">
                       <label className="font-15">
                         BUSINESS MAILING ADDRESS
+                        <span className="text-danger font-16">*</span>
                       </label>
                       <div className="underLine w-100"></div>
                     </div>
                     <div className="col-md-4">
-                      <label>Street Address</label>
+                      <label>
+                        Street Address
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userAddress"
                         value={userAddress}
                         onChange={onChange}
-                        required
                       />
                     </div>
                     <div className="col-md-4">
-                      <label>Apt / Suite / Other</label>
+                      <label>
+                        Apt / Suite / Other
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userAppartment"
                         value={userAppartment}
                         onChange={onChange}
-                        required
                       />
                     </div>
                     <div className="col-md-4">
-                      <label>City</label>
+                      <label>
+                        City
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userCity"
                         value={userCity}
                         onChange={onChange}
-                        required
                       />
                     </div>
                     <div className="col-md-4 mt-4">
-                      <label>Zip / Postal Code</label>
+                      <label>
+                        Zip / Postal Code
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="text"
                         name="userZipCode"
                         value={userZipCode}
                         onChange={onChange}
-                        required
                       />
                     </div>
                     <div className="col-md-4 mt-4">
-                      <label>Country</label>
+                      <label>
+                        Country
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <select
                         name="userCountry"
                         value={userCountry}
-                        required
                         onChange={onChange}
                       >
                         <option>Select Country</option>
                         <option>Pakistan</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
-                        <option>...</option>
+                        <option>iran</option>
+                        <option>turkey</option>
+                        <option>indonasia</option>
                       </select>
                     </div>
                     <div className="col-md-4 mt-4">
-                      <label>Phone Number</label>
+                      <label>
+                        Phone Number
+                        <span className="text-danger font-16">*</span>
+                      </label>
                       <input
                         type="number"
                         name="userPhNumber"
                         value={userPhNumber}
-                        required
                         onChange={onChange}
                       />
-                      <p className="font-13 text-secondary">
-                        To Validate your account please enter valid mobile
-                        Number to receive confirmation code
-                      </p>
                     </div>
                   </div>
                   <div className="PaginateButton">
@@ -717,73 +805,6 @@ const SellerApplication = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </>
-          )}
-          {sendCodeShown && (
-            <>
-              <div className="head">
-                <span className="hd1">Application Critaria</span>
-                <span className="hd2">Company Profile</span>
-                <span className="hd3">Web & Social Media</span>
-                <span className="hd4">Contact Info</span>
-                <span className="hd5 active">Confirm Account</span>
-              </div>
-              <div className="sellerApplicationBox">
-                {/* CONFIRM ACCOUNT PORTION */}
-                <div className="container-fluid">
-                  <div className="row mt-2">
-                    <div className="col-12 mt-4">
-                      <div className="mt-3">
-                        <p className="text-center font-15 text-darkpurple mt-2">
-                          Enter Confirmation code send to your mobile phone
-                        </p>
-                        <input type="number" className="mt-2" required />
-                        <span
-                          className="button ripple button-base next_button"
-                          onClick={sendCode}
-                        >
-                          Confirm
-                        </span>
-                      </div>
-                      <div className="mt-5">
-                        <p className="text-center font-14 text-darkpurple mt-5">
-                          Dont’s have code? <br /> Generate new code, Enter your
-                          Mobile Number
-                        </p>
-                        <input type="number" className="mt-2" required />
-                        <span
-                          className="button ripple button-base next_button"
-                          onClick={sendCode}
-                        >
-                          Regenerate Code
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-          {thanksShown && (
-            <>
-              <div className="head">
-                <span className="hd1">Application Critaria</span>
-                <span className="hd2">Company Profile</span>
-                <span className="hd3">Web & Social Media</span>
-                <span className="hd4">Contact Info</span>
-                <span className="hd5 active">Confirm Account</span>
-              </div>
-              <div className="sellerApplicationBox">
-                {/* CONFIRM ACCOUNT PORTION */}
-                <p className="text-center font-14 text-darkpurple mt-5">
-                  Thank you for submitting Seller Application. Your application
-                  is being reviewed, withing 48 hours. <br /> You will receive
-                  and email about the status of your application.
-                </p>
-                <Link to="/product" className="btn btn-darkpurple mt-3 ripple">
-                  LET’S GO FOR SHOPPING
-                </Link>
               </div>
             </>
           )}

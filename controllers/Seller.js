@@ -42,7 +42,7 @@ exports.register = async (req, res, next) => {
     hearAboutPandata,
   } = req.body;
 
-  let userImage = req.file.originalname;
+  let userImage = req.file.filename;
 
   if (
     !userFirstName ||

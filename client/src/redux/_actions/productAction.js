@@ -50,9 +50,9 @@ export const getProduct = () => {
       dispatch({ type: PRODUCT_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       //  console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      // );
       dispatch({
         type: PRODUCT_LOAD_FAIL,
         payload: err.response?.data?.message,

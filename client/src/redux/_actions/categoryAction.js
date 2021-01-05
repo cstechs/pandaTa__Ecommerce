@@ -48,9 +48,12 @@ export const getCategory = () => {
       dispatch({ type: CATEGORY_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       // console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, {
+      //     message: err.response.data.message,
+      //     alertType: "danger",
+      //   })
+      // );
       dispatch({
         type: CATEGORY_LOAD_FAIL,
         payload: err.response.data.message,
@@ -72,9 +75,9 @@ export const getCategoryBySubCategoryId = (SubCategoryId) => {
       }
     } catch (err) {
       //  console.log(err);
-      dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      );
+      // dispatch(
+      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      // );
       dispatch({
         type: CATEGORY_SINGLE_LOAD_FAIL,
         payload: err.response.data.message,
@@ -100,7 +103,10 @@ export const updateCategory = (id, categoryName) => async (dispatch) => {
   } catch (err) {
     //  console.log(err);
     dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      setAlert(SET_ALERT, {
+        message: err.response.message,
+        alertType: "danger",
+      })
     );
     dispatch({
       type: CATEGORY_UPDATE_FAIL,
@@ -119,7 +125,10 @@ export const deleteCategory = (id) => async (dispatch) => {
     dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: res.data });
   } catch (err) {
     dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      setAlert(SET_ALERT, {
+        message: err.response.message,
+        alertType: "danger",
+      })
     );
     dispatch({
       type: CATEGORY_DELETE_FAIL,

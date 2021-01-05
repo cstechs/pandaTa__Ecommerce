@@ -10403,6 +10403,9 @@ a.text-blue:hover {
 .text-decoration-none {
   text-decoration: none !important;
 }
+.text-decoration-underline {
+  text-decoration: underline !important;
+}
 
 .text-break {
   word-break: break-word !important;

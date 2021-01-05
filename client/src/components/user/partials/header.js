@@ -200,23 +200,23 @@ const Header = () => {
                         </span>
                       </Link>
                       <div className="btn-group">
-                        <span
-                          type="button"
-                          className="dropdown-toggle"
-                          data-toggle="dropdown"
-                        >
-                          <img
-                            src={UserImage}
-                            alt="user-image"
-                            className="rounded-circle"
-                          />
-                          <label>{user.userName}</label>
+                        <span type="button" data-toggle="dropdown">
+                          {user.role === "seller" ? (
+                            <img
+                              src={`/${user.userImage}`}
+                              alt="user-image"
+                              className="rounded-circle"
+                            />
+                          ) : (
+                            <i className="fa fa-user" />
+                          )}
+                          <i className="fe-chevron-down" />
                         </span>
-                        <div className="dropdown-menu">
+                        <div className="dropdown-menu dropdown-menu-right">
                           <div>
                             <span className="dropdown-item">
-                              <i className="fa fa-user"></i>
-                              Profile
+                              <i className="fa fa-user" />
+                              {user.userName}
                             </span>
                           </div>
                           <div>
@@ -227,7 +227,7 @@ const Header = () => {
                                 window.location.reload();
                               }}
                             >
-                              <i className="fas fa-sign-out-alt"></i>
+                              <i className="fas fa-sign-out-alt" />
                               LogOut
                             </span>
                           </div>

@@ -104,7 +104,7 @@ const Navbar = () => {
                 <div className="dropdown-item noti-title">
                   <h5 className="m-0">
                     <span className="float-right">
-                      <span className="text-dark">
+                      <span className="text-dark cursor-pointer">
                         <small>Clear All</small>
                       </span>
                     </span>
@@ -131,7 +131,7 @@ const Navbar = () => {
                     </React.Fragment>
                   ))}
                 </div>
-                <span className="dropdown-item text-center text-primary notify-item notify-all">
+                <span className="dropdown-item text-center text-primary notify-item notify-all cursor-pointer">
                   View all
                   <i className="fe-arrow-right" alt="" />
                 </span>
@@ -192,7 +192,11 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <img src={UserImage} alt="user" className="rounded-circle" />
+                <img
+                  src={`/${user.userImage}`}
+                  alt={user.userName}
+                  className="rounded-circle"
+                />
                 <span className="pro-user-name ml-1">
                   {user.userName} <i className="mdi mdi-chevron-down" />
                 </span>

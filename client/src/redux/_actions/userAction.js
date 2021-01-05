@@ -17,9 +17,6 @@ export const getUser = () => async (dispatch) => {
 
     dispatch({ type: USER_LOAD_SUCCESS, payload: res.data });
   } catch (err) {
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
     dispatch({ type: USER_LOAD_FAIL, payload: err.response.data.message });
   }
 };
@@ -34,9 +31,7 @@ export const updateUser = (user, id) => async (dispatch) => {
     dispatch({ type: USER_UPDATE_SUCCESS, payload: res.data });
   } catch (err) {
     console.log("err", err.message);
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
+
     dispatch({ type: USER_UPDATE_FAIL, payload: err.message });
   }
 };
@@ -51,10 +46,6 @@ export const deleteUser = (id) => async (dispatch) => {
     );
     dispatch({ type: USER_DELETE_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log("err", err.message);
-    dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-    );
     dispatch({ type: USER_DELETE_FAIL, payload: err.message });
   }
 };

@@ -47,14 +47,14 @@ exports.login = async (req, res) => {
 
     //validate password
     if (!user.comparePassword(password))
-      return res.status(401).json({ message: "Invalid Creds.." });
+      return res.status(401).json({ message: "Invalid Credentials" });
 
     // Make sure the user has been verified
-    if (!user.isVerified)
+    if (!user.isVerified) {
       return res.status(401).json({
-        type: "not-verified",
         message: "Your account has not been verified.",
       });
+    }
 
     // Login successful, write token, and send back user
     res.status(200).json({ token: user.generateJWT(), user: user });

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import businessimg from "../../../assets/images/user/businessLogo.png";
 import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { Link } from "react-router-dom";
@@ -8,13 +7,13 @@ import { Link } from "react-router-dom";
 const SellerSideBar = ({
   seller,
   subCategory,
-
   Productidsetter,
   Catidsetter,
 }) => {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const [categoryDropDown, setcategoryDropDown] = useState(true);
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [subcategoryDropDown, setSubcategoryDropDown] = useState([
     true,
     true,
@@ -48,7 +47,7 @@ const SellerSideBar = ({
     <React.Fragment>
       <div className="sellerProfilePortion">
         <div className="businessImage">
-          <img src={businessimg} alt="BussinessLogo" />
+          <img src={UserImage} alt="BussinessLogo" />
         </div>
         <h1>{seller.businessName}</h1>
         <p className="mb-3">
@@ -61,7 +60,7 @@ const SellerSideBar = ({
         <p className="mt-3 font-14">MEET THE OWNER</p>
         <div className="underLine w-100"></div>
         <div className="sellerImage">
-          <img src={UserImage} alt="sellerImage" />
+          <img src={`/${user.userImage}`} alt="sellerImage" />
         </div>
         <h1 className="font-20 mt-2">{seller.userName}</h1>
         <p className="mt-2">

@@ -10,7 +10,6 @@ const Product = () => {
   const users = useSelector((state) => state.user.users);
   const dispatch = useDispatch();
   const [wishList] = useState(JSON.parse(localStorage.getItem("WishList")));
-  console.log(wishList);
 
   useEffect(() => {
     dispatch(getUser());

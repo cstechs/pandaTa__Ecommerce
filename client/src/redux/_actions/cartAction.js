@@ -69,7 +69,10 @@ export const removeCart = () => async (dispatch) => {
   } catch (err) {
     console.log(err);
     dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      setAlert(SET_ALERT, {
+        message: err.response.message,
+        alertType: "danger",
+      })
     );
     dispatch({ type: CART_DELETE_FAIL, payload: err.response.data.message });
   }
@@ -137,7 +140,10 @@ export const removeCartItem = (CreatedBy, Cartid) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     dispatch(
-      setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+      setAlert(SET_ALERT, {
+        message: err.response.message,
+        alertType: "danger",
+      })
     );
     dispatch({
       type: CART_REMOVE_ITEM_FAIL,
