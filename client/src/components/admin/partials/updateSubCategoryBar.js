@@ -8,9 +8,9 @@ const UpdateSubCategoryBar = (props) => {
   const [name, setName] = useState(props.newSubcategory?.subCategoryName);
   const dispatch = useDispatch();
 
-  function handleHide() {
-    props.SubCategorytogglePreview();
-  }
+  const handleHide = () => {
+    props.SubCategoryUpdatetogglePreview();
+  };
 
   useEffect(() => {
     dispatch(getCategory());

@@ -7,9 +7,9 @@ const UpdateCategoryBar = (props) => {
   const [update, setUpdate] = useState(props.newcategory?.categoryName);
   const dispatch = useDispatch();
 
-  function handleHide() {
-    props.categorytogglePreview();
-  }
+  const handleHide = () => {
+    props.categoryUpdatetogglePreview();
+  };
 
   useEffect(() => {}, []);
   const onSubmit = (e, id) => {

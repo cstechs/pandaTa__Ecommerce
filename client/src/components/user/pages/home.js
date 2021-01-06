@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import $ from "jquery";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
@@ -51,11 +50,6 @@ const Home = () => {
       '<i class="fa">&#xf0d9</i>';
     document.getElementsByClassName("owl-next")[0].innerHTML =
       '<i class="fa">&#xf0da</i>';
-    $(function () {
-      setTimeout(function () {
-        $("#loader").fadeOut();
-      }, 1000);
-    });
   }, [dispatch]);
 
   useEffect(() => {

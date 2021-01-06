@@ -4,12 +4,10 @@ import { addCategory } from "../../../redux/_actions/categoryAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
 // import { CLEAR_ERRORS } from '../../../redux/types';
 
-const AddCategoryBar = () => {
-  function toggle() {
-    document
-      .getElementById("AddCategoryBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
+const AddCategoryBar = (props) => {
+  const handleHide = () => {
+    props.categoryAddtogglePreview();
+  };
 
   const dispatch = useDispatch();
 
@@ -34,7 +32,7 @@ const AddCategoryBar = () => {
 
   return (
     <>
-      <i className="fas fa-times-circle closeIcon" onClick={toggle}></i>
+      <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
       <div className="CategoryBar">
         <form onSubmit={onSubmit}>
           <div className="row">
@@ -62,7 +60,7 @@ const AddCategoryBar = () => {
               <div className="text-right mt-4">
                 <span
                   className="btn btn-danger ripple button-base mr-2 px-4"
-                  onClick={toggle}
+                  onClick={handleHide}
                 >
                   CANCEL
                 </span>

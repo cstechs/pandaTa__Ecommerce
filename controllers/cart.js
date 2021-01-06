@@ -1,7 +1,6 @@
 //const cartRepository = require('./repository.js')
 const Product = require("../models/Product");
 const car = require("../middleware/db");
-const { data } = require("jquery");
 
 exports.addItemToCart = async (req, res) => {
   const { productId, createdBy } = req.body;

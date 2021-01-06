@@ -20,49 +20,41 @@ import {
 } from "../../../redux/_actions/subCategoryAction";
 
 const Category = () => {
-  function categoryToggle() {
-    document
-      .getElementById("AddCategoryBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
-  function SubcategoryToggle() {
-    document
-      .getElementById("AddSubCategoryBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
-  function UpdateSubcategoryToggle() {
-    document
-      .getElementById("UpdateSubCategoryBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
-
-  const [catPreviewShown, setcatPreviewShown] = useState(false);
   const [newcategory, setnewcategory] = useState(0);
-  const [subCatPreviewShown, setsubCatPreviewShown] = useState(false);
+  const [catAddPreviewShown, setAddcatPreviewShown] = useState(false);
+  const [catUpdatePreviewShown, setUpdatecatPreviewShown] = useState(false);
+  const [subCatAddPreviewShown, setsubCatAddPreviewShown] = useState(false);
+  const [subCatUpdatePreviewShown, setsubUpdateCatPreviewShown] = useState(
+    false
+  );
   const [newSubcategory, setnewSubcategory] = useState(0);
   const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
 
-  const categorytogglePreview = () => {
-    setcatPreviewShown(!catPreviewShown);
+  const categoryAddtogglePreview = () => {
+    setAddcatPreviewShown(!catAddPreviewShown);
+  };
+  const categoryUpdatetogglePreview = () => {
+    setUpdatecatPreviewShown(!catUpdatePreviewShown);
+  };
+  const SubCategoryAddtogglePreview = () => {
+    setsubCatAddPreviewShown(!subCatAddPreviewShown);
+  };
+  const SubCategoryUpdatetogglePreview = () => {
+    setsubUpdateCatPreviewShown(!subCatUpdatePreviewShown);
   };
 
-  const SubCategorytogglePreview = () => {
-    setsubCatPreviewShown(!subCatPreviewShown);
-  };
-
-  const showCategory = (item) => {
-    setcatPreviewShown(true);
+  const showUpdateCategoryBar = (item) => {
+    setUpdatecatPreviewShown(true);
     setnewcategory(item);
   };
 
-  const showSubCategory = (item) => {
-    setsubCatPreviewShown(true);
+  const showUpdateSubCategoryBar = (item) => {
+    setsubUpdateCatPreviewShown(true);
     setnewSubcategory(item);
   };
   const categoryDelete = (e, item) => {
-    // console.log("it", item._id);
     dispatch(deleteCategory(item._id));
     window.location.reload();
   };
@@ -138,13 +130,13 @@ const Category = () => {
                   <div className="col-12 text-right">
                     <button
                       className="btn btn-success ripple button-base mr-2"
-                      onClick={categoryToggle}
+                      onClick={categoryAddtogglePreview}
                     >
                       ADD CATEGORY
                     </button>
                     <button
                       className="btn btn-success ripple button-base"
-                      onClick={SubcategoryToggle}
+                      onClick={SubCategoryAddtogglePreview}
                     >
                       ADD SUB CATEGORY
                     </button>
@@ -172,7 +164,9 @@ const Category = () => {
                                   <td className="font-16">
                                     <i
                                       className="fas fa-edit"
-                                      onClick={() => showCategory(item)}
+                                      onClick={() =>
+                                        showUpdateCategoryBar(item)
+                                      }
                                     ></i>
                                     |
                                     <i
@@ -184,17 +178,6 @@ const Category = () => {
                               ))}
                             </tbody>
                           </table>
-                          {catPreviewShown && (
-                            <div
-                              className="Category_Bar_Portion"
-                              style={{ transform: "translateX(0)" }}
-                            >
-                              <UpdateCategoryBar
-                                newcategory={newcategory}
-                                categorytogglePreview={categorytogglePreview}
-                              />
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -226,7 +209,9 @@ const Category = () => {
                                   <td className="font-16">
                                     <i
                                       className="fas fa-edit"
-                                      onClick={() => showSubCategory(item)}
+                                      onClick={() =>
+                                        showUpdateSubCategoryBar(item)
+                                      }
                                     ></i>
                                     |
                                     <i
@@ -240,19 +225,6 @@ const Category = () => {
                               ))}
                             </tbody>
                           </table>
-                          {subCatPreviewShown && (
-                            <div
-                              className="Category_Bar_Portion"
-                              style={{ transform: "translateX(0)" }}
-                            >
-                              <UpdateSubCategoryBar
-                                newSubcategory={newSubcategory}
-                                SubCategorytogglePreview={
-                                  SubCategorytogglePreview
-                                }
-                              />
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -264,12 +236,34 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <div className="Category_Bar_Portion" id="AddCategoryBar">
-        <AddCategoryBar />
-      </div>
-      <div className="Category_Bar_Portion" id="AddSubCategoryBar">
-        <AddSubCategory />
-      </div>
+      {catAddPreviewShown && (
+        <div className="Category_Bar_Portion">
+          <AddCategoryBar categoryAddtogglePreview={categoryAddtogglePreview} />
+        </div>
+      )}
+      {catUpdatePreviewShown && (
+        <div className="Category_Bar_Portion">
+          <UpdateCategoryBar
+            newcategory={newcategory}
+            categoryUpdatetogglePreview={categoryUpdatetogglePreview}
+          />
+        </div>
+      )}
+      {subCatAddPreviewShown && (
+        <div className="Category_Bar_Portion">
+          <AddSubCategory
+            SubCategoryAddtogglePreview={SubCategoryAddtogglePreview}
+          />
+        </div>
+      )}
+      {subCatUpdatePreviewShown && (
+        <div className="Category_Bar_Portion">
+          <UpdateSubCategoryBar
+            newSubcategory={newSubcategory}
+            SubCategoryUpdatetogglePreview={SubCategoryUpdatetogglePreview}
+          />
+        </div>
+      )}
     </>
   );
 };

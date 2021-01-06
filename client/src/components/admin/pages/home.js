@@ -10,7 +10,6 @@ import cardbodyimg3 from "../../../assets/images/admin/current-progress-img-3.pn
 
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import { Line } from "react-chartjs-2";
-import $ from "jquery";
 import { useDispatch } from "react-redux";
 
 const Home = () => {
@@ -51,22 +50,6 @@ const Home = () => {
 
   useEffect(() => {
     chart();
-    $(".count").each(function () {
-      $(this)
-        .prop("Counter", 0)
-        .animate(
-          {
-            Counter: $(this).text(),
-          },
-          {
-            duration: 1000,
-            easing: "swing",
-            step: function (now) {
-              $(this).text(Math.ceil(now));
-            },
-          }
-        );
-    });
   }, []);
 
   return (

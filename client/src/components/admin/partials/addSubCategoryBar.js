@@ -4,18 +4,13 @@ import { setAlert } from "../../../redux/_actions/alertAction";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { addSubCategory } from "../../../redux/_actions/subCategoryAction";
 
-const AddSubCategoryBar = () => {
-  function toggle() {
-    document
-      .getElementById("AddSubCategoryBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
+const AddSubCategoryBar = (props) => {
+  const handleHide = () => {
+    props.SubCategoryAddtogglePreview();
+  };
 
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
-
-  // const [categoryId, setValue] = useState("");
-  // const [isDisable, setDisable] = useState(true);
 
   useEffect(() => {
     dispatch(getCategory());
@@ -43,7 +38,7 @@ const AddSubCategoryBar = () => {
 
   return (
     <>
-      <i className="fas fa-times-circle closeIcon" onClick={toggle}></i>
+      <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
       <div className="CategoryBar">
         <form onSubmit={onSubmit}>
           <div className="row">
@@ -89,7 +84,7 @@ const AddSubCategoryBar = () => {
                 <div className="text-right mt-4">
                   <span
                     className="btn btn-danger ripple button-base mr-2 px-4"
-                    onClick={toggle}
+                    onClick={handleHide}
                   >
                     CANCEL
                   </span>
