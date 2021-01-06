@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import { getProductBySubCategoryId } from "../../../redux/_actions/productAction";
+import Loader from "./loader";
 const RelatedProduct = (props) => {
   const [responsive] = useState({
     0: {
@@ -18,12 +19,17 @@ const RelatedProduct = (props) => {
       items: 4,
     },
   });
+
   const relatedProduct = useSelector((state) => state.product.relatedProducts);
   const dispatch = useDispatch();
+  console.log("prop", props.products);
 
   useEffect(() => {
     dispatch(getProductBySubCategoryId(props.products));
   }, [dispatch]);
+  if (props.products === undefined) {
+    return <Loader />;
+  }
 
   return (
     <>

@@ -11,8 +11,6 @@ const Login = ({ history }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.users);
 
-  console.log(users);
-
   useEffect(() => {
     if (state.isAuthenticated) {
       history.push("/admin");

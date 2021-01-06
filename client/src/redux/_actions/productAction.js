@@ -100,6 +100,7 @@ export const updateProduct = (product, productId) => {
       // dispatch(
       //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
       // );
+      console.log("error", err.response);
       dispatch({
         type: PRODUCT_UPDATE_FAIL,
         payload: err?.response?.data?.message,

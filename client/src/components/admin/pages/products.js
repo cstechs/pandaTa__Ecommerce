@@ -15,17 +15,10 @@ import {
 } from "../../../redux/_actions/productAction";
 
 const Products = () => {
-  function productToggle() {
-    document
-      .getElementById("AddProductBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
-
   const product = useSelector((state) => state.product);
   const dispatch = useDispatch();
-  const [isPreviewShown, setPreviewShown] = useState(false);
-  // const category = useSelector((state) => state.category);
-  // const subCategory = useSelector((state) => state.subCategory);
+  const [addBarPreviewShown, setaddBarPreviewShown] = useState(false);
+  const [updateBarPreviewShown, setupdateBarPreviewShown] = useState(false);
   const [products, setProduct] = useState(0);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const lowStock = product?.products?.data?.filter(
@@ -39,15 +32,18 @@ const Products = () => {
       (x.productQuantity < 0 && x.createdBy === user._id)
   )?.length;
 
-  // console.log(
-  //   "checkuser",
-  //   product?.products?.data?.filter(
-  //     (x) => x.createdBy === user._id && x.productQuantity < 0
-  //   )?.length
-  // );
+  const updatetogglePreview = () => {
+    setupdateBarPreviewShown(!updateBarPreviewShown);
+  };
 
-  const handlePreview = (item) => {
-    setPreviewShown(true);
+  const addtogglePreview = () => {
+    setaddBarPreviewShown(!addBarPreviewShown);
+  };
+  const addProductBarPreview = () => {
+    setaddBarPreviewShown(true);
+  };
+  const updateProductBarPreview = (item) => {
+    setupdateBarPreviewShown(true);
     setProduct(item);
   };
   const ProductDelete = (item) => {
@@ -116,14 +112,16 @@ const Products = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-12 text-right">
-                    <button
-                      className="btn btn-success ripple button-base mr-2"
-                      onClick={productToggle}
-                    >
-                      ADD PRODUCT
-                    </button>
-                  </div>
+                  {user.role === "seller" && (
+                    <div className="col-12 text-right">
+                      <button
+                        className="btn btn-success ripple button-base mr-2"
+                        onClick={() => addProductBarPreview()}
+                      >
+                        ADD PRODUCT
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="row mt-3">
                   <div className="col-md-8">
@@ -189,7 +187,9 @@ const Products = () => {
                                         <td className="pt-2 font-16">
                                           <i
                                             className="fas fa-edit"
-                                            onClick={() => handlePreview(item)}
+                                            onClick={() =>
+                                              updateProductBarPreview(item)
+                                            }
                                           ></i>
                                           |
                                           <i
@@ -240,10 +240,19 @@ const Products = () => {
                                       ${item.productPrice}
                                     </td>
                                     <td className="pt-2 font-16">
-                                      <i
-                                        className="fas fa-edit"
-                                        onClick={() => handlePreview(item)}
-                                      ></i>
+                                      {user.role === "seller" && (
+                                        <i
+                                          className="fas fa-edit"
+                                          onClick={() =>
+                                            updateProductBarPreview(item)
+                                          }
+                                        ></i>
+                                      )}
+                                      {user.role === "admin" && (
+                                        <Link to={`/product/${item._id}`}>
+                                          <i className="fas fa-eye text-dark"></i>
+                                        </Link>
+                                      )}
                                       |
                                       <i
                                         className="fas fa-trash-alt text-danger"
@@ -254,14 +263,6 @@ const Products = () => {
                                 ))}
                             </tbody>
                           </table>
-                          {isPreviewShown && (
-                            <div
-                              className="Product_Bar_Portion"
-                              style={{ transform: "translateX(0)" }}
-                            >
-                              <UpdateProductBar products={products} />
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -350,9 +351,19 @@ const Products = () => {
           </div>
         </div>
       </div>
-      <div className="Product_Bar_Portion" id="AddProductBar">
-        <AddProductBar />
-      </div>
+      {updateBarPreviewShown && (
+        <div className="Product_Bar_Portion">
+          <UpdateProductBar
+            products={products}
+            updatetogglePreview={updatetogglePreview}
+          />
+        </div>
+      )}
+      {addBarPreviewShown && (
+        <div className="Product_Bar_Portion">
+          <AddProductBar addtogglePreview={addtogglePreview} />
+        </div>
+      )}
     </>
   );
 };

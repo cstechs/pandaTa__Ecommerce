@@ -127,19 +127,11 @@ const Header = () => {
                     <button className="ripple">Search</button>
                   </div>
                   <div className="searchDropdown">
-                    {searchProduct?.map(
-                      ({
-                        _id,
-                        productName,
-                        productPrice,
-                        productImage,
-                        productSubCategory,
-                      }) => (
-                        <Link to={`/product/${_id}`} key={_id}>
-                          <span>{productName}</span>
-                        </Link>
-                      )
-                    )}
+                    {searchProduct?.map(({ _id, productName }) => (
+                      <Link to={`/product/${_id}`} key={_id}>
+                        <span>{productName}</span>
+                      </Link>
+                    ))}
                   </div>
                 </div>
                 <div className="col-md-5 col-6">
@@ -208,7 +200,7 @@ const Header = () => {
                               className="rounded-circle"
                             />
                           ) : (
-                            <i className="fa fa-user" />
+                            <i className="fa fa-user-circle" />
                           )}
                           <i className="fe-chevron-down" />
                         </span>

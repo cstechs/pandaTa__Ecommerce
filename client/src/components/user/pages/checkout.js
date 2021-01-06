@@ -135,7 +135,11 @@ const CheckOut = () => {
                       <label htmlFor="">
                         Country<span className="text-danger">*</span>
                       </label>
-                      <select name="country" onChange={(e) => HandleChange(e)}>
+                      <select
+                        name="country"
+                        value={country}
+                        onChange={(e) => HandleChange(e)}
+                      >
                         <option value="">Select Country</option>
                         <option value="United Kingdom (UK)">
                           United Kingdom (UK)
@@ -208,15 +212,6 @@ const CheckOut = () => {
                         value={phoneNum}
                         onChange={(e) => HandleChange(e)}
                       />
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <div className="createAccount">
-                        <label className="check">
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <p>Create an Account?</p>
-                      </div>
                     </div>
                   </div>
                   <div className="row mt-5">
@@ -322,15 +317,6 @@ const CheckOut = () => {
                     <div className="col-md-4 mt-3">
                       <label htmlFor="">Phone</label>
                       <input type="number" placeholder="eg. 94 788 1221" />
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <div className="createAccount">
-                        <label className="check">
-                          <input type="checkbox" />
-                          <span className="checkmark"></span>
-                        </label>
-                        <p>Create an Account?</p>
-                      </div>
                     </div>
                   </div>
                   <div className="row mt-5">

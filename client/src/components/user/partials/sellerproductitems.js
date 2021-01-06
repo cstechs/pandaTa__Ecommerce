@@ -55,9 +55,13 @@ const SellerProductitems = ({ product, proId, catId, seller }) => {
                   }}
                 >
                   <div className="product">
-                    <div className="productimgPortion">
-                      <img src={`/${productImage}`} alt={productName} />
-                    </div>
+                    <div
+                      className="image-portion"
+                      style={{
+                        backgroundImage: `url(/${productImage})`,
+                      }}
+                    ></div>
+                    {/* <img src={`/${productImage}`} alt={productName} /> */}
                     <div className="content">
                       <div className="content-left">
                         <span className="vendor">{seller.userName}</span>

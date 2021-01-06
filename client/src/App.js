@@ -30,9 +30,6 @@ import AdminPanelCategory from "./components/admin/pages/categories";
 import AdminPanelInvoice from "./components/admin/pages/invoice";
 import AdminPanelCustomer from "./components/admin/pages/customers";
 import AdminPanelChat from "./components/admin/pages/chat";
-import AdminPanelEmailInbox from "./components/admin/pages/emailinbox";
-import AdminPanelEmailCompose from "./components/admin/pages/emailcompose";
-import AdminPanelEmailRead from "./components/admin/pages/emailread";
 import AdminPanelSetting from "./components/admin/pages/profile";
 import AdminPanelEditSetting from "./components/admin/pages/updateProfile";
 import AdminLogin from "./components/admin/auth/login";
@@ -114,7 +111,6 @@ function App() {
           )}
           {/* ADMIN PANEL ROUTES */}
           <PrivateRoute exact path="/admin" component={AdminPanel} />
-          {/* <Route exact path='/admin/panel' component={AdminPanel}/> */}
           <Route exact path="/admin/login" component={AdminLogin} />
           <Route
             exact
@@ -132,21 +128,6 @@ function App() {
             exact
             path="/admin/setting/edit"
             component={AdminPanelEditSetting}
-          />
-          <PrivateRoute
-            exact
-            path="/admin/email/inbox"
-            component={AdminPanelEmailInbox}
-          />
-          <PrivateRoute
-            exact
-            path="/admin/email/compose"
-            component={AdminPanelEmailCompose}
-          />
-          <PrivateRoute
-            exact
-            path="/admin/email/read"
-            component={AdminPanelEmailRead}
           />
           <PrivateRoute
             exact

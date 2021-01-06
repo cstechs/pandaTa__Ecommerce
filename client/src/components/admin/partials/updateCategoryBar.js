@@ -8,7 +8,7 @@ const UpdateCategoryBar = (props) => {
   const dispatch = useDispatch();
 
   function handleHide() {
-    window.location.reload();
+    props.categorytogglePreview();
   }
 
   useEffect(() => {}, []);

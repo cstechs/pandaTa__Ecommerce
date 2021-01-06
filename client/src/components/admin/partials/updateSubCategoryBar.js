@@ -9,7 +9,7 @@ const UpdateSubCategoryBar = (props) => {
   const dispatch = useDispatch();
 
   function handleHide() {
-    window.location.reload();
+    props.SubCategorytogglePreview();
   }
 
   useEffect(() => {

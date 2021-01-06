@@ -44,6 +44,14 @@ const Category = () => {
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
 
+  const categorytogglePreview = () => {
+    setcatPreviewShown(!catPreviewShown);
+  };
+
+  const SubCategorytogglePreview = () => {
+    setsubCatPreviewShown(!subCatPreviewShown);
+  };
+
   const showCategory = (item) => {
     setcatPreviewShown(true);
     setnewcategory(item);
@@ -181,7 +189,10 @@ const Category = () => {
                               className="Category_Bar_Portion"
                               style={{ transform: "translateX(0)" }}
                             >
-                              <UpdateCategoryBar newcategory={newcategory} />
+                              <UpdateCategoryBar
+                                newcategory={newcategory}
+                                categorytogglePreview={categorytogglePreview}
+                              />
                             </div>
                           )}
                         </div>
@@ -236,6 +247,9 @@ const Category = () => {
                             >
                               <UpdateSubCategoryBar
                                 newSubcategory={newSubcategory}
+                                SubCategorytogglePreview={
+                                  SubCategorytogglePreview
+                                }
                               />
                             </div>
                           )}

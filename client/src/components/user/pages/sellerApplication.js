@@ -156,12 +156,6 @@ const SellerApplication = () => {
     setwebAndSocialMediaShown(true);
   };
 
-  // const sendCode = (e) => {
-  //   e.preventDefault();
-  //   setsendCodeShown(false);
-  //   setthanksShown(true);
-  // };
-
   const onsubmit = (e) => {
     e.preventDefault();
     if (

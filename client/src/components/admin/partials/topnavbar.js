@@ -192,11 +192,13 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <img
-                  src={`/${user.userImage}`}
-                  alt={user.userName}
-                  className="rounded-circle"
-                />
+                {user.role === "seller" && (
+                  <img
+                    src={`/${user.userImage}`}
+                    alt={user.userName}
+                    className="rounded-circle"
+                  />
+                )}
                 <span className="pro-user-name ml-1">
                   {user.userName} <i className="mdi mdi-chevron-down" />
                 </span>

@@ -92,11 +92,17 @@ exports.updateProduct = asyncHandlers(async (req, res, next) => {
       productDescription,
       productQuantity,
       productSubCategory,
+      productImage,
     } = req.body;
 
-    let productImage = req.file.filename;
+    console.log("file", req.body);
+    if (req.file !== undefined) {
+      var productImages = req.file.filename;
+    } else {
+      productImages = productImage;
+    }
 
-    productImage = productImage.replace("C:\\fakepath\\", "");
+    productImages = productImages.replace("C:\\fakepath\\", "");
 
     // if (!productName || !productPrice || !productImage || !productDescription || !productQuantity || !productCategory) {
     //     return res.status(400).json({ success: false, message: "Please enter all the fields." });
@@ -108,7 +114,7 @@ exports.updateProduct = asyncHandlers(async (req, res, next) => {
         $set: {
           productName: productName,
           productPrice: productPrice,
-          productImage: productImage,
+          productImage: productImages,
           productDescription: productDescription,
           productQuantity: productQuantity,
           productSubCategory: productSubCategory,

@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
 import { useSelector, useDispatch } from "react-redux";
 import { updateProduct } from "../../../redux/_actions/productAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getSubCategoryByCategoryId } from "../../../redux/_actions/subCategoryAction";
-// import { getCategoryBySubCategoryId } from "../../../redux/_actions/categoryAction";
 
 const UpdateProductBar = (props) => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: "image/jpeg, image/png",
-  });
   const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
 
+  const handleHide = () => {
+    props.updatetogglePreview();
+  };
   const [newProduct, setNewProduct] = useState({
     productName: props.products.productName,
     productQuantity: props.products.productQuantity,
@@ -35,18 +33,14 @@ const UpdateProductBar = (props) => {
     productSubCategory,
   } = newProduct;
 
-  // var arr = category?.categories?.data?.find(
-  //   (z) =>
-  //     z._id ===
-  //     subCategory.subCategories?.data?.find((x) => x._id === productSubCategory)
-  //       ?.categoryId
-  // );
-
+  const [fileImage, setfileImage] = useState(null);
   const onChange = (e) =>
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
 
-  const handleOnUploadFile = (e) =>
+  const handleOnUploadFile = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.files[0] });
+    setfileImage(URL.createObjectURL(e.target.files[0]));
+  };
 
   const onCategoryChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -57,12 +51,6 @@ const UpdateProductBar = (props) => {
     dispatch(getSubCategory());
   }, []);
 
-  // useEffect(() => {
-  //   if (arr) {
-  //     dispatch(getCategoryBySubCategoryId(arr._id));
-  //     setNewProduct((prev) => ({ ...prev, productCategory: arr._id }));
-  //   }
-  // }, []);
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -86,10 +74,6 @@ const UpdateProductBar = (props) => {
       dispatch(updateProduct(data, props.products._id));
     }
   };
-
-  function handleHide() {
-    window.location.reload();
-  }
   return (
     <>
       <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
@@ -234,22 +218,27 @@ const UpdateProductBar = (props) => {
                 <h5 className="text-uppercase mt-0 mb-3 bg-light p-2">
                   Product Images
                 </h5>
-                <div className="dz-message">
-                  <div {...getRootProps({ className: "dropzone" })}>
-                    <input
-                      {...getInputProps()}
-                      name="productImage"
-                      onChange={handleOnUploadFile}
-                      value={acceptedFiles}
-                    />
-                    <i className="h1 text-muted dripicons-cloud-upload" />
-                    <h4>Update Your Image Here</h4>
-                    <span>(Drop files here or click to upload)</span>
-                  </div>
+                <div className="dropzone mb-3">
+                  <input
+                    type="file"
+                    name="productImage"
+                    onChange={handleOnUploadFile}
+                  />
+                  <i className="h1 text-muted dripicons-cloud-upload" />
+                  <h4>Update Your Image Here</h4>
+                  <span>(Drop files here or click to upload)</span>
+                </div>
+                {fileImage ? (
+                  <label>Updated Image</label>
+                ) : (
                   <label>Current Image</label>
-                  <div className="SelectedImage">
-                    <img src={`/${props.products.productImage}`} />
-                  </div>
+                )}
+                <div className="SelectedImage">
+                  {fileImage ? (
+                    <img src={`${fileImage}`} />
+                  ) : (
+                    <img src={`/${productImage}`} />
+                  )}
                 </div>
               </div>
               <div className="text-right mt-2">

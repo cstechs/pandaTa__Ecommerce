@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "../../../redux/_actions/productAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
-import { CLEAR_ERRORS } from "../../../redux/types";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { getSubCategoryByCategoryId } from "../../../redux/_actions/subCategoryAction";
-import { json } from "body-parser";
-const AddProductBar = () => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: "image/jpeg, image/png",
-  });
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+const AddProductBar = (props) => {
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
 
-  function toggle() {
-    document
-      .getElementById("AddProductBar")
-      .classList.toggle("ShowProductAndCategoryBar");
-  }
+  const handleHide = () => {
+    props.addtogglePreview();
+  };
   const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
+  const [fileImage, setfileImage] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategory());
@@ -34,7 +27,6 @@ const AddProductBar = () => {
     productSubCategory: "",
     createdBy: user._id,
   });
-  //const [productImage, setNewFile] = useState("");
   const {
     productName,
     productQuantity,
@@ -46,8 +38,10 @@ const AddProductBar = () => {
   } = newProduct;
   const onChange = (e) =>
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
-  const handleOnUploadFile = (e) =>
+  const handleOnUploadFile = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.files[0] });
+    setfileImage(URL.createObjectURL(e.target.files[0]));
+  };
   const onCategoryChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
     dispatch(getSubCategoryByCategoryId(e.target.value));
@@ -80,7 +74,7 @@ const AddProductBar = () => {
   };
   return (
     <>
-      <i className="fas fa-times-circle closeIcon" onClick={toggle}></i>
+      <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
       <div className="ProductBar">
         <form onSubmit={onSubmit} encType="multipart/form-data">
           <div className="row">
@@ -198,23 +192,26 @@ const AddProductBar = () => {
                 <h5 className="text-uppercase mt-0 mb-3 bg-light p-2">
                   Product Images
                 </h5>
-                <div className="dz-message">
-                  <div {...getRootProps({ className: "dropzone" })}>
-                    <input
-                      {...getInputProps()}
-                      name="productImage"
-                      onChange={handleOnUploadFile}
-                    />
-                    <i className="h1 text-muted dripicons-cloud-upload" />
-                    <h4>Drop files here or click to upload.</h4>
-                    <span>(Only *.jpeg and *.png images will be accepted)</span>
-                  </div>
+                <div className="dropzone">
+                  <input
+                    type="file"
+                    name="productImage"
+                    onChange={handleOnUploadFile}
+                  />
+                  <i className="h1 text-muted dripicons-cloud-upload" />
+                  <h4>Drop files here or click to upload.</h4>
+                  <span>(Only *.jpeg and *.png images will be accepted)</span>
                 </div>
+                {fileImage && (
+                  <div className="SelectedImage mt-2">
+                    <img src={`${fileImage}`} />
+                  </div>
+                )}
               </div>
               <div className="text-right mt-2">
                 <span
                   className="btn btn-danger ripple button-base mr-2 px-4"
-                  onClick={toggle}
+                  onClick={handleHide}
                 >
                   CANCEL
                 </span>

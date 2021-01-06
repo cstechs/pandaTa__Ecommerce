@@ -86,37 +86,6 @@ const Category = () => {
               <div className="products">
                 <div className="container-fluid">
                   <div className="row">
-                    {/* {sellerProducts.length !== 0 ? (
-                      sellerProducts.map((product) => (
-                        <div className="col-md-4 col-6">
-                          <div className="product">
-                            <img src={`/${product.productImage}`} alt="" />
-                            <div className="content">
-                              <div className="content-left">
-                                <span className="vendor">
-                                  {seller.userName}
-                                </span>
-                                <span className="product_name">
-                                  {product.productName}
-                                </span>
-                                <span className="product_price">
-                                  ${product.productPrice}
-                                </span>
-                              </div>
-                              <div className="content-right">
-                                <i className="fa fa-caret-right"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="mt-5 pt-5 w-100">
-                        <div className="empty mt-5 pt-5">
-                          No Products by Seller
-                        </div>
-                      </div>
-                    )} */}
                     <SellerProductitems
                       product={sellerProducts}
                       proId={proId}

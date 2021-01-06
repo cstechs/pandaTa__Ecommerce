@@ -9,24 +9,22 @@ import { getProductById } from "../../../redux/_actions/productAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getChat } from "../../../redux/_actions/chatAction";
 import RelatedProduct from "../partials/relatedProducts";
-// import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import Chat from "../partials/Chat";
 import Loader from "../partials/loader";
 import { getUser } from "../../../redux/_actions/userAction";
 import { getSellerById } from "../../../redux/_actions/sellerAction";
+import { SET_ALERT } from "../../../redux/types";
+import { setAlert } from "../../../redux/_actions/alertAction";
 
-const SingleProduct = (props) => {
+const SingleProduct = () => {
   const product = useSelector((state) => state.product);
-  // const chat = useSelector((state) => state.chat);
   const users = useSelector((state) => state.user.users);
   const seller = useSelector((state) => state.seller.seller);
 
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-
-  // console.log("wish", oldwishList);
-  // const [checkSender, setCheckSender] = useState(null);
+  const [itemWish, setItemWish] = useState(false);
   const arr = subCategory?.subCategories?.data?.filter(
     (x) => x._id === product?.product?.data.productSubCategory
   );
@@ -39,15 +37,8 @@ const SingleProduct = (props) => {
     }
   }, [product?.product?.data]);
 
-  const [RelatedProductShown, setRelatedProductShown] = useState(false);
   const [StartChatShown, setStartChatShown] = useState(false);
-  const [products, setProduct] = useState(0);
   const [quantity, setquantity] = useState(1);
-
-  const handlePreview = (item) => {
-    setRelatedProductShown(true);
-    setProduct(item);
-  };
   const ChatShow = () => {
     setStartChatShown(true);
   };
@@ -55,11 +46,7 @@ const SingleProduct = (props) => {
     setStartChatShown(false);
   };
   useEffect(() => {
-    dispatch(getSubCategory());
-  }, [RelatedProductShown]);
-  useEffect(() => {
     var subId = window.location.pathname.split("/")[2];
-
     dispatch(getProductById(subId));
   }, []);
 
@@ -79,32 +66,37 @@ const SingleProduct = (props) => {
   };
 
   const addToWishList = () => {
-    // console.log(wishList);
     var newData = product?.product?.data;
 
     if (localStorage.getItem("WishList") == null) {
       localStorage.setItem("WishList", "[]");
     }
     var oldData = JSON.parse(localStorage.getItem("WishList"));
-    if (oldData.find((data) => data._id === newData._id)) {
-      return null;
+    if (oldData?.find((data) => data._id === newData._id)) {
+      let index = oldData.findIndex((data) => data._id === newData._id);
+      oldData.splice(index, 1);
+      console.log("olddata", oldData);
+      setItemWish(false);
+      localStorage.setItem("WishList", JSON.stringify(oldData));
     } else {
       oldData.push(newData);
       localStorage.setItem("WishList", JSON.stringify(oldData));
+      setItemWish(true);
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Item Successfully added to WishList",
+          alertType: "success",
+        })
+      );
     }
   };
-  useEffect(() => {}, [addToWishList]);
+  useEffect(() => {
+    var oldData = JSON.parse(localStorage.getItem("WishList"));
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
-  //   // //     dispatch(setAlert('Please Enter fields.', 'danger'));
-  //   // // }
-  //   // else {
-  //   dispatch(createChat(newMessage));
-
-  //   // }
-  // };
+    if (oldData?.find((data) => data._id === product?.product?.data?._id)) {
+      setItemWish(true);
+    }
+  }, [product?.product?.data?._id]);
   useEffect(() => {
     dispatch(getChat());
   }, [getChat]);
@@ -132,12 +124,7 @@ const SingleProduct = (props) => {
               {product?.product?.data.productName}
             </li>
           </ol>
-          <div
-            className="Single_Product_Portion"
-            onMouseOver={() =>
-              handlePreview(product?.product?.data.productSubCategory)
-            }
-          >
+          <div className="Single_Product_Portion">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-md-5">
@@ -159,13 +146,6 @@ const SingleProduct = (props) => {
                       <i className="fa fa-star" />
                     </div>
                     <h3> ${product?.product?.data.productPrice}</h3>
-
-                    {/* {console.log(
-                  product?.product?.data.productSubCategory ===
-                    subCategory?.data?.map((item) => item._id)
-                )} */}
-                    {/* {console.log(product?.product?.data)} */}
-
                     <h6 className="text-success">
                       Avalibility ( {product?.product?.data.productQuantity} In
                       Stock )
@@ -193,13 +173,23 @@ const SingleProduct = (props) => {
                         >
                           Add To Cart
                         </button>
-                        <button className="AddToWishlist">
-                          <i
-                            className="fa fa-heart"
-                            onClick={() => addToWishList()}
-                          />
-                        </button>
                       </>
+                    )}
+                    {itemWish && (
+                      <button className="AddToWishlist">
+                        <i
+                          className="fa fa-heart"
+                          onClick={() => addToWishList()}
+                        />
+                      </button>
+                    )}
+                    {!itemWish && (
+                      <button className="AddToWishlist">
+                        <i
+                          className="far fa-heart"
+                          onClick={() => addToWishList()}
+                        />
+                      </button>
                     )}
                     <hr />
                     <h6>
@@ -228,10 +218,11 @@ const SingleProduct = (props) => {
               <div className="row mt-5">
                 <div className="relatedProducts mt-2">
                   <h1>Related Products</h1>
-                  {/* {console.log("related", RelatedProductShown)} */}
                   <div className="product-carousel">
-                    {RelatedProductShown && (
-                      <RelatedProduct products={products} />
+                    {product?.product?.data.productSubCategory && (
+                      <RelatedProduct
+                        products={product?.product?.data.productSubCategory}
+                      />
                     )}
                   </div>
                 </div>

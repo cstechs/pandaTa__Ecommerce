@@ -60,7 +60,7 @@ const SellerSideBar = ({
         <p className="mt-3 font-14">MEET THE OWNER</p>
         <div className="underLine w-100"></div>
         <div className="sellerImage">
-          <img src={`/${user.userImage}`} alt="sellerImage" />
+          <img src={`/${seller.userImage}`} alt="sellerImage" />
         </div>
         <h1 className="font-20 mt-2">{seller.userName}</h1>
         <p className="mt-2">

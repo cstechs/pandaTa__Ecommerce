@@ -16,12 +16,6 @@ const LeftBar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/admin/email/inbox" className="ripple button-base">
-                <i className="mdi mdi-email-multiple-outline leftbar_icon" />
-                <span> Inbox </span>
-              </Link>
-            </li>
-            <li>
               <Link to="/admin/product" className="ripple button-base">
                 <i className="mdi mdi-cart-plus leftbar_icon" />
                 <span> Products </span>
