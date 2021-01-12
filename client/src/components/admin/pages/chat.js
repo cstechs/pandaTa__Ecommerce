@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Navbar from "../partials/header";
 import Footer from "../partials/footer";
-
-import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import { getChat, createChat } from "../../../redux/_actions/chatAction";
 import { getUser } from "../../../redux/_actions/userAction";
 import Warning from "../partials/warning";
@@ -141,35 +139,32 @@ const Chat = () => {
                       <div className="row">
                         <div className="col">
                           <div data-simplebar style={{ minHeight: "300px" }}>
-                            {messagedUser?.map((item) =>
-                              messagedUser.length >= 1 ? (
+                            {messagedUser.length > 0 ? (
+                              messagedUser?.map((item) => (
                                 <React.Fragment key={item._id}>
-                                  {
-                                    item._id != user._id && (
-                                      <div
-                                        className="text-body mt-3 cursor-pointer"
-                                        onClick={() => CheckUser(item)}
-                                      >
-                                        <div className="media p-1">
-                                          <div className="mr-2 rounded-circle px-2 py-1 bg-secondary text-white">
-                                            <i className="mdi mdi-forum font-17" />
-                                          </div>
-                                          <div className="media-body">
-                                            <h5 className="mt-2 mb-0 font-16">
-                                              {item.userName}
-                                            </h5>
-                                          </div>
+                                  {item._id != user._id && (
+                                    <div
+                                      className="text-body mt-3 cursor-pointer"
+                                      onClick={() => CheckUser(item)}
+                                    >
+                                      <div className="media p-1">
+                                        <div className="mr-2 rounded-circle px-2 py-1 bg-secondary text-white">
+                                          <i className="mdi mdi-forum font-17" />
+                                        </div>
+                                        <div className="media-body">
+                                          <h5 className="mt-2 mb-0 font-16">
+                                            {item.userName}
+                                          </h5>
                                         </div>
                                       </div>
-                                    )
-                                    //  : (
-                                    //   <p className="empty mt-5 ">NO CHAT FOUND</p>
-                                    // )
-                                  }
+                                    </div>
+                                  )}
                                 </React.Fragment>
-                              ) : (
-                                <p className="empty mt-5 ">NO CHAT FOUND</p>
-                              )
+                              ))
+                            ) : (
+                              <p className="empty mt-5 pt-5 font-14">
+                                NO CHATS FOUND
+                              </p>
                             )}
                           </div>
                         </div>

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-
 import Navbar from "../partials/header";
 import Footer from "../partials/footer";
-
+import { Link } from "react-router-dom";
 import cardbodyimg1 from "../../../assets/images/admin/current-progress-img-1.png";
 import cardbodyimg2 from "../../../assets/images/admin/current-progress-img-2.png";
 import cardbodyimg3 from "../../../assets/images/admin/current-progress-img-3.png";
-
-import UserImage from "../../../assets/images/admin/users/user-6.jpg";
+import UserImage from "../../../assets/images/admin/user.jpg";
 import { Line } from "react-chartjs-2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getChat } from "../../../redux/_actions/chatAction";
 
 const Home = () => {
   const [chartData, setChartData] = useState({});
@@ -23,6 +22,13 @@ const Home = () => {
   const customerLength = customers.filter(
     (customer) => customer.role === "customer"
   )?.length;
+  const users = useSelector((state) => state.user.users);
+  const chat = useSelector((state) => state.chat.chats);
+  const dispatch = useDispatch();
+  const totalUsers = users.filter((z) =>
+    chat?.data?.find((x) => x.createdBy === z._id && x.sellerId === user._id)
+  );
+  console.log("tot", totalUsers);
 
   const chart = () => {
     setChartData({
@@ -51,6 +57,10 @@ const Home = () => {
       ],
     });
   };
+
+  useEffect(() => {
+    dispatch(getChat());
+  }, [dispatch]);
 
   useEffect(() => {
     chart();
@@ -231,204 +241,37 @@ const Home = () => {
                         data-simplebar
                         style={{ maxHeight: 420 }}
                       >
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
+                        {totalUsers.length > 0 ? (
+                          totalUsers?.map((item, index) => (
+                            <React.Fragment key={item._id}>
+                              {index < 4 && (
+                                <Link to="/admin/chat">
+                                  <div className="inbox-item">
+                                    <div className="inbox-item-img">
+                                      <img
+                                        src={UserImage}
+                                        className="rounded-circle"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <p className="inbox-item-author">
+                                      {item.userName}
+                                    </p>
+                                    <p className="inbox-item-date">
+                                      <span className="btn btn-sm btn-link text-info font-13">
+                                        Reply
+                                      </span>
+                                    </p>
+                                  </div>
+                                </Link>
+                              )}
+                            </React.Fragment>
+                          ))
+                        ) : (
+                          <p className="empty font-14 my-5 py-5">
+                            No Chats Available
                           </p>
-                          <p className="inbox-item-date">
-                            <a
-                              className="btn btn-sm btn-link text-info font-13"
-                              href="#"
-                            >
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13">
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13">
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13">
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a className="btn btn-sm btn-link text-info font-13">
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a
-                              className="btn btn-sm btn-link text-info font-13"
-                              href="#"
-                            >
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a
-                              className="btn btn-sm btn-link text-info font-13"
-                              href="#"
-                            >
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a
-                              className="btn btn-sm btn-link text-info font-13"
-                              href="#"
-                            >
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a
-                              className="btn btn-sm btn-link text-info font-13"
-                              href="#"
-                            >
-                              Reply
-                            </a>
-                          </p>
-                        </div>
-                        <div className="inbox-item">
-                          <div className="inbox-item-img">
-                            <img
-                              src={UserImage}
-                              className="rounded-circle"
-                              alt=""
-                            />
-                          </div>
-                          <p className="inbox-item-author">Stillnotdavid</p>
-                          <p className="inbox-item-text">
-                            This theme is awesome!
-                          </p>
-                          <p className="inbox-item-date">
-                            <a
-                              className="btn btn-sm btn-link text-info font-13"
-                              href="#"
-                            >
-                              Reply
-                            </a>
-                          </p>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>

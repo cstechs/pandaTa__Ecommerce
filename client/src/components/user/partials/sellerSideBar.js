@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { Link } from "react-router-dom";
 

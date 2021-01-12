@@ -14,12 +14,23 @@ const Productitems = ({ product, proId, catId }) => {
   const subcategory = useSelector((state) => state.subCategory.subCategories);
 
   const sellers = useSelector((state) => state.seller.sellers);
+  const [count, setCount] = useState(9);
+
+  const [prolength, setProlength] = useState([]);
 
   const dispatch = useDispatch();
 
+  const fetchMoreProducts = () => {
+    setCount(count + 9);
+    setProlength(product?.slice(0, count));
+  };
   useEffect(() => {
     dispatch(getSellers());
   }, [dispatch]);
+
+  useEffect(() => {
+    setProlength(product?.slice(0, count));
+  }, [product]);
 
   useEffect(() => {
     dispatch(getProduct());
@@ -28,7 +39,7 @@ const Productitems = ({ product, proId, catId }) => {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-
+  useEffect(() => {}, [product]);
   useEffect(() => {
     setCheck(proId);
   }, [proId]);
@@ -39,9 +50,19 @@ const Productitems = ({ product, proId, catId }) => {
     return <Loader />;
   }
 
+  if (!prolength) {
+    return <div>loading</div>;
+  }
+
   return (
-    <InfiniteScroll dataLength={product.length} className="row w-100">
-      {product?.map(
+    <InfiniteScroll
+      dataLength={prolength}
+      next={() => fetchMoreProducts()}
+      hasMore={true}
+      loader={<h4>Loading...</h4>}
+      className="row w-100"
+    >
+      {prolength?.map(
         ({
           _id,
           productName,

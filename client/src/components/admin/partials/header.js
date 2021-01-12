@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserImage from "../../../assets/images/admin/users/user-2.jpg";
+import UserImage from "../../../assets/images/admin/user.jpg";
 import SmLogo from "../../../assets/images/admin/logo-sm.png";
 import LeftBar from "./leftsidebar";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,8 +25,6 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(getChat());
-
-    // $("#mydiv").scrollTop($("#mydiv").height);
   }, [dispatch]);
 
   function toggle() {
@@ -118,10 +116,7 @@ const Navbar = () => {
                         <Link to="/admin/chat">
                           <span className="dropdown-item notify-item">
                             <div className="notify-icon bg-secondary">
-                              <i
-                                className="mdi mdi-forum"
-                                alt={item.userName}
-                              />
+                              <i className="mdi mdi-forum" />
                             </div>
                             <p className="notify-details pt-1">
                               {item.userName}
@@ -134,7 +129,7 @@ const Navbar = () => {
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all cursor-pointer">
                   View all
-                  <i className="fe-arrow-right" alt="" />
+                  <i className="fe-arrow-right" />
                 </span>
               </div>
             </li>
@@ -222,10 +217,10 @@ const Navbar = () => {
                   <i className="fe-log-out" alt="" />
                   <span
                     onClick={() => {
+                      dispatch(logout());
                       setTimeout(() => {
-                        dispatch(logout());
                         history.push("/");
-                      }, 1000);
+                      }, 500);
                     }}
                   >
                     Logout

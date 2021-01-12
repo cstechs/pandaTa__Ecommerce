@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-// import productimg from "../../../assets/images/user/product.png";
-import UserImage from "../../../assets/images/admin/users/user-1.jpg";
 import whybecomebuyerimg from "../../../assets/images/user/whybecomebuyer.png";
 import whybecomeSellerimg from "../../../assets/images/user//whybecomeseller.png";
 import SliderImage1 from "../../../assets/images/user/SliderImage1.jpg";

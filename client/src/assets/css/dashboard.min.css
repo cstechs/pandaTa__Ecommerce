@@ -2679,7 +2679,7 @@ li.menuitem-active > a:not(.collapsed) > span.menu-arrow {
 .inbox-widget .inbox-item .inbox-item-author {
   color: #343a40;
   display: block;
-  margin-bottom: 3px;
+  margin-top: 10px;
   font-weight: 500;
 }
 

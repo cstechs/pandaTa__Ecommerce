@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createChat, getChat } from "../../../redux/_actions/chatAction";
 import { useSelector, useDispatch } from "react-redux";
-import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 
 const Chat = ({ ChatHide, product, seller }) => {
   const ChatHandler = () => {
@@ -59,10 +58,11 @@ const Chat = ({ ChatHide, product, seller }) => {
     <>
       <div className="head">
         <img
-          src={UserImage}
+          src={`/${seller.userImage}`}
           className="mr-2 rounded-circle"
+          width={42}
           height={38}
-          alt="Brandon Smith"
+          alt={seller.userName}
         />
         <span>{seller.userName}</span>
         <i className="ti-close" onClick={() => ChatHandler()}></i>

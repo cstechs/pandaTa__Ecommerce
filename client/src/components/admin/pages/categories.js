@@ -109,8 +109,8 @@ const Category = () => {
                         <img src={productProgessImg2} draggable="false" />
                       </div>
                       <div>
-                        <h2 className="text-left text-purple">$1,250</h2>
-                        <p className="text-secondary ">Revenue</p>
+                        <h2 className="text-left text-purple">20</h2>
+                        <p className="text-secondary ">Total Orders</p>
                       </div>
                     </div>
                   </div>

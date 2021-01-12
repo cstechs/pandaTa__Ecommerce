@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../partials/header";
 import Footer from "../partials/footer";
 
-import UserImage from "../../../assets/images/admin/users/user-6.jpg";
+import UserImage from "../../../assets/images/admin/user.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, getUser } from "../../../redux/_actions/userAction";
 
