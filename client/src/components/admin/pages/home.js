@@ -28,7 +28,6 @@ const Home = () => {
   const totalUsers = users.filter((z) =>
     chat?.data?.find((x) => x.createdBy === z._id && x.sellerId === user._id)
   );
-  console.log("tot", totalUsers);
 
   const chart = () => {
     setChartData({

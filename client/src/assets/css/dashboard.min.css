@@ -9146,9 +9146,9 @@ ul.rdw-dropdown-optionwrapper li {
 }
 
 .quick-detail-item {
-  border-top: 1px solid grey;
-  margin-top: 10px;
-  padding-top: 20px;
+  border-top: 1px solid #acacac;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .quick-detail-item .quick-detail-icon {

@@ -8,19 +8,33 @@ import UpdateProductBar from "../partials/updateProductBar";
 import productProgessImg1 from "../../../assets/images/admin/current-products-progress-img-1.png";
 import productProgessImg2 from "../../../assets/images/admin/current-products-progress-img-2.png";
 import productProgessImg3 from "../../../assets/images/admin/current-products-progress-img-3.png";
-
 import {
   deleteProduct,
   getProduct,
 } from "../../../redux/_actions/productAction";
+import { getOrder } from "../../../redux/_actions/orderAction";
+import { getCart } from "../../../redux/_actions/cartAction";
 
 const Products = () => {
   const product = useSelector((state) => state.product);
+  const orders = useSelector((state) => state.order.orders);
   const dispatch = useDispatch();
   const [addBarPreviewShown, setaddBarPreviewShown] = useState(false);
   const [updateBarPreviewShown, setupdateBarPreviewShown] = useState(false);
+  const cart = useSelector((state) => state.cart.cartItems.data);
   const [products, setProduct] = useState(0);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const PlacedOrders = cart
+    ?.filter((cartitem) =>
+      orders?.find((order) => order.cartId === cartitem._id)
+    )
+    ?.map((x) => x.subTotal)
+    .reduce((a, b) => a + b, 0);
+  const inStock = product?.products?.data?.filter(
+    (x) =>
+      (user.role === "admin" && x.productQuantity > 50) ||
+      (x.productQuantity > 50 && x.createdBy === user._id)
+  )?.length;
   const lowStock = product?.products?.data?.filter(
     (x) =>
       (user.role === "admin" && x.productQuantity < 50) ||
@@ -51,6 +65,8 @@ const Products = () => {
   };
   useEffect(() => {
     dispatch(getProduct());
+    dispatch(getCart());
+    dispatch(getOrder());
   }, [dispatch]);
 
   return (
@@ -83,7 +99,9 @@ const Products = () => {
                         <img src={productProgessImg1} draggable="false" />
                       </div>
                       <div>
-                        <h2 className="text-left text-lightblue">$50,000</h2>
+                        <h2 className="text-left text-lightblue">
+                          ${PlacedOrders}
+                        </h2>
                         <p className="text-secondary ">Total Revenue</p>
                       </div>
                     </div>
@@ -273,43 +291,15 @@ const Products = () => {
                         <h4 className="header-title mb-3">Quick Details </h4>
 
                         <div className="quick-detail-item">
-                          <div className="quick-detail-icon bg-purple">
-                            <i className="fas fa-user-plus" />
-                          </div>
-                          <div className="quick-detail-details">
-                            <div className="float-left">
-                              <h6>Last 24 Hours</h6>
-                            </div>
-                            <div className="float-right">
-                              <h4>290 new customers</h4>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="quick-detail-item">
                           <div className="quick-detail-icon bg-success">
-                            <i className="fas fa-redo" />
-                          </div>
-                          <div className="quick-detail-details">
-                            <div className="float-left">
-                              <h6>Awaiting Process</h6>
-                            </div>
-                            <div className="float-right">
-                              <h4>490 orders</h4>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="quick-detail-item">
-                          <div className="quick-detail-icon bg-secondary">
                             <i className="fas fa-stopwatch" />
                           </div>
                           <div className="quick-detail-details">
                             <div className="float-left">
-                              <h6>On Hold </h6>
+                              <h6>In Stock </h6>
                             </div>
                             <div className="float-right">
-                              <h4>120 orders</h4>
+                              <h4>{inStock} items</h4>
                             </div>
                           </div>
                         </div>
@@ -323,7 +313,7 @@ const Products = () => {
                               <h6>Low in Stock</h6>
                             </div>
                             <div className="float-right">
-                              <h4>{lowStock} orders</h4>
+                              <h4>{lowStock} items</h4>
                             </div>
                           </div>
                         </div>

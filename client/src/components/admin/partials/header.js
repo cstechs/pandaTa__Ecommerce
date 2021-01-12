@@ -213,18 +213,17 @@ const Navbar = () => {
                   <i className="fe-settings" alt="" />
                   <span>Settings</span>
                 </Link>
-                <span className="dropdown-item notify-item ripple button-base cursor-pointer">
+                <span
+                  className="dropdown-item notify-item ripple button-base cursor-pointer"
+                  onClick={() => {
+                    dispatch(logout());
+                    setTimeout(() => {
+                      history.push("/");
+                    }, 500);
+                  }}
+                >
                   <i className="fe-log-out" alt="" />
-                  <span
-                    onClick={() => {
-                      dispatch(logout());
-                      setTimeout(() => {
-                        history.push("/");
-                      }, 500);
-                    }}
-                  >
-                    Logout
-                  </span>
+                  <span>Logout</span>
                 </span>
               </div>
             </li>
