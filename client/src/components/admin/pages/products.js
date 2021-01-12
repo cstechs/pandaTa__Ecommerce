@@ -30,6 +30,7 @@ const Products = () => {
     )
     ?.map((x) => x.subTotal)
     .reduce((a, b) => a + b, 0);
+
   const inStock = product?.products?.data?.filter(
     (x) =>
       (user.role === "admin" && x.productQuantity > 50) ||
@@ -45,6 +46,16 @@ const Products = () => {
       (user.role === "admin" && x.productQuantity < 0) ||
       (x.productQuantity < 0 && x.createdBy === user._id)
   )?.length;
+  const totalOrders = orders.length;
+
+  // console.log(
+  //   "lol",
+  //   cart
+  //     ?.filter((cartitem) =>
+  //       orders?.find((order) => order.cartId === cartitem._id)
+  //     )
+  //     ?.filter((oneitem) => oneitem.items.find((d) => d.sellerId === user._id))
+  // );
 
   const updatetogglePreview = () => {
     setupdateBarPreviewShown(!updateBarPreviewShown);
@@ -112,7 +123,7 @@ const Products = () => {
                         <img src={productProgessImg2} draggable="false" />
                       </div>
                       <div>
-                        <h2 className="text-left text-purple">20</h2>
+                        <h2 className="text-left text-purple">{totalOrders}</h2>
                         <p className="text-secondary ">Total Orders</p>
                       </div>
                     </div>

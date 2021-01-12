@@ -19,6 +19,13 @@ const Orders = () => {
   const users = useSelector((state) => state.user.users);
   const [orderDetailShown, setorderDetailShown] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
+  const totalOrders = orders.length;
+  const PlacedOrders = cart
+    ?.filter((cartitem) =>
+      orders?.find((order) => order.cartId === cartitem._id)
+    )
+    ?.map((x) => x.subTotal)
+    .reduce((a, b) => a + b, 0);
 
   const orderPreviewToggle = (item) => {
     setorderDetailShown(!orderDetailShown);
@@ -67,7 +74,9 @@ const Orders = () => {
                       <img src={productProgessImg1} draggable="false" />
                     </div>
                     <div>
-                      <h2 className="text-left text-lightblue">$50,000</h2>
+                      <h2 className="text-left text-lightblue">
+                        ${PlacedOrders}
+                      </h2>
                       <p className="text-secondary ">Total Revenue</p>
                     </div>
                   </div>
@@ -78,7 +87,7 @@ const Orders = () => {
                       <img src={productProgessImg2} draggable="false" />
                     </div>
                     <div>
-                      <h2 className="text-left text-purple">20</h2>
+                      <h2 className="text-left text-purple">{totalOrders}</h2>
                       <p className="text-secondary ">Total Orders</p>
                     </div>
                   </div>
