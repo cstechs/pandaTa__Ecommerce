@@ -66,7 +66,7 @@ const Category = () => {
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getSubCategory());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

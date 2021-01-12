@@ -22,7 +22,6 @@ const RelatedProduct = (props) => {
 
   const relatedProduct = useSelector((state) => state.product.relatedProducts);
   const dispatch = useDispatch();
-  console.log("prop", props.products);
 
   useEffect(() => {
     dispatch(getProductBySubCategoryId(props.products));

@@ -19,7 +19,7 @@ export const sellerregister = (seller) => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.post("/api/seller/register", seller, config);
-      console.log(res);
+
       dispatch(
         setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
       );
@@ -92,7 +92,6 @@ export const getSellerById = (id) => async (dispatch) => {
 
 export const getSellerProducts = (id) => async (dispatch) => {
   try {
-    console.log("ie", id);
     const config = { header: { "Content-Type": "application/json" } };
     const res = await axios.get(
       `/api/product/getProductsByCreatedBy/` + id,

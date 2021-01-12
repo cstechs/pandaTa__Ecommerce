@@ -48,7 +48,7 @@ const Sidebar = ({ LoginHandler, RegisterHandler }) => {
     }
     dispatch(getCategory());
     dispatch(getSubCategory());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

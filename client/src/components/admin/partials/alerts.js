@@ -15,16 +15,6 @@ const Alerts = () => {
         </div>
       )}
     </>
-    // alertsList.length > 0 &&
-    // alertsList.map((alert) => (
-    //   <>
-    //     {console.log("alert", alert)}
-
-    //     <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-    //       <i className="fas fa-info-circle" /> {alert.message}
-    //     </div>
-    //   </>
-    // ))
   );
 };
 

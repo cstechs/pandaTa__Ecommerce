@@ -11,7 +11,6 @@ const UpdateCategoryBar = (props) => {
     props.categoryUpdatetogglePreview();
   };
 
-  useEffect(() => {}, []);
   const onSubmit = (e, id) => {
     dispatch(updateCategory(id, update));
   };

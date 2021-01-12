@@ -6,15 +6,21 @@ import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getUser } from "../../../redux/_actions/userAction";
 import Loader from "./loader";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { getSellers } from "../../../redux/_actions/sellerAction";
 
 const Productitems = ({ product, proId, catId }) => {
   const [check, setCheck] = useState([]);
   const [catcheck, setcatCheck] = useState([]);
-  //const category = useSelector((state) => state.category.categories);
   const subcategory = useSelector((state) => state.subCategory.subCategories);
-  const users = useSelector((state) => state.user.users);
+
+  const sellers = useSelector((state) => state.seller.sellers);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSellers());
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(getProduct());
     dispatch(getSubCategory());
@@ -32,23 +38,6 @@ const Productitems = ({ product, proId, catId }) => {
   if (product === undefined) {
     return <Loader />;
   }
-
-  // console.log(subcategory);
-  //   (subcategory?.data?.find((x) =>
-  //   check.find((z) => z === x.categoryId)
-  // )?.categoryId === productSubCategory.toString()
-
-  //   (subcategory?.data?.find((x) =>
-  //   check.find((z) => z === x.categoryId)
-  // )?._id === productSubCategory
-
-  // console.log(
-  //   "pro",
-  //   // category?.data?.find(
-  //   //   (x) =>
-  //   //     x._id ===
-  //   subcategory?.data?.find((x) => check.find((z) => z === x.categoryId))?._id
-  // );
 
   return (
     <InfiniteScroll dataLength={product.length} className="row w-100">
@@ -82,7 +71,10 @@ const Productitems = ({ product, proId, catId }) => {
                     <div className="content">
                       <div className="content-left">
                         <span className="vendor">
-                          {users.find((x) => x._id === createdBy)?.userName}
+                          {
+                            sellers?.find((seller) => seller._id === createdBy)
+                              ?.userName
+                          }
                         </span>
                         <span className="product_name">{productName}</span>
                         <span className="product_price">${productPrice}</span>
@@ -112,8 +104,10 @@ const Productitems = ({ product, proId, catId }) => {
                     <div className="content">
                       <div className="content-left">
                         <span className="vendor">
-                          {" "}
-                          {users.find((x) => x._id === createdBy)?.userName}
+                          {
+                            sellers?.find((seller) => seller._id === createdBy)
+                              ?.userName
+                          }
                         </span>
                         <span className="product_name">{productName}</span>
                         <span className="product_price">${productPrice}</span>

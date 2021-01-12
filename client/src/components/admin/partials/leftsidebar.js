@@ -27,6 +27,12 @@ const LeftBar = () => {
                 <span>Invoice</span>
               </Link>
             </li>
+            <li>
+              <Link to="/admin/order" className="ripple button-base">
+                <i className="fas fa-box-open leftbar_icon font-14" />
+                <span>Orders</span>
+              </Link>
+            </li>
             {user && user.role === "admin" && (
               <>
                 <li>
@@ -40,7 +46,7 @@ const LeftBar = () => {
                     <i className="mdi mdi-card-plus leftbar_icon" />
                     <span> Category </span>
                   </Link>
-                </li>{" "}
+                </li>
               </>
             )}
             <li>

@@ -46,9 +46,6 @@ const SellerSideBar = ({
   return (
     <React.Fragment>
       <div className="sellerProfilePortion">
-        <div className="businessImage">
-          <img src={UserImage} alt="BussinessLogo" />
-        </div>
         <h1>{seller.businessName}</h1>
         <p className="mb-3">
           {seller.userCity},{seller.userCountry}

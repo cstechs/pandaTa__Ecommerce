@@ -54,7 +54,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getSellers());
-  }, []);
+  }, [dispatch]);
 
   if (product && subCategory === undefined) {
     return <Loader />;
@@ -233,12 +233,6 @@ const Home = () => {
         </div>
       </div>
       <div className="productsPortion">
-        {/* {product.products.data?.map((item, index) => {
-          {
-            console.log(index)
-          }
-          return (
-            <> */}
         <div className="container-fluid">
           <div className="row">
             <HomeLeft product={product} />

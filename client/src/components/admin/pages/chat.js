@@ -20,7 +20,6 @@ const Chat = () => {
   const [select, setSelect] = useState(false);
 
   const [messagedUser, setmessagedUser] = useState([]);
-
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
@@ -37,14 +36,8 @@ const Chat = () => {
 
   useEffect(() => {
     dispatch(getChat());
-
-    // $("#mydiv").scrollTop($("#mydiv").height);
   }, [dispatch]);
   const onSubmit = (e) => {
-    // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
-    // //     dispatch(setAlert('Please Enter fields.', 'danger'));
-    // // }
-    // else {
     e.preventDefault();
     dispatch(createChat(newMessage));
     setNewMessage({ ...newMessage, message: "" });
@@ -108,7 +101,6 @@ const Chat = () => {
       });
     }
   };
-  useEffect(() => {}, [chat]);
 
   return (
     <div className="Dashobard">
@@ -141,168 +133,165 @@ const Chat = () => {
                           <i className="mdi mdi-magnify" />
                           <input
                             type="text"
-                            placeholder="People, groups & messages..."
+                            placeholder="Search Customer"
                             onChange={(e) => handleChange(e)}
                           />
                         </div>
                       </form>
                       <div className="row">
                         <div className="col">
-                          <div data-simplebar style={{ maxHeight: "600px" }}>
-                            {messagedUser?.map((item) => (
-                              <React.Fragment key={item._id}>
-                                {item._id != user._id && (
-                                  <div
-                                    className="text-body mt-3 cursor-pointer"
-                                    onClick={() => CheckUser(item)}
-                                  >
-                                    <div className="media p-1">
-                                      <img
-                                        src={UserImage}
-                                        className="mr-2 rounded-circle"
-                                        height={42}
-                                        alt="Brandon Smith"
-                                      />
-                                      <div className="media-body">
-                                        <h5 className="mt-0 mb-0 font-14">
-                                          {item.userName}
-                                        </h5>
-                                        <p className="mt-1 mb-0 text-muted font-13">
-                                          <span className="w-75">
-                                            How are you today?
-                                          </span>
-                                        </p>
+                          <div data-simplebar style={{ minHeight: "300px" }}>
+                            {messagedUser?.map((item) =>
+                              messagedUser.length >= 1 ? (
+                                <React.Fragment key={item._id}>
+                                  {
+                                    item._id != user._id && (
+                                      <div
+                                        className="text-body mt-3 cursor-pointer"
+                                        onClick={() => CheckUser(item)}
+                                      >
+                                        <div className="media p-1">
+                                          <div className="mr-2 rounded-circle px-2 py-1 bg-secondary text-white">
+                                            <i className="mdi mdi-forum font-17" />
+                                          </div>
+                                          <div className="media-body">
+                                            <h5 className="mt-2 mb-0 font-16">
+                                              {item.userName}
+                                            </h5>
+                                          </div>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </div>
-                                )}
-                              </React.Fragment>
-                            ))}
+                                    )
+                                    //  : (
+                                    //   <p className="empty mt-5 ">NO CHAT FOUND</p>
+                                    // )
+                                  }
+                                </React.Fragment>
+                              ) : (
+                                <p className="empty mt-5 ">NO CHAT FOUND</p>
+                              )
+                            )}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                {select && (
-                  <div className="col-md-8">
-                    <div className="card">
-                      <div className="card-body py-2 px-3 border-bottom border-light">
-                        <div className="media py-1">
-                          <img
-                            src={UserImage}
-                            className="mr-2 rounded-circle"
-                            height={36}
-                            alt="Brandon Smith"
-                          />
-                          <div className="media-body">
-                            <h5 className="mt-0 mb-0 font-15">
-                              <span className="text-reset">
-                                {selectedUser.userName}
+                <div className="col-md-8">
+                  <div className="card">
+                    {select ? (
+                      <>
+                        <div className="card-body py-2 px-3 border-bottom border-light">
+                          <div className="media py-1">
+                            <div className="mr-2 rounded-circle px-2 py-1 bg-secondary text-white">
+                              <i className="mdi mdi-forum font-17" />
+                            </div>
+                            <div className="media-body">
+                              <h5 className="mt-2 mb-0 font-15">
+                                <span className="text-reset">
+                                  {selectedUser.userName}
+                                </span>
+                              </h5>
+                            </div>
+                            <div>
+                              <span className="text-reset font-17 py-1 px-2 d-inline-block">
+                                <i
+                                  className="fas fa-times cursor-pointer"
+                                  onClick={() => handleSelect()}
+                                />
                               </span>
-                            </h5>
-                            <p className="mt-1 mb-0 text-muted font-12">
-                              <small className="mdi mdi-circle text-success" />{" "}
-                              Online
-                            </p>
-                          </div>
-                          <div>
-                            <span className="text-reset font-17 py-1 px-2 d-inline-block">
-                              <i
-                                className="fas fa-times cursor-pointer"
-                                onClick={() => handleSelect()}
-                              />
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="card-body">
-                        <ul
-                          className="conversation-list"
-                          data-simplebar
-                          style={{ maxHeight: "390px" }}
-                        >
-                          {chat?.data?.map((item, index) => (
-                            <React.Fragment key={item._id}>
-                              {item.sellerId === user._id && (
-                                <>
-                                  {item.sender == 0 &&
-                                    item.createdBy === selectedUser._id && (
-                                      <li
-                                        className="clearfix"
-                                        id={`${
-                                          index == chat?.data?.length - 1 &&
-                                          "mydiv"
-                                        }`}
-                                      >
-                                        <div className="conversation-text">
-                                          <div className="ctext-wrap">
-                                            <p>{item.message}</p>
-                                          </div>
-                                        </div>
-                                      </li>
-                                    )}
-                                  {select &&
-                                    item.sender == 1 &&
-                                    user._id === item.sellerId &&
-                                    item.createdBy === selectedUser._id && (
-                                      <li
-                                        className="clearfix odd"
-                                        id={`${
-                                          index == chat?.data?.length - 1 &&
-                                          "mydiv"
-                                        }`}
-                                      >
-                                        <div className="conversation-text">
-                                          <div className="ctext-wrap">
-                                            <p>{item.message}</p>
-                                          </div>
-                                        </div>
-                                      </li>
-                                    )}
-                                </>
-                              )}
-                            </React.Fragment>
-                          ))}
-                        </ul>
-                        <div className="row">
-                          <div className="col">
-                            <div className="mt-2 p-2">
-                              <form onSubmit={(e) => onSubmit(e)}>
-                                <div className="row">
-                                  <div className="col mb-2 mb-sm-0">
-                                    <input
-                                      type="text"
-                                      className="form-control border-0"
-                                      placeholder="Enter your text"
-                                      required
-                                      name="message"
-                                      value={message}
-                                      onChange={onChange}
-                                    />
-                                  </div>
-                                  <div className="col-sm-auto">
-                                    <div className="btn-group">
-                                      <span className="btn font-17">
-                                        <i className="fe-paperclip" />
-                                      </span>
-                                      <button
-                                        type="submit"
-                                        className="btn text-yellow chat-send btn-block font-17"
-                                      >
-                                        <i className="fe-send" />
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </form>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                        <div className="card-body">
+                          <ul
+                            className="conversation-list"
+                            data-simplebar
+                            style={{ maxHeight: "390px" }}
+                          >
+                            {chat?.data?.map((item, index) => (
+                              <React.Fragment key={item._id}>
+                                {item.sellerId === user._id && (
+                                  <>
+                                    {item.sender == 0 &&
+                                      item.createdBy === selectedUser._id && (
+                                        <li
+                                          className="clearfix"
+                                          id={`${
+                                            index == chat?.data?.length - 1 &&
+                                            "mydiv"
+                                          }`}
+                                        >
+                                          <div className="conversation-text">
+                                            <div className="ctext-wrap">
+                                              <p>{item.message}</p>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      )}
+                                    {select &&
+                                      item.sender == 1 &&
+                                      user._id === item.sellerId &&
+                                      item.createdBy === selectedUser._id && (
+                                        <li
+                                          className="clearfix odd"
+                                          id={`${
+                                            index == chat?.data?.length - 1 &&
+                                            "mydiv"
+                                          }`}
+                                        >
+                                          <div className="conversation-text">
+                                            <div className="ctext-wrap">
+                                              <p>{item.message}</p>
+                                            </div>
+                                          </div>
+                                        </li>
+                                      )}
+                                  </>
+                                )}
+                              </React.Fragment>
+                            ))}
+                          </ul>
+                          <div className="row">
+                            <div className="col">
+                              <div className="mt-2 p-2">
+                                <form onSubmit={(e) => onSubmit(e)}>
+                                  <div className="row">
+                                    <div className="col mb-2 mb-sm-0">
+                                      <input
+                                        type="text"
+                                        className="form-control border-0"
+                                        placeholder="Enter your text"
+                                        required
+                                        name="message"
+                                        value={message}
+                                        onChange={onChange}
+                                      />
+                                    </div>
+                                    <div className="col-sm-auto">
+                                      <div className="btn-group">
+                                        <button
+                                          type="submit"
+                                          className="btn text-yellow chat-send btn-block font-17"
+                                        >
+                                          <i className="fe-send" />
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <p className="empty mt-5 pt-5 mb-5 pb-5">
+                        OPEN CUSTOMER CHAT TO START CONVERSATION
+                      </p>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>

@@ -23,13 +23,12 @@ export const addSubCategory = (subCategory) => {
         subCategory,
         config
       );
-      // console.log(res.data);
+
       dispatch(
         setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
       );
       dispatch({ type: SUBCATEGORY_SUCCESS, payload: res.data });
     } catch (err) {
-      console.log(err);
       dispatch(
         setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
       );
@@ -43,7 +42,7 @@ export const getSubCategory = () => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.get("/api/subCategory/", config);
-      // console.log(res.data);
+
       dispatch({ type: SUBCATEGORY_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch({
@@ -62,7 +61,7 @@ export const getSubCategoryByCategoryId = (CategoryId) => {
         "/api/subCategory/getSubCategoryByCategoryId/" + CategoryId,
         config
       );
-      //  console.log(res.data);
+
       if (res.data == []) {
         dispatch({ type: SUBCATEGORY_EMPTY_SET, payload: res.data });
       } else {
@@ -80,7 +79,6 @@ export const getSubCategoryByCategoryId = (CategoryId) => {
 export const updateSubCategory = (id, subCategoryName, categoryId) => async (
   dispatch
 ) => {
-  console.log(id, subCategoryName, categoryId);
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.patch(
@@ -88,14 +86,13 @@ export const updateSubCategory = (id, subCategoryName, categoryId) => async (
       { subCategoryName, categoryId },
       config
     );
-    //console.log(res.data);
+
     dispatch(
       setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
     );
     dispatch({ type: SUBCATEGORY_UPDATE_SUCCESS, payload: res.data });
     window.location.reload();
   } catch (err) {
-    //  console.log(err);
     dispatch(
       setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
     );

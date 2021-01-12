@@ -27,7 +27,6 @@ const cartReducer = (state = initState, action) => {
         loading: false,
       };
     case CART_CREATE_SUCCESS:
-      console.log("check", action.payload);
       return {
         ...state,
         cartItems: action.payload.data,

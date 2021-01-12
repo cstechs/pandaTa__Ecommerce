@@ -13,11 +13,10 @@ export const createChat = (chat) => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.post("/api/chat/createChat", chat, config);
-      //console.log(res.data);
+
       dispatch(getChat());
       dispatch({ type: CHAT_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
-      //   console.log(err);
       dispatch(
         setAlert(SET_ALERT, {
           message: err.response.message,
@@ -34,10 +33,9 @@ export const getChat = () => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.get("/api/chat/", config);
-      //  console.log(res.data);
+
       dispatch({ type: CHAT_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
-      //  console.log(err);
       dispatch({
         type: CHAT_LOAD_FAIL,
         payload: err.response?.data?.message,
@@ -45,16 +43,3 @@ export const getChat = () => {
     }
   };
 };
-
-// export const getChat = () => {
-//   return (dispatch) => {
-//     const config = { header: { "Content-Type": "application/json" } };
-//     fetch("/api/chat/", config)
-//       .then((res) => res.json())
-//       .then((res) => {
-//         console.log("res", res.data);
-//         dispatch({ type: CHAT_LOAD_SUCCESS, payload: res.data });
-//       })
-//       .catch((err) => err.message);
-//   };
-// };

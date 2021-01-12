@@ -20,22 +20,11 @@ const Product = ({ history }) => {
   const proIdProduct = product?.products?.data?.filter((x) =>
     proId.find((val) => val === x.productSubCategory)
   );
-  // console.log("checkproId", proId);
-  // console.log(
-  //   "proId",
-  //   product?.products?.data?.filter((x) =>
-  //     proId.find((val) => val === x.productSubCategory)
-  //   )
-  // );
 
-  //  const [check] = useState(false);
-  //const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
   useEffect(() => {
     dispatch(getProduct());
   }, [dispatch]);
-  // console.log("pro", product);
-  // console.log("sub", subCategory);
 
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
 
@@ -106,7 +95,7 @@ const Product = ({ history }) => {
                 <div className="container-fluid">
                   <div className="row">
                     <ProductItems
-                      product={currentProducts}
+                      product={product?.products?.data}
                       proId={proId}
                       catId={catId}
                     />

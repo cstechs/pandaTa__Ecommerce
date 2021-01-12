@@ -1,8 +1,16 @@
-import React from "react";
-import productimg from "../../../assets/images/user/product.png";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getSellers } from "../../../redux/_actions/sellerAction";
 
 const HomeRight = ({ product }) => {
+  const sellers = useSelector((state) => state.seller.sellers);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSellers);
+  }, [dispatch]);
   return (
     <div className="col-md-6">
       <div className="container-fluid">
@@ -23,7 +31,14 @@ const HomeRight = ({ product }) => {
                         ></div>
                         <div className="content">
                           <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="vendor">
+                              {" "}
+                              {
+                                sellers?.find(
+                                  (seller) => seller._id === item.createdBy
+                                )?.userName
+                              }
+                            </span>
                             <span className="product_name">
                               {item.productName}
                             </span>
@@ -51,7 +66,14 @@ const HomeRight = ({ product }) => {
                         ></div>
                         <div className="content">
                           <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="vendor">
+                              {" "}
+                              {
+                                sellers?.find(
+                                  (seller) => seller._id === item.createdBy
+                                )?.userName
+                              }
+                            </span>
                             <span className="product_name">
                               {item.productName}
                             </span>
@@ -71,10 +93,22 @@ const HomeRight = ({ product }) => {
                   <div className="col-6">
                     <Link to={`/product/${item._id}`}>
                       <div className="product">
-                        <img src={item.productImage} alt="" />
+                        <div
+                          className="image-portion"
+                          style={{
+                            backgroundImage: `url(${item.productImage})`,
+                          }}
+                        ></div>
                         <div className="content">
                           <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="vendor">
+                              {" "}
+                              {
+                                sellers?.find(
+                                  (seller) => seller._id === item.createdBy
+                                )?.userName
+                              }
+                            </span>
                             <span className="product_name">
                               {item.productName}
                             </span>

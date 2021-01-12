@@ -179,7 +179,6 @@ const SellerApplication = () => {
         })
       );
     } else {
-      console.log("user", newUser);
       const data = new FormData();
       data.append("userEmail", newUser.userEmail);
       data.append("userImage", newUser.userImage);

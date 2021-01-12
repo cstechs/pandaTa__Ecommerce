@@ -81,7 +81,6 @@ const productReducer = (state = initState, action) => {
         error: action.payload,
       };
     case RELATED_PRODUCT_LOAD_SUCCESS:
-      console.log("IN RELATED_PRODUCT_LOAD_SUCCESS");
       return {
         ...state,
         relatedProducts: action.payload,

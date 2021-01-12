@@ -8,12 +8,7 @@ import "./assets/css/home.min.css";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import setAuthToken from "./utils/setAuthToken";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import UserPanel from "./components/user/pages/home";
 import UserCart from "./components/user/pages/cart";
 import UserCheckout from "./components/user/pages/checkout";
@@ -28,6 +23,7 @@ import AdminPanelProducts from "./components/admin/pages/products";
 import AdminPanelUpdateProducts from "./components/admin/partials/updateProductBar";
 import AdminPanelCategory from "./components/admin/pages/categories";
 import AdminPanelInvoice from "./components/admin/pages/invoice";
+import AdminPanelOrder from "./components/admin/pages/orders";
 import AdminPanelCustomer from "./components/admin/pages/customers";
 import AdminPanelChat from "./components/admin/pages/chat";
 import AdminPanelSetting from "./components/admin/pages/profile";
@@ -72,7 +68,7 @@ function App() {
           <Route exact path="/" component={UserPanel} />
           <Route exact path="/cart" component={UserCart} />
 
-          <Route exact path="/checkout" component={UserCheckout} />
+          <Route exact path="/checkout/:cartid" component={UserCheckout} />
           <Route exact path="/product" component={UserProduct} />
           <Route exact path="/wishlist" component={UserWishlist} />
           <Route
@@ -148,6 +144,11 @@ function App() {
             exact
             path="/admin/invoice/"
             component={AdminPanelInvoice}
+          />
+          <PrivateRoute
+            exact
+            path="/admin/order/"
+            component={AdminPanelOrder}
           />
           <PrivateRoute
             exact

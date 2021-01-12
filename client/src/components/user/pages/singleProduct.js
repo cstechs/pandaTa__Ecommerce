@@ -6,7 +6,6 @@ import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
 import { getProductById } from "../../../redux/_actions/productAction";
-import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getChat } from "../../../redux/_actions/chatAction";
 import RelatedProduct from "../partials/relatedProducts";
 import Chat from "../partials/Chat";
@@ -75,8 +74,13 @@ const SingleProduct = () => {
     if (oldData?.find((data) => data._id === newData._id)) {
       let index = oldData.findIndex((data) => data._id === newData._id);
       oldData.splice(index, 1);
-      console.log("olddata", oldData);
       setItemWish(false);
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Item Successfully removed from WishList",
+          alertType: "success",
+        })
+      );
       localStorage.setItem("WishList", JSON.stringify(oldData));
     } else {
       oldData.push(newData);
@@ -128,12 +132,12 @@ const SingleProduct = () => {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-md-5">
-                  <div className="productimage">
-                    <img
-                      src={`/${product?.product?.data.productImage}`}
-                      alt="productImage"
-                    />
-                  </div>
+                  <div
+                    className="productimage"
+                    style={{
+                      backgroundImage: `url(/${product?.product?.data.productImage})`,
+                    }}
+                  ></div>
                 </div>
                 <div className="col-md-7">
                   <div className="product_detail">

@@ -31,7 +31,6 @@ export const addItemToCart = (productId, createdBy, quantity) => {
       dispatch(getCart());
       dispatch({ type: CART_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
-      //console.log(err);
       dispatch(
         setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
       );
@@ -45,13 +44,9 @@ export const getCart = () => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.get("/api/cart/", config);
-      // console.log(res.data);
+
       dispatch({ type: CART_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
-      //  console.log(err);
-      // dispatch(
-      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      // );
       dispatch({ type: CART_LOAD_FAIL, payload: err.response.data.message });
     }
   };
@@ -61,13 +56,12 @@ export const removeCart = () => async (dispatch) => {
   const config = { header: { "Content-Type": "application/json" } };
   try {
     const res = await axios.delete("/api/cart/empty-cart", config);
-    console.log(res.data);
+
     dispatch(
       setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
     );
     dispatch({ type: CART_DELETE_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log(err);
     dispatch(
       setAlert(SET_ALERT, {
         message: err.response.message,
@@ -138,7 +132,6 @@ export const removeCartItem = (CreatedBy, Cartid) => async (dispatch) => {
     dispatch(getCart());
     dispatch({ type: CART_REMOVE_ITEM_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log(err);
     dispatch(
       setAlert(SET_ALERT, {
         message: err.response.message,
@@ -151,23 +144,3 @@ export const removeCartItem = (CreatedBy, Cartid) => async (dispatch) => {
     });
   }
 };
-// export const cartIncrement = (productId, quantity) => {
-//   return async (dispatch) => {
-//     const config = { header: { "Content-Type": "application/json" } };
-//     try {
-//       const res = await axios.patch(
-//         "/api/cart/addItemToCart",
-//         { productId, quantity },
-//         config
-//       );
-//       console.log(res.data);
-//       dispatch({ type: CART_INCREMENT, payload: res.data });
-//     } catch (err) {
-//       console.log(err);
-//       dispatch({
-//         type: CART_INCREMENT_FAIL,
-//         payload: err.response.data.message,
-//       });
-//     }
-//   };
-// };

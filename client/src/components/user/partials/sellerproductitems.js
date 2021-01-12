@@ -10,7 +10,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const SellerProductitems = ({ product, proId, catId, seller }) => {
   const [check, setCheck] = useState([]);
   const [catcheck, setcatCheck] = useState([]);
-  //const category = useSelector((state) => state.category.categories);
   const subcategory = useSelector((state) => state.subCategory.subCategories);
 
   const dispatch = useDispatch();

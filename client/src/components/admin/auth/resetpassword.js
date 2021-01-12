@@ -12,7 +12,7 @@ const ResetPassword = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("pass", password, "conf", confirmpassword);
+
     if (password === "" || confirmpassword === "") {
       dispatch(setAlert("Please enter all the fields.", "danger"));
     } else if (password !== confirmpassword) {

@@ -118,12 +118,13 @@ const Navbar = () => {
                         <Link to="/admin/chat">
                           <span className="dropdown-item notify-item">
                             <div className="notify-icon bg-secondary">
-                              <i className="mdi mdi-heart" alt="" />
+                              <i
+                                className="mdi mdi-forum"
+                                alt={item.userName}
+                              />
                             </div>
-                            <p className="notify-details">
+                            <p className="notify-details pt-1">
                               {item.userName}
-                              {/* <b>Admin</b>
-                        <small className="text-muted">13 days ago</small> */}
                             </p>
                           </span>
                         </Link>

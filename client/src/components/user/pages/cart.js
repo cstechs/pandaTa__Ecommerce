@@ -3,47 +3,45 @@ import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link, useHistory } from "react-router-dom";
-
-// import { login } from "../../../redux/_actions/authAction";
-
-// import productimg from "../../../assets/images/user/product.png";
 import Banner from "../../../assets/images/user/banner.PNG";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCartQuantity,
-  // cartIncrement,
   getCart,
-  removeCart,
   removeCartItem,
   subtractCartQuantity,
 } from "../../../redux/_actions/cartAction";
-// import CartInput from "./cartInput";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
 import Loader from "../partials/loader";
 import { getUser } from "../../../redux/_actions/userAction";
+import { getOrder } from "../../../redux/_actions/orderAction";
+import { SET_ALERT } from "../../../redux/types";
+import { setAlert } from "../../../redux/_actions/alertAction";
 
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  // const orders = useSelector((state) => state.order.orders);
+  // let placedOrder = cartItem?.data?.find((cart) =>
+  //   orders?.find((order) => order.cartId === cart._id)
+  // );
 
   const history = useHistory();
+  let userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
+  const [quantity, setQuantity] = useState([]);
+  const dispatch = useDispatch();
   if (!user) {
     history.push("/");
+    dispatch(
+      setAlert(SET_ALERT, {
+        message: "Login now to go on this page",
+        alertType: "danger",
+      })
+    );
   }
-  const userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
-  // console.log("carts", userCart?.createdBy);
-
-  // console.log("cart", cartItem.data?.items)
-  const [quantity, setQuantity] = useState([]);
-
-  // {
-  //   console.log(cartItem?.data);
-  // }
-
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getOrder());
   }, [dispatch]);
 
   useEffect(() => {
@@ -64,44 +62,19 @@ const Cart = () => {
   //   };
 
   const handleAddQuantity = (id) => {
-    // setQuantity((prev) => {
-    //   prev.splice(index, 1, {
-    //     itemQuantity: Quantity + 1,
-    //     itemId: id,
-    //     itemTotal: total,
-    //   });
-    //   dispatch(addItemToCart(id, +1));
-    //   return [...prev];
-    // });
-    // console.log(id);
     dispatch(addCartQuantity(id, userCart?.createdBy));
   };
   const handleRemoveQuantity = (id, quantity) => {
-    // if (Quantity > 0)
-    //   setQuantity((prev) => {
-    //     prev.splice(index, 1, {
-    //       itemQuantity: Quantity - 1,
-    //       itemId: id,
-    //       itemTotal: total,
-    //     });
-
-    // return [...prev];
-    // });
     if (quantity > 1) {
       dispatch(subtractCartQuantity(id, userCart?.createdBy));
     }
   };
   useEffect(() => {
     dispatch(getCart());
-  }, []);
-  // useEffect(() => {
-  //   dispatch(getCart());
-  // }, []);
+  }, [dispatch]);
 
   const RemoveCart = (id) => {
     dispatch(removeCartItem(userCart?.createdBy, id));
-
-    // window.location.reload();
   };
 
   return (
@@ -227,11 +200,13 @@ const Cart = () => {
                       </p>
                     </div>
                   </div>
-                  <Link to="/checkout">
-                    <button className="btn btn-purple float-right font-13 ripple button-base">
-                      PROCEED TO CHECKOUT
-                    </button>
-                  </Link>
+                  {userCart && userCart.items.length > 0 && (
+                    <Link to={`/checkout/${userCart?._id}`}>
+                      <button className="btn btn-purple float-right font-13 ripple button-base">
+                        PROCEED TO CHECKOUT
+                      </button>
+                    </Link>
+                  )}
                 </div>
                 <div className="col-lg-3 banner">
                   <img src={Banner} />

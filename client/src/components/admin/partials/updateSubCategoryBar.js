@@ -18,14 +18,7 @@ const UpdateSubCategoryBar = (props) => {
 
   const handleSubCategoryUpdate = (e) => {
     e.preventDefault();
-    console.log(
-      "prop",
-      props.newSubcategory?._id,
-      "name",
-      name,
-      "cat",
-      categoryId
-    );
+
     dispatch(updateSubCategory(props.newSubcategory?._id, name, categoryId));
   };
   const [newSubCategory, setNewSubCategory] = useState({
@@ -60,20 +53,8 @@ const UpdateSubCategoryBar = (props) => {
                     <option disabled>Select Category</option>
 
                     {category.categories.data?.map((item) => (
-                      <option
-                        key={item._id}
-                        value={item._id}
-                        // onClick={() => {
-                        //   setCat(item._id);
-                        //   console.log("cat", Cat);
-                        // }}
-                        defaultValue
-                      >
+                      <option key={item._id} value={item._id} defaultValue>
                         {item.categoryName}
-                        {console.log(
-                          "checked",
-                          props.newSubcategory.categoryId === item._id
-                        )}
                       </option>
                     ))}
                   </select>

@@ -16,7 +16,7 @@ const AddProductBar = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategory());
-  }, []);
+  }, [dispatch]);
   const [newProduct, setNewProduct] = useState({
     productName: "",
     productQuantity: "",

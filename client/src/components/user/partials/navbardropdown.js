@@ -14,7 +14,7 @@ const NavbarDropdown = ({ _id, categoryName, subCategory }) => {
           if (item.categoryId === _id) {
             return (
               <li key={item._id}>
-                <Link to="/" className="dropdownLink">
+                <Link to="/product" className="dropdownLink">
                   {item.subCategoryName}
                 </Link>
               </li>

@@ -24,13 +24,12 @@ export const addCategory = (Category) => {
         Category,
         config
       );
-      // console.log(res.data);
+
       dispatch(
         setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
       );
       dispatch({ type: CATEGORY_SUCCESS, payload: res.data });
     } catch (err) {
-      // console.log(err);
       dispatch(
         setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
       );
@@ -44,16 +43,9 @@ export const getCategory = () => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.get("/api/category/", config);
-      //console.log(res.data);
+
       dispatch({ type: CATEGORY_LOAD_SUCCESS, payload: res.data });
     } catch (err) {
-      // console.log(err);
-      // dispatch(
-      //   setAlert(SET_ALERT, {
-      //     message: err.response.data.message,
-      //     alertType: "danger",
-      //   })
-      // );
       dispatch({
         type: CATEGORY_LOAD_FAIL,
         payload: err.response.data.message,
@@ -67,17 +59,13 @@ export const getCategoryBySubCategoryId = (SubCategoryId) => {
     const config = { header: { "Content-Type": "application/json" } };
     try {
       const res = await axios.get("/api/category/" + SubCategoryId, config);
-      //console.log(res.data);
+
       if (res.data == []) {
         dispatch({ type: CATEGORY_EMPTY_SET, payload: res.data });
       } else {
         dispatch({ type: CATEGORY_SINGLE_LOAD_SUCCESS, payload: res.data });
       }
     } catch (err) {
-      //  console.log(err);
-      // dispatch(
-      //   setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
-      // );
       dispatch({
         type: CATEGORY_SINGLE_LOAD_FAIL,
         payload: err.response.data.message,
@@ -94,14 +82,12 @@ export const updateCategory = (id, categoryName) => async (dispatch) => {
       { categoryName },
       config
     );
-    //console.log(res.data);
     dispatch(
       setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
     );
     dispatch({ type: CATEGORY_UPDATE_SUCCESS, payload: res.data });
     window.location.reload();
   } catch (err) {
-    //  console.log(err);
     dispatch(
       setAlert(SET_ALERT, {
         message: err.response.message,

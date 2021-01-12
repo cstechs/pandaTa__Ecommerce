@@ -3,9 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { getCart } from "../../../redux/_actions/cartAction";
 import productimg from "../../../assets/images/user/product.png";
+import { createOrder } from "../../../redux/_actions/orderAction";
+import { setAlert } from "../../../redux/_actions/alertAction";
+import { SET_ALERT } from "../../../redux/types";
 
 const CheckOut = () => {
   const [shippingShown, setshippingShown] = useState(true);
@@ -14,16 +17,26 @@ const CheckOut = () => {
   const [successShown, setsuccessShown] = useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const cartItem = useSelector((state) => state.cart.cartItems);
+  const { cartid } = useParams();
+  const history = useHistory();
+
+  if (!user) {
+    history.push("/");
+  }
+
   const [userProfile, setUserProfile] = useState({
     firstName: "",
     lastName: "",
     companyName: "",
     country: "",
-    town: "",
-    postCode: "",
+    city: "",
+    postalCode: "",
     address: "",
     email: "",
-    phoneNum: "",
+    phone: "",
+    cartId: cartid,
+    createdBy: user?._id,
+    updatedBy: user?._id,
   });
 
   const {
@@ -31,11 +44,14 @@ const CheckOut = () => {
     lastName,
     companyName,
     country,
-    town,
-    postCode,
+    city,
+    postalCode,
     address,
     email,
-    phoneNum,
+    phone,
+    cartId,
+    createdBy,
+    updatedBy,
   } = userProfile;
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,25 +62,37 @@ const CheckOut = () => {
     setUserProfile({ ...userProfile, [e.target.name]: e.target.value });
   };
 
-  const shippingPaymentSubmit = () => {
-    setshippingShown(false);
-    setbillingShown(true);
-  };
-  const billingDetailSubmit = () => {
-    setbillingShown(false);
-    setpaymentShown(true);
+  const shippingPaymentSubmit = (e) => {
+    e.preventDefault();
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      country === "" ||
+      city === "" ||
+      postalCode === "" ||
+      address === "" ||
+      email === "" ||
+      phone === ""
+    ) {
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please Enter Required Fields",
+          alertType: "danger",
+        })
+      );
+    } else {
+      setshippingShown(false);
+      setpaymentShown(true);
+    }
   };
   const paymentSubmit = () => {
     setpaymentShown(false);
     setsuccessShown(true);
-  };
-  const billingBack = () => {
-    setbillingShown(false);
-    setshippingShown(true);
+    dispatch(createOrder(userProfile));
   };
   const paymentBack = () => {
     setpaymentShown(false);
-    setbillingShown(true);
+    setshippingShown(true);
   };
 
   return (
@@ -88,11 +116,11 @@ const CheckOut = () => {
           <>
             <div className="head">
               <span className="hd1 active">Shipping Address</span>
-              <span className="hd2">Billing Detail </span>
+
               <span className="hd3">Payment</span>
             </div>
             <div className="checkoutBox">
-              <form onSubmit={shippingPaymentSubmit}>
+              <form onSubmit={(e) => shippingPaymentSubmit(e)}>
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-md-4 mt-3">
@@ -157,9 +185,9 @@ const CheckOut = () => {
                       </label>
                       <input
                         type="text"
-                        name="town"
+                        name="city"
                         placeholder="eg. New york"
-                        value={town}
+                        value={city}
                         onChange={(e) => HandleChange(e)}
                       />
                     </div>
@@ -169,9 +197,9 @@ const CheckOut = () => {
                       </label>
                       <input
                         type="number"
-                        name="postCode"
+                        name="postalCode"
                         placeholder="eg. 358745"
-                        value={postCode}
+                        value={postalCode}
                         onChange={(e) => HandleChange(e)}
                       />
                     </div>
@@ -204,12 +232,14 @@ const CheckOut = () => {
                       />
                     </div>
                     <div className="col-md-4 mt-3">
-                      <label htmlFor="">Phone</label>
+                      <label htmlFor="">
+                        Phone<span className="text-danger">*</span>
+                      </label>
                       <input
                         type="number"
-                        name="phoneNum"
+                        name="phone"
                         placeholder="eg. 94 788 1221"
-                        value={phoneNum}
+                        value={phone}
                         onChange={(e) => HandleChange(e)}
                       />
                     </div>
@@ -219,7 +249,7 @@ const CheckOut = () => {
                       <div className="float-left">
                         <Link
                           to="/cart"
-                          className="button ripple button-base bck"
+                          className="button ripple button-base bck cursor-pointer"
                         >
                           BACK
                         </Link>
@@ -240,7 +270,7 @@ const CheckOut = () => {
           </>
         )}
         {/* BILLING DETAIL PORTION */}
-        {billingShown && (
+        {/* {billingShown && (
           <>
             <div className="head">
               <span className="hd1">Shipping Address</span>
@@ -343,14 +373,14 @@ const CheckOut = () => {
               </form>
             </div>
           </>
-        )}
+        )} */}
         {/* PAYMENT PORTION */}
 
         {paymentShown && (
           <>
             <div className="head">
               <span className="hd1">Shipping Address</span>
-              <span className="hd2">Billing Detail </span>
+
               <span className="hd3 active">Payment</span>
             </div>
             <div className="checkoutBox">
@@ -361,26 +391,30 @@ const CheckOut = () => {
                       <h6>Your Order</h6>
                       <table>
                         <tbody>
-                          {cartItem?.data?.items?.map((item) => (
+                          {cartItem?.data?.map((cartitem) => (
                             <>
-                              {cartItem.data.createdBy == user._id && (
-                                <tr>
-                                  <td>
-                                    <div className="imageBox">
-                                      <img
-                                        src={item.productId.productImage}
-                                        alt=""
-                                      />
-                                    </div>
-                                  </td>
-                                  <td>{item.productId.productName}</td>
-                                  <td>
-                                    <span className="price">
-                                      {item.quantity}
-                                    </span>
-                                  </td>
-                                  <td>${item.productId.productPrice} </td>
-                                </tr>
+                              {cartitem.createdBy == user._id && (
+                                <>
+                                  {cartitem.items.map((item) => (
+                                    <tr>
+                                      <td>
+                                        <div className="imageBox">
+                                          <img
+                                            src={`/${item.productId.productImage}`}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </td>
+                                      <td>{item.productId.productName}</td>
+                                      <td>
+                                        <span className="price">
+                                          {item.quantity}
+                                        </span>
+                                      </td>
+                                      <td>${item.productId.productPrice} </td>
+                                    </tr>
+                                  ))}
+                                </>
                               )}
                             </>
                           ))}
@@ -462,7 +496,7 @@ const CheckOut = () => {
                     <div className="col-12 mt-4">
                       <div className="float-left">
                         <span
-                          className="button ripple button-base bck"
+                          className="button ripple button-base bck cursor-pointer"
                           onClick={paymentBack}
                         >
                           BACK

@@ -6,7 +6,6 @@ import { logout } from "../../../redux/_actions/authAction";
 import Register from "../auth/register";
 import Sidebar from "./sidebar";
 import { getCart } from "../../../redux/_actions/cartAction";
-import UserImage from "../../../assets/images/admin/users/user-2.jpg";
 import { getProduct } from "../../../redux/_actions/productAction";
 import Loader from "./loader";
 const Header = () => {
@@ -21,13 +20,11 @@ const Header = () => {
   const [isPreviewShown, setPreviewShown] = useState(false);
   const [loginView, setLoginView] = useState(false);
   const [RegisterView, setRegisterView] = useState(false);
-  const [SellerRegisterView, setSellerRegisterView] = useState(false);
+
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const state = useSelector((state) => state.auth);
-  const cart = useSelector((state) => state.cart);
+
   const cartItem = useSelector((state) => state.cart.cartItems);
-  //const history = useHistory();
-  //console.log(cart?.cartItems?.data?.items?.length);
 
   const dispatch = useDispatch();
   const product = useSelector((state) => state.product);

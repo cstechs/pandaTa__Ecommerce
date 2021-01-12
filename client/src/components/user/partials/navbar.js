@@ -18,18 +18,11 @@ const Navbar = () => {
   return (
     <nav>
       <ul>
-        {/* {console.log(category.categories.data)} */}
-        {category.categories.data?.map(({ _id, categoryName, index }) => (
+        {category.categories.data?.map(({ _id, categoryName }) => (
           <div className="dropdown" key={_id}>
             <li>
               <Link to="/product">{categoryName}</Link>
             </li>
-            {/* {subCategory.subCategories.data?.map((item) => {
-               return <NavbarDropdown _id={_id} categoryName={categoryName} item={item} subCategory={subCategory} />
-              })} */}
-            {/* {subCategory.subCategories.data?.find(
-              (item) => (item.categoryId === _id) === undefined
-            ) && ( */}
 
             {subCategory.subCategories?.data?.find(
               (item) => item.categoryId === _id

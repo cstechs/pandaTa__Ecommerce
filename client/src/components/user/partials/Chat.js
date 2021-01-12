@@ -13,19 +13,12 @@ const Chat = ({ ChatHide, product, seller }) => {
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
-    // // if (newText === '', sender === '', createdBy === '', sellerId === '' ) {
-    // //     dispatch(setAlert('Please Enter fields.', 'danger'));
-    // // }
-    // else {
     e.preventDefault();
-
     dispatch(createChat(newMessage));
     setNewMessage({ ...newMessage, message: "" });
   };
   useEffect(() => {
     dispatch(getChat());
-
-    // $("#mydiv").scrollTop($("#mydiv").height);
   }, [getChat]);
 
   useEffect(() => {
@@ -34,22 +27,6 @@ const Chat = ({ ChatHide, product, seller }) => {
       objDiv.scrollIntoView();
     }
   }, [chat]);
-
-  useEffect(() => {}, [chat]);
-
-  //   useEffect(() => {
-  //     setSendChat(() =>
-  //       chat?.chats?.data?.map((item) => {
-  //         return {
-  //           Message: item.message,
-  //           Sender: item.sender,
-  //           createdBy: item.createdBy,
-  //           sellerId: item.sellerId,
-  //         };
-  //       })
-  //     );
-  //   }, [chat]);
-  //   console.log("checking", sendChat);
 
   const [newMessage, setNewMessage] = useState({
     message: "",
@@ -95,7 +72,6 @@ const Chat = ({ ChatHide, product, seller }) => {
           <ul className="conversation-list mt-2">
             {chat.chats?.data?.map((item, index) => (
               <React.Fragment key={item._id}>
-                {/* {console.log("chatlength", item)} */}
                 {product?.product?.data?.createdBy === item.sellerId && (
                   <React.Fragment key={index}>
                     {item.sender == 1 &&

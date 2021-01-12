@@ -49,7 +49,7 @@ const UpdateProductBar = (props) => {
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getSubCategory());
-  }, []);
+  }, [dispatch]);
 
   const onSubmit = (e) => {
     e.preventDefault();

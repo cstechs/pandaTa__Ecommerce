@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import productimg from "../../../assets/images/user/product.png";
+import { useDispatch, useSelector } from "react-redux";
+import { getSellers } from "../../../redux/_actions/sellerAction";
 
 const HomeLeft = ({ product }) => {
+  const sellers = useSelector((state) => state.seller.sellers);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSellers);
+  }, [dispatch]);
   return (
     <div className="col-md-6">
       <div className="container-fluid">
@@ -22,7 +31,13 @@ const HomeLeft = ({ product }) => {
                         ></div>
                         <div className="content">
                           <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="vendor">
+                              {
+                                sellers?.find(
+                                  (seller) => seller._id === item.createdBy
+                                )?.userName
+                              }
+                            </span>
                             <span className="product_name">
                               {item.productName}
                             </span>
@@ -50,7 +65,14 @@ const HomeLeft = ({ product }) => {
                         ></div>
                         <div className="content">
                           <div className="content-left">
-                            <span className="vendor">Supplier’s Name Here</span>
+                            <span className="vendor">
+                              {" "}
+                              {
+                                sellers?.find(
+                                  (seller) => seller._id === item.createdBy
+                                )?.userName
+                              }
+                            </span>
                             <span className="product_name">
                               {item.productName}
                             </span>
@@ -69,82 +91,6 @@ const HomeLeft = ({ product }) => {
               </React.Fragment>
             );
           })}
-
-          {/* <div className="col-6">
-            <div className="product">
-              <img src={productimg} alt="" />
-              <div className="content">
-                <div className="content-left">
-                  <span className="vendor">Supplier’s Name Here</span>
-                  <span className="product_name">Product Name Here</span>
-                  <span className="product_price">$29,354.75</span>
-                </div>
-                <div className="content-right">
-                  <i className="fa fa-caret-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="product">
-              <img src={productimg} alt="" />
-              <div className="content">
-                <div className="content-left">
-                  <span className="vendor">Supplier’s Name Here</span>
-                  <span className="product_name">Product Name Here</span>
-                  <span className="product_price">$29,354.75</span>
-                </div>
-                <div className="content-right">
-                  <i className="fa fa-caret-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="product">
-              <img src={productimg} alt="" />
-              <div className="content">
-                <div className="content-left">
-                  <span className="vendor">Supplier’s Name Here</span>
-                  <span className="product_name">Product Name Here</span>
-                  <span className="product_price">$29,354.75</span>
-                </div>
-                <div className="content-right">
-                  <i className="fa fa-caret-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="product">
-              <img src={productimg} alt="" />
-              <div className="content">
-                <div className="content-left">
-                  <span className="vendor">Supplier’s Name Here</span>
-                  <span className="product_name">Product Name Here</span>
-                  <span className="product_price">$29,354.75</span>
-                </div>
-                <div className="content-right">
-                  <i className="fa fa-caret-right"></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="product">
-              <img src={productimg} alt="" />
-              <div className="content">
-                <div className="content-left">
-                  <span className="vendor">Supplier’s Name Here</span>
-                  <span className="product_name">Product Name Here</span>
-                  <span className="product_price">$29,354.75</span>
-                </div>
-                <div className="content-right">
-                  <i className="fa fa-caret-right"></i>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

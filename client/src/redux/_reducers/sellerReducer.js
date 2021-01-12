@@ -23,7 +23,6 @@ const initState = {
 const sellerReducer = (state = initState, action) => {
   switch (action.type) {
     case SELLER_LOGIN_SUCCESS:
-      console.log("red", action.payload);
       localStorage.setItem("user", JSON.stringify(action.payload.seller));
       localStorage.setItem("token", action.payload.token);
 
