@@ -30,7 +30,6 @@ import AdminPanelSetting from "./components/admin/pages/profile";
 import AdminPanelEditSetting from "./components/admin/pages/updateProfile";
 import AdminLogin from "./components/admin/auth/login";
 import AdminForgetPassword from "./components/admin/auth/forgetpassword";
-import AdminRegister from "./components/admin/auth/register";
 import ResetPassword from "./components/admin/auth/resetpassword";
 import ErrorPage from "./components/user/pages/404";
 import VerifyView from "./components/user/auth/verifyPage";
@@ -114,11 +113,6 @@ function App() {
             component={AdminForgetPassword}
           />
           <Route path="/admin/resetpassword" component={ResetPassword} />
-          <PrivateRoute
-            exact
-            path="/admin/register"
-            component={AdminRegister}
-          />
           <Route exact path="/admin/setting" component={AdminPanelSetting} />
           <PrivateRoute
             exact

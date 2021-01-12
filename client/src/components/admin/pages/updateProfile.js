@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../partials/topnavbar";
+import Navbar from "../partials/header";
 import Footer from "../partials/footer";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../../redux/_actions/userAction";

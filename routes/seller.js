@@ -1,4 +1,4 @@
-const Seller = require("../controllers/seller");
+const Seller = require("../controllers/Seller");
 const express = require("express");
 const multerInstance = require("../config/multer");
 

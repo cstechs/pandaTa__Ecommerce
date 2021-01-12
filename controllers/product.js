@@ -95,7 +95,6 @@ exports.updateProduct = asyncHandlers(async (req, res, next) => {
       productImage,
     } = req.body;
 
-    console.log("file", req.body);
     if (req.file !== undefined) {
       var productImages = req.file.filename;
     } else {

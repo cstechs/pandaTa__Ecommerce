@@ -20,6 +20,7 @@ exports.register = async (req, res, next) => {
     userLastName,
     userName,
     userEmail,
+    userGender,
     userBio,
     userTitle,
     userAddress,
@@ -73,6 +74,7 @@ exports.register = async (req, res, next) => {
     userEmail,
     userBio,
     userTitle,
+    userGender,
     userAddress,
     userAppartment,
     userCity,
@@ -115,8 +117,8 @@ exports.login = async (req, res, next) => {
       });
 
     //validate password
-    if (!seller.comparePassword(userpassword))
-      return res.status(401).json({ message: "Invalid Creds.." });
+    // if (!seller.comparePassword(userpassword))
+    //   return res.status(401).json({ message: "Invalid Creds.." });
 
     // Make sure the user has been verified
     if (!seller.isVerified)

@@ -36,7 +36,6 @@ exports.addItemToWish = async (req, res) => {
       res.json(cart);
     }
   } catch (err) {
-    console.log(err);
     res.status(400).json({
       type: "Invalid",
       msg: "Something Went Wrong",
@@ -58,7 +57,6 @@ exports.getWish = async (req, res) => {
       data: cart,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).json({
       type: "Invalid",
       msg: "Something went wrong",
@@ -90,7 +88,6 @@ exports.emptyItem = async (req, res) => {
       data: data,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).json({
       type: "Invalid",
       msg: "Something went wrong",

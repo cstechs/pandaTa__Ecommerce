@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../partials/topnavbar";
+import Navbar from "../partials/header";
 import Footer from "../partials/footer";
 import OrderDetail from "../partials/orderDetails";
 import productProgessImg1 from "../../../assets/images/admin/current-products-progress-img-1.png";

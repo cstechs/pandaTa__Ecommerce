@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import Navbar from "../partials/topnavbar";
+import Navbar from "../partials/header";
 import Footer from "../partials/footer";
-import { getUser } from "../../../redux/_actions/userAction";
 
 import cardbodyimg1 from "../../../assets/images/admin/current-progress-img-1.png";
 import cardbodyimg2 from "../../../assets/images/admin/current-progress-img-2.png";
@@ -10,12 +9,20 @@ import cardbodyimg3 from "../../../assets/images/admin/current-progress-img-3.pn
 
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";
 import { Line } from "react-chartjs-2";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [chartData, setChartData] = useState({});
-  const dispatch = useDispatch();
-  // const users = useSelector((state) => state.user.users);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const products = useSelector((state) => state.product.products.data);
+  const SellerproductsLength = products.filter(
+    (product) => product.createdBy === user._id
+  )?.length;
+  const TotalproductsLength = products.length;
+  const customers = useSelector((state) => state.user.users);
+  const customerLength = customers.filter(
+    (customer) => customer.role === "customer"
+  )?.length;
 
   const chart = () => {
     setChartData({
@@ -44,9 +51,6 @@ const Home = () => {
       ],
     });
   };
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
 
   useEffect(() => {
     chart();
@@ -69,20 +73,12 @@ const Home = () => {
               <div className="row">
                 <div className="col-md-4">
                   <div className="card-box current-progress">
-                    <i
-                      className="fa fa-info-circle text-muted float-right"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                    />
-                    <h4 className="mt-0 font-13">Total Views</h4>
+                    <i className="fa fa-info-circle text-muted float-right" />
+                    <h4 className="mt-0 font-13">Total Customers</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        <span className="count">389</span>K
+                        <span>{customerLength}</span>
                       </h2>
-                      <p className="text-danger mb-0 font-weight-bolder">
-                        <i className="fa fa-arrow-down mr-1" />
-                        13.8%
-                      </p>
                     </div>
                     <div className="float-right">
                       <img src={cardbodyimg1} draggable="false" alt="" />
@@ -91,21 +87,12 @@ const Home = () => {
                 </div>
                 <div className="col-md-4">
                   <div className="card-box current-progress">
-                    <i
-                      className="fa fa-info-circle text-muted float-right"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                      alt=""
-                    />
+                    <i className="fa fa-info-circle text-muted float-right" />
                     <h4 className="mt-0 font-13">Products Sold</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        <span className="count">2453</span>
+                        <span>200</span>
                       </h2>
-                      <p className="text-success mb-0 font-weight-bolder">
-                        <i className="fa fa-arrow-up mr-1" alt="" />
-                        13.8%
-                      </p>
                     </div>
                     <div className="float-right">
                       <img src={cardbodyimg2} draggable="false" alt="" />
@@ -114,20 +101,16 @@ const Home = () => {
                 </div>
                 <div className="col-md-4">
                   <div className="card-box current-progress">
-                    <i
-                      className="fa fa-info-circle text-muted float-right"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                    />
-                    <h4 className="mt-0 font-13">Total Earnings</h4>
+                    <i className="fa fa-info-circle text-muted float-right" />
+                    <h4 className="mt-0 font-13">Total Products</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        $<span className="count">39</span>K
+                        {user && user.role === "seller" ? (
+                          <span>{SellerproductsLength}</span>
+                        ) : (
+                          <span>{TotalproductsLength}</span>
+                        )}
                       </h2>
-                      <p className="text-danger mb-0 font-weight-bolder">
-                        <i className="fa fa-arrow-down mr-1" />
-                        13.8%
-                      </p>
                     </div>
                     <div className="float-right">
                       <img src={cardbodyimg3} draggable="false" alt="" />

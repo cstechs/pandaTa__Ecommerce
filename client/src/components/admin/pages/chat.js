@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import Navbar from "../partials/topnavbar";
+import Navbar from "../partials/header";
 import Footer from "../partials/footer";
 
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";

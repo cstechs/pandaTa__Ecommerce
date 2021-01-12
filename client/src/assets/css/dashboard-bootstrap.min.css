@@ -11590,7 +11590,8 @@ a.text-blue:hover {
 .current-progress h2 {
   font-weight: 900;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: 27px;
+  font-size: 30px;
+  margin-top: 23px !important;
 }
 .current-progress img {
   position: absolute;

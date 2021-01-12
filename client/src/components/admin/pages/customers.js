@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Navbar from "../partials/topnavbar";
+import Navbar from "../partials/header";
 import Footer from "../partials/footer";
 
 import UserImage from "../../../assets/images/admin/users/user-6.jpg";

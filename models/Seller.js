@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
@@ -35,6 +34,9 @@ const SellerSchema = mongoose.Schema(
       type: String,
     },
     userZipCode: {
+      type: String,
+    },
+    userGender: {
       type: String,
     },
     userCountry: {
@@ -97,26 +99,26 @@ const SellerSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-SellerSchema.pre("save", function (next) {
-  const seller = this;
+// SellerSchema.pre("save", function (next) {
+//   const seller = this;
 
-  if (!seller.isModified("userpassword")) return next();
+//   if (!seller.isModified("userpassword")) return next();
 
-  bcrypt.genSalt(10, function (err, salt) {
-    if (err) return next(err);
+//   bcrypt.genSalt(10, function (err, salt) {
+//     if (err) return next(err);
 
-    bcrypt.hash(seller.userpassword, salt, function (err, hash) {
-      if (err) return next(err);
+//     bcrypt.hash(seller.userpassword, salt, function (err, hash) {
+//       if (err) return next(err);
 
-      seller.userpassword = hash;
-      next();
-    });
-  });
-});
+//       seller.userpassword = hash;
+//       next();
+//     });
+//   });
+// });
 
-SellerSchema.methods.comparePassword = function (userpassword) {
-  return bcrypt.compareSync(userpassword, this.userpassword);
-};
+// SellerSchema.methods.comparePassword = function (userpassword) {
+//   return bcrypt.compareSync(userpassword, this.userpassword);
+// };
 
 SellerSchema.methods.generateJWT = function () {
   const today = new Date();

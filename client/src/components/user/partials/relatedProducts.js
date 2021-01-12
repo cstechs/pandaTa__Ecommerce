@@ -5,6 +5,7 @@ import OwlCarousel from "react-owl-carousel";
 import { getProductBySubCategoryId } from "../../../redux/_actions/productAction";
 import Loader from "./loader";
 const RelatedProduct = (props) => {
+  const sellers = useSelector((state) => state.seller.sellers);
   const [responsive] = useState({
     0: {
       items: 1,
@@ -40,12 +41,17 @@ const RelatedProduct = (props) => {
         navContainer="#customNav"
       >
         {relatedProduct?.data?.map(
-          ({ _id, productName, productPrice, productImage }) => (
+          ({ _id, productName, productPrice, productImage, createdBy }) => (
             <div className="item" key={_id}>
               <Link to={`/product/${_id}`}>
                 <img src={`/${productImage}`} alt={productName} />
                 <div className="content">
-                  <h6 className="font-13">Supplier’s Name Here</h6>
+                  <h6 className="font-13">
+                    {
+                      sellers?.find((seller) => seller._id === createdBy)
+                        ?.userName
+                    }
+                  </h6>
                   <h1 className="font-16 mt-2 text-dark">{productName}</h1>
                   <h3 className="font-20 mt-2">${productPrice}</h3>
                 </div>

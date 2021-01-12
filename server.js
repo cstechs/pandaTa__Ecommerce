@@ -13,6 +13,7 @@ const user = require("./routes/user");
 const seller = require("./routes/seller");
 const chat = require("./routes/chat");
 const wish = require("./routes/wish");
+const order = require("./routes/order");
 const sanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -63,6 +64,7 @@ app.use("/api/wish", wish);
 app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/seller", seller);
+app.use("/api/order", order);
 
 //Redirect all other urls to client(frontend)
 app.get("*", (req, res) => {

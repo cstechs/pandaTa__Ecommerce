@@ -64,6 +64,7 @@ exports.addItemToCart = async (req, res) => {
           quantity: quantity,
           price: productDetails.productPrice,
           total: parseInt(productDetails.productPrice * quantity),
+          sellerId: productDetails.createdBy,
         });
         cart.subTotal = cart.items
           .map((item) => item.total)
@@ -92,6 +93,7 @@ exports.addItemToCart = async (req, res) => {
             quantity: quantity,
             total: parseInt(productDetails.productPrice * quantity),
             price: productDetails.productPrice,
+            sellerId: productDetails.createdBy,
           },
         ],
         createdBy: createdBy,
@@ -126,7 +128,6 @@ exports.getCart = async (req, res) => {
       data: cart,
     });
   } catch (err) {
-    console.log(err);
     res.status(400).json({
       type: "Invalid",
       msg: "Something went wrong",
@@ -135,30 +136,8 @@ exports.getCart = async (req, res) => {
   }
 };
 
-// exports.emptyCart = async (req, res) => {
-//   try {
-//     let cart = await car.cart();
-//     cart.items = [];
-//     cart.subTotal = 0;
-//     let data = await cart.save();
-//     res.status(200).json({
-//       type: "Success",
-//       mgs: "Cart has been emptied",
-//       data: data,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(400).json({
-//       type: "Invalid",
-//       msg: "Something went wrong",
-//       err: err,
-//     });
-//   }
-// };
-
 exports.removeProductCart = async (req, res) => {
   const { createdby, productId } = req.params;
-  //console.log("createdby", createdby, "cartid", productid);
 
   try {
     let cart = await car.cart1(createdby);
@@ -288,7 +267,6 @@ exports.subtractQuantityCart = async (req, res) => {
       res.json(cart);
     }
   } catch (err) {
-    console.log(err);
     res
       .status(400)
       .json({ type: "invalid", msg: "Something went wrong", err: err });
@@ -384,7 +362,6 @@ exports.addQuantityCart = async (req, res) => {
       res.json(cart);
     }
   } catch (err) {
-    console.log(err);
     res
       .status(400)
       .json({ type: "invalid", msg: "Something went wrong", err: err });
