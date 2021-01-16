@@ -9,7 +9,6 @@ import {
   RESET_FAIL,
   LOGOUT,
   VERIFY_SUCCESS,
-  VERIFY_FAIL,
   SET_ALERT,
 } from "../types";
 import axios from "axios";

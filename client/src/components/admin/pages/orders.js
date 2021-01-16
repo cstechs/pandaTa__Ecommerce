@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrder } from "../../../redux/_actions/orderAction";
 import { getCart } from "../../../redux/_actions/cartAction";
 import { getUser } from "../../../redux/_actions/userAction";
+import dateFormat from "dateformat";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,6 @@ const Orders = () => {
   const sellerProducts = cart?.filter((cart) =>
     cart.items?.find((item) => item.sellerId === user._id)
   );
-
   const sellerOrders = orders?.filter((order) =>
     sellerProducts?.find((sellerproduct) => sellerproduct._id === order.cartId)
   );
@@ -71,7 +71,11 @@ const Orders = () => {
                 <div className="col-md-4">
                   <div className="card-box current-products-progress">
                     <div>
-                      <img src={productProgessImg1} draggable="false" />
+                      <img
+                        src={productProgessImg1}
+                        draggable="false"
+                        alt="product-progress-image"
+                      />
                     </div>
                     <div>
                       <h2 className="text-left text-lightblue">
@@ -84,7 +88,11 @@ const Orders = () => {
                 <div className="col-md-4">
                   <div className="card-box current-products-progress">
                     <div>
-                      <img src={productProgessImg2} draggable="false" />
+                      <img
+                        src={productProgessImg2}
+                        draggable="false"
+                        alt="product-progress-image"
+                      />
                     </div>
                     <div>
                       <h2 className="text-left text-purple">{totalOrders}</h2>
@@ -95,7 +103,11 @@ const Orders = () => {
                 <div className="col-md-4">
                   <div className="card-box current-products-progress">
                     <div>
-                      <img src={productProgessImg3} draggable="false" />
+                      <img
+                        src={productProgessImg3}
+                        draggable="false"
+                        alt="product-progress-image"
+                      />
                     </div>
                     <div>
                       <h2 className="text-left text-success">+2.0%</h2>
@@ -116,35 +128,101 @@ const Orders = () => {
                               <tr>
                                 <th>#</th>
                                 <th>ORDER DATE</th>
-                                <th>Total Products</th>
+                                <th>TOTAL PRODUCTS</th>
                                 <th>CUSTOMER</th>
                                 <th />
                               </tr>
                             </thead>
                             <tbody>
-                              {sellerProducts?.map((products, index) => (
+                              {user.role === "seller" ? (
+                                sellerProducts.length > 0 ? (
+                                  sellerProducts?.map((products, index) => (
+                                    <tr key={index}>
+                                      <td>{index + 1}</td>
+                                      <td>
+                                        {dateFormat(
+                                          products.createdAt,
+                                          "dS mmmm , yyyy"
+                                        )}
+                                      </td>
+                                      <td className="pl-5">
+                                        {products.items.length}
+                                      </td>
+                                      <td>
+                                        {
+                                          users.find(
+                                            (user) =>
+                                              user._id === products.createdBy
+                                          )?.userName
+                                        }
+                                      </td>
+                                      <td
+                                        className="font-11 text-success cursor-pointer"
+                                        onClick={() =>
+                                          orderPreviewToggle(products)
+                                        }
+                                      >
+                                        MoreDetail
+                                      </td>
+                                    </tr>
+                                  ))
+                                ) : (
+                                  <tr>
+                                    <td />
+                                    <td />
+                                    <td>
+                                      <p className="empty my-5 py-3 text-dark font-15 text-center">
+                                        NO ORDERS FOUND
+                                      </p>
+                                    </td>
+                                    <td />
+                                    <td />
+                                  </tr>
+                                )
+                              ) : cart?.length > 0 ? (
+                                cart?.map((products, index) => (
+                                  <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                      {dateFormat(
+                                        products.createdAt,
+                                        "dS mmmm , yyyy"
+                                      )}
+                                    </td>
+                                    <td className="pl-5">
+                                      {products.items.length}
+                                    </td>
+                                    <td>
+                                      {
+                                        users.find(
+                                          (user) =>
+                                            user._id === products.createdBy
+                                        )?.userName
+                                      }
+                                    </td>
+                                    <td
+                                      className="font-11 text-success cursor-pointer"
+                                      onClick={() =>
+                                        orderPreviewToggle(products)
+                                      }
+                                    >
+                                      MoreDetail
+                                    </td>
+                                  </tr>
+                                ))
+                              ) : (
                                 <tr>
-                                  <td>{index + 1}</td>
-                                  <td>{products.createdAt.slice(0, 10)}</td>
-                                  <td className="pl-5">
-                                    {products.items.length}
-                                  </td>
+                                  <td />
+                                  <td />
                                   <td>
-                                    {
-                                      users.find(
-                                        (user) =>
-                                          user._id === products.createdBy
-                                      )?.userName
-                                    }
+                                    <p className="empty my-5 py-3 text-dark font-15 text-center">
+                                      NO ORDERS FOUND
+                                    </p>
                                   </td>
-                                  <td
-                                    className="font-11 text-success cursor-pointer"
-                                    onClick={() => orderPreviewToggle(products)}
-                                  >
-                                    MoreDetail
-                                  </td>
+                                  <td />
+                                  <td />
                                 </tr>
-                              ))}
+                              )}
                             </tbody>
                           </table>
                         </div>

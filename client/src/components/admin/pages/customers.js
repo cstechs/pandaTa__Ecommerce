@@ -94,7 +94,7 @@ const Customers = () => {
                             <img
                               src={UserImage}
                               className="rounded-circle img-thumbnail avatar-lg"
-                              alt="profile-image"
+                              alt={item.userName}
                             />
                             <h4 className="mt-2 mb-1 font-16 text-dark">
                               {item.userName}

@@ -5,25 +5,23 @@ import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { getCart } from "../../../redux/_actions/cartAction";
-import productimg from "../../../assets/images/user/product.png";
 import { createOrder } from "../../../redux/_actions/orderAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { SET_ALERT } from "../../../redux/types";
 
 const CheckOut = () => {
   const [shippingShown, setshippingShown] = useState(true);
-  const [billingShown, setbillingShown] = useState(false);
-  const [paymentShown, setpaymentShown] = useState(false);
+  const [paymentShown, setpaymentShown] = useState(true);
   const [successShown, setsuccessShown] = useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const cartItem = useSelector((state) => state.cart.cartItems);
+  let userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
   const { cartid } = useParams();
   const history = useHistory();
 
   if (!user) {
     history.push("/");
   }
-
   const [userProfile, setUserProfile] = useState({
     firstName: "",
     lastName: "",
@@ -49,9 +47,6 @@ const CheckOut = () => {
     address,
     email,
     phone,
-    cartId,
-    createdBy,
-    updatedBy,
   } = userProfile;
   const dispatch = useDispatch();
   useEffect(() => {
@@ -111,7 +106,6 @@ const CheckOut = () => {
         <li className="breadcrumb-item active">Checkout</li>
       </ol>
       <div className="checkout">
-        <div className="PageTitle">Checkout</div>
         {shippingShown && (
           <>
             <div className="head">
@@ -269,111 +263,6 @@ const CheckOut = () => {
             </div>
           </>
         )}
-        {/* BILLING DETAIL PORTION */}
-        {/* {billingShown && (
-          <>
-            <div className="head">
-              <span className="hd1">Shipping Address</span>
-              <span className="hd2 active">Billing Detail </span>
-              <span className="hd3">Payment</span>
-            </div>
-            <div className="checkoutBox">
-              <form onSubmit={billingDetailSubmit}>
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">
-                        First Name<span className="text-danger">*</span>
-                      </label>
-                      <input type="text" placeholder="Jhone" />
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">
-                        Last Name<span className="text-danger">*</span>
-                      </label>
-                      <input type="text" placeholder="Smith" />
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">Company Name</label>
-                      <input type="text" placeholder="Rosuson Industries" />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">
-                        Country<span className="text-danger">*</span>
-                      </label>
-                      <select>
-                        <option value="">Select Country</option>
-                        <option value="">United Kingdom (UK)</option>
-                        <option value="">United State</option>
-                        <option value="">Pakistan</option>
-                        <option value="">Iraq</option>
-                        <option value="">Iran</option>
-                        <option value="">Turkey</option>
-                      </select>
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">
-                        Town / City<span className="text-danger">*</span>
-                      </label>
-                      <input type="text" placeholder="eg. New york" />
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">
-                        Postcode<span className="text-danger">*</span>
-                      </label>
-                      <input type="number" placeholder="eg. 358745" />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-12 mt-3">
-                      <label htmlFor="">
-                        Address<span className="text-danger">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="eg. 2nd steer, Costrica, Uk 354548"
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">
-                        Email Address<span className="text-danger">*</span>
-                      </label>
-                      <input type="email" placeholder="abc@xyz.com" />
-                    </div>
-                    <div className="col-md-4 mt-3">
-                      <label htmlFor="">Phone</label>
-                      <input type="number" placeholder="eg. 94 788 1221" />
-                    </div>
-                  </div>
-                  <div className="row mt-5">
-                    <div className="col-12 mt-4">
-                      <div className="float-left">
-                        <span
-                          className="button ripple button-base bck"
-                          onClick={billingBack}
-                        >
-                          BACK
-                        </span>
-                      </div>
-                      <div className="float-right">
-                        <button
-                          type="submit"
-                          className="button ripple button-base nxt"
-                        >
-                          NEXT
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </>
-        )} */}
         {/* PAYMENT PORTION */}
 
         {paymentShown && (
@@ -391,39 +280,37 @@ const CheckOut = () => {
                       <h6>Your Order</h6>
                       <table>
                         <tbody>
-                          {cartItem?.data?.map((cartitem) => (
-                            <>
-                              {cartitem.createdBy == user._id && (
-                                <>
-                                  {cartitem.items.map((item) => (
-                                    <tr>
-                                      <td>
-                                        <div className="imageBox">
-                                          <img
-                                            src={`/${item.productId.productImage}`}
-                                            alt=""
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>{item.productId.productName}</td>
-                                      <td>
-                                        <span className="price">
-                                          {item.quantity}
-                                        </span>
-                                      </td>
-                                      <td>${item.productId.productPrice} </td>
-                                    </tr>
-                                  ))}
-                                </>
-                              )}
-                            </>
+                          {userCart?.items.map((item) => (
+                            <tr key={item._id}>
+                              <td>
+                                <div className="imageBox">
+                                  <img
+                                    src={`/${item.productId.productImage}`}
+                                    alt={item.productId.productName}
+                                  />
+                                </div>
+                              </td>
+                              <td>{item.productId.productName}</td>
+                              <td>
+                                <span className="price">{item.quantity}</span>
+                              </td>
+                              <td>${item.productId.productPrice} </td>
+                            </tr>
                           ))}
                         </tbody>
                       </table>
-                      <div className="shippingCharge mt-3 pt-2">
-                        <div className="float-left">Shipping Charge</div>
+                      <div className="totalPriceCharge mt-3 pt-2">
+                        <div className="float-left">Total Amount</div>
                         <div className="float-right">
-                          <p>$5.00</p>
+                          <p>
+                            $
+                            {userCart?.subTotal.toLocaleString(
+                              navigator.language,
+                              {
+                                minimumFractionDigits: 0,
+                              }
+                            )}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -507,7 +394,13 @@ const CheckOut = () => {
                           type="submit"
                           className="button ripple button-base px-5 mr-3 nxt"
                         >
-                          Pay $254.84
+                          Pay $
+                          {userCart?.subTotal.toLocaleString(
+                            navigator.language,
+                            {
+                              minimumFractionDigits: 0,
+                            }
+                          )}
                         </button>
                       </div>
                     </div>
@@ -524,7 +417,9 @@ const CheckOut = () => {
           <h1>Congratulations</h1>
           <p>Order Placed Successfully!</p>
           <Link to="/product">
-            <button className="ripple button-base">BACK TO SHOPPING</button>
+            <button className="ripple button-base font-14 px-4">
+              BACK TO SHOPPING
+            </button>
           </Link>
         </div>
       )}

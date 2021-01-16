@@ -18,7 +18,7 @@ const Chat = ({ ChatHide, product, seller }) => {
   };
   useEffect(() => {
     dispatch(getChat());
-  }, [getChat]);
+  }, [dispatch]);
 
   useEffect(() => {
     var objDiv = document.getElementById("mydiv");

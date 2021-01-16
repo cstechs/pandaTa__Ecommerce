@@ -273,6 +273,7 @@ const SellerApplication = () => {
                           <img
                             src={addImageIcon}
                             className="w-50 d-block m-auto"
+                            alt={userName}
                           />
                         </div>
                       )}

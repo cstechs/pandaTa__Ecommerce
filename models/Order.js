@@ -3,6 +3,9 @@ const orderSchema = mongoose.Schema({
   orderId: {
     type: String,
   },
+  orderNumber: {
+    type: String,
+  },
   firstName: {
     type: String,
     required: [true, "First name is required"],

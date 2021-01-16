@@ -90,7 +90,11 @@ const Home = () => {
                       </h2>
                     </div>
                     <div className="float-right">
-                      <img src={cardbodyimg1} draggable="false" alt="" />
+                      <img
+                        src={cardbodyimg1}
+                        draggable="false"
+                        alt="pandata-image"
+                      />
                     </div>
                   </div>
                 </div>
@@ -104,7 +108,11 @@ const Home = () => {
                       </h2>
                     </div>
                     <div className="float-right">
-                      <img src={cardbodyimg2} draggable="false" alt="" />
+                      <img
+                        src={cardbodyimg2}
+                        draggable="false"
+                        alt="pandata-Products-Sold-image"
+                      />
                     </div>
                   </div>
                 </div>
@@ -122,7 +130,11 @@ const Home = () => {
                       </h2>
                     </div>
                     <div className="float-right">
-                      <img src={cardbodyimg3} draggable="false" alt="" />
+                      <img
+                        src={cardbodyimg3}
+                        draggable="false"
+                        alt="pandata-Total-Products-image"
+                      />
                     </div>
                   </div>
                 </div>
@@ -250,7 +262,7 @@ const Home = () => {
                                       <img
                                         src={UserImage}
                                         className="rounded-circle"
-                                        alt=""
+                                        alt={item.userName}
                                       />
                                     </div>
                                     <p className="inbox-item-author">

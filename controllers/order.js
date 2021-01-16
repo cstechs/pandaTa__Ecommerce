@@ -10,6 +10,7 @@ const Product = require("../models/Product");
 exports.createOrder = asyncHandlers(async (req, res, next) => {
   try {
     const {
+      orderNumber,
       firstName,
       lastName,
       companyName,
@@ -25,6 +26,7 @@ exports.createOrder = asyncHandlers(async (req, res, next) => {
     } = req.body;
 
     order = await Order.create({
+      orderNumber,
       firstName,
       lastName,
       companyName,

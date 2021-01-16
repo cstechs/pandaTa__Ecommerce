@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 
-const ProductSideBar = ({
-  subCategory,
-  user,
-  Productidsetter,
-  Catidsetter,
-}) => {
+const ProductSideBar = ({ subCategory, Productidsetter, Catidsetter }) => {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const [categoryDropDown, setcategoryDropDown] = useState(true);

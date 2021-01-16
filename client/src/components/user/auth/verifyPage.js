@@ -12,7 +12,6 @@ import { CLEAR_ERRORS } from "../../../redux/types";
 const VerifyPage = (props) => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const history = useHistory();
   var statusMessage = "";
   useEffect(() => {
     dispatch(verifyaccount(props.match.params.token));

@@ -142,7 +142,7 @@ const Chat = () => {
                             {messagedUser.length > 0 ? (
                               messagedUser?.map((item) => (
                                 <React.Fragment key={item._id}>
-                                  {item._id != user._id && (
+                                  {item._id !== user._id && (
                                     <div
                                       className="text-body mt-3 cursor-pointer"
                                       onClick={() => CheckUser(item)}
@@ -208,12 +208,12 @@ const Chat = () => {
                               <React.Fragment key={item._id}>
                                 {item.sellerId === user._id && (
                                   <>
-                                    {item.sender == 0 &&
+                                    {item.sender === 0 &&
                                       item.createdBy === selectedUser._id && (
                                         <li
                                           className="clearfix"
                                           id={`${
-                                            index == chat?.data?.length - 1 &&
+                                            index === chat?.data?.length - 1 &&
                                             "mydiv"
                                           }`}
                                         >
@@ -225,13 +225,13 @@ const Chat = () => {
                                         </li>
                                       )}
                                     {select &&
-                                      item.sender == 1 &&
+                                      item.sender === 1 &&
                                       user._id === item.sellerId &&
                                       item.createdBy === selectedUser._id && (
                                         <li
                                           className="clearfix odd"
                                           id={`${
-                                            index == chat?.data?.length - 1 &&
+                                            index === chat?.data?.length - 1 &&
                                             "mydiv"
                                           }`}
                                         >

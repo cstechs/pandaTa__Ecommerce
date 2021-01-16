@@ -108,7 +108,7 @@ const Productitems = ({ product, proId, catId }) => {
                 </Link>
               </div>
             )}
-            {((check != [] &&
+            {((check !== [] &&
               check.find((val) => val === productSubCategory.toString())) ||
               subcategory?.data
                 ?.filter((x) => catcheck.find((z) => z === x.categoryId))

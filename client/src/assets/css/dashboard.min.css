@@ -9060,7 +9060,6 @@ ul.rdw-dropdown-optionwrapper li {
   width: 200px;
   height: 200px;
   position: relative;
-  float: right;
   overflow: hidden;
   background-position: center;
   background-size: cover;
@@ -9488,7 +9487,7 @@ ul.rdw-dropdown-optionwrapper li {
 .login input[type="submit"] {
   background: #43425d;
   padding: 10px 0;
-  width: 23%;
+  width:40%;
   font-size: 15px;
   font-weight: lighter;
   border-radius: 5px;

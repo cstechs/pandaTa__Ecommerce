@@ -7,12 +7,12 @@ const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
     pageNumbers.push(i);
   }
   return (
-    <ul class="pagination">
+    <ul className="pagination">
       {pageNumbers.map((number) => (
-        <li key={number} class="page-item">
+        <li key={number} className="page-item">
           <a
             onClick={() => paginate(number)}
-            class="page-link"
+            className="page-link"
             href="#"
             tabindex="-1"
           >

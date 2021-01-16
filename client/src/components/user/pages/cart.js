@@ -21,20 +21,15 @@ import { setAlert } from "../../../redux/_actions/alertAction";
 const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-  // const orders = useSelector((state) => state.order.orders);
-  // let placedOrder = cartItem?.data?.find((cart) =>
-  //   orders?.find((order) => order.cartId === cart._id)
-  // );
-
   const history = useHistory();
   let userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
-  const [quantity, setQuantity] = useState([]);
+  // const [quantity, setQuantity] = useState([]);
   const dispatch = useDispatch();
   if (!user) {
     history.push("/");
     dispatch(
       setAlert(SET_ALERT, {
-        message: "Login now to go on this page",
+        message: "Login now to proceed",
         alertType: "danger",
       })
     );
@@ -44,22 +39,18 @@ const Cart = () => {
     dispatch(getOrder());
   }, [dispatch]);
 
-  useEffect(() => {
-    setQuantity(() =>
-      cartItem?.data?.items?.map((item) => {
-        return {
-          itemQuantity: item.quantity,
-          itemId: item.productId._id,
-          itemTotal: item.total,
-        };
-      })
-    );
-  }, [cartItem]);
+  // useEffect(() => {
+  //   setQuantity(() =>
+  //     cartItem?.data?.items?.map((item) => {
+  //       return {
+  //         itemQuantity: item.quantity,
+  //         itemId: item.productId._id,
+  //         itemTotal: item.total,
+  //       };
+  //     })
+  //   );
+  // }, [cartItem]);
   useEffect(() => {}, [addItemToCart]);
-  //   const CartIncrement = () => {
-  //     setQuantity(quantity + 1);
-  //     // dispatch(cartIncrement(_id,quantity))
-  //   };
 
   const handleAddQuantity = (id) => {
     dispatch(addCartQuantity(id, userCart?.createdBy));
@@ -75,6 +66,12 @@ const Cart = () => {
 
   const RemoveCart = (id) => {
     dispatch(removeCartItem(userCart?.createdBy, id));
+    dispatch(
+      setAlert(SET_ALERT, {
+        message: "Item Successfully Removed",
+        alertType: "danger",
+      })
+    );
   };
 
   return (
@@ -92,7 +89,6 @@ const Cart = () => {
             </li>
             <li className="breadcrumb-item active">Cart</li>
           </ol>
-          <div className="PageTitle">Cart</div>
           <div className="cart">
             <div className="container-fluid">
               <div className="row">
@@ -107,11 +103,11 @@ const Cart = () => {
                         <th></th>
                       </tr>
                     </thead>
-                    {
-                      userCart?.items?.map((item, index) => {
-                        return (
-                          <tbody key={item._id}>
-                            <tr>
+                    <tbody>
+                      {userCart?.items?.length > 0 ? (
+                        userCart?.items?.map((item, index) => {
+                          return (
+                            <tr key={item._id}>
                               <td>
                                 <i
                                   className="ti-close"
@@ -121,20 +117,30 @@ const Cart = () => {
                                 ></i>
                               </td>
                               <td>
-                                <div className="float-left">
-                                  <div className="imageBox">
-                                    <img
-                                      src={item?.productId?.productImage}
-                                      alt="ProductImage"
-                                    />
+                                <Link to={`/product/${item?.productId?._id}`}>
+                                  <div className="float-left">
+                                    <div
+                                      className="imageBox"
+                                      style={{
+                                        backgroundImage: `url(/${item?.productId?.productImage})`,
+                                      }}
+                                    ></div>
                                   </div>
-                                </div>
-                                <div className="float-left">
-                                  <h4>{item?.productId?.productName}</h4>
-                                  <span></span>
-                                </div>
+                                  <div className="float-left">
+                                    <h4>{item?.productId?.productName}</h4>
+                                    <span></span>
+                                  </div>
+                                </Link>
                               </td>
-                              <td>{item?.productId?.productPrice} </td>
+                              <td>
+                                $
+                                {item?.productId?.productPrice.toLocaleString(
+                                  navigator.language,
+                                  {
+                                    minimumFractionDigits: 0,
+                                  }
+                                )}
+                              </td>
                               <td>
                                 <div className="position-relative">
                                   <input
@@ -149,10 +155,8 @@ const Cart = () => {
                                       className="fa fa-plus border-bottom-0"
                                       onClick={() =>
                                         handleAddQuantity(
-                                          // index,
-                                          // quantity[index]?.itemQuantity,
-                                          item?.productId?._id
-                                          // item.total
+                                          item?.productId?._id,
+                                          item?.quantity
                                         )
                                       }
                                     />
@@ -160,10 +164,6 @@ const Cart = () => {
                                       className="fa fa-minus"
                                       onClick={() =>
                                         handleRemoveQuantity(
-                                          // index,
-                                          // quantity[index].itemQuantity,
-                                          // item?.productId?._id,
-                                          // item.total
                                           item?.productId?._id,
                                           item?.quantity
                                         )
@@ -173,44 +173,61 @@ const Cart = () => {
                                 </div>
                               </td>
                               <td>
-                                <p>{item.total}</p>
+                                <p>
+                                  $
+                                  {item.total.toLocaleString(
+                                    navigator.language,
+                                    {
+                                      minimumFractionDigits: 0,
+                                    }
+                                  )}
+                                </p>
                               </td>
                             </tr>
-                          </tbody>
-                        );
-                      })
-                      // ) : (
-                      //   null
-                      // )
-                    }
+                          );
+                        })
+                      ) : (
+                        <tr>
+                          <td />
+                          <td />
+                          <td>
+                            <p className="empty my-5 py-3 text-dark font-16 text-center">
+                              NO ITEMS FOUND
+                            </p>
+                          </td>
+                          <td />
+                          <td />
+                        </tr>
+                      )}
+                    </tbody>
                   </table>
                   <div className="detail">
-                    <div className="float-right">
-                      <p>
-                        Subtotal
-                        <span>{userCart?.subTotal || 0}</span>
-                      </p>
-
-                      <p>
-                        Shipping<span>$0.00</span>
-                      </p>
-                      <p>
-                        Total Amount
-                        <span>{userCart?.subTotal || 0}</span>
-                      </p>
-                    </div>
+                    {userCart?.items?.length > 0 && (
+                      <div className="float-right">
+                        <p>
+                          Total Amount
+                          <span>
+                            $
+                            {userCart?.subTotal.toLocaleString(
+                              navigator.language,
+                              {
+                                minimumFractionDigits: 0,
+                              }
+                            ) || 0}
+                          </span>
+                        </p>
+                        <Link to={`/checkout/${userCart?._id}`}>
+                          <button className="btn btn-purple float-right font-13 ripple button-base mt-2 py-2">
+                            PROCEED TO CHECKOUT
+                          </button>
+                        </Link>
+                      </div>
+                    )}
                   </div>
-                  {userCart && userCart.items.length > 0 && (
-                    <Link to={`/checkout/${userCart?._id}`}>
-                      <button className="btn btn-purple float-right font-13 ripple button-base">
-                        PROCEED TO CHECKOUT
-                      </button>
-                    </Link>
-                  )}
                 </div>
                 <div className="col-lg-3 banner">
-                  <img src={Banner} />
-                  <img src={Banner} />
+                  <img src={Banner} alt="banner" />
+                  <img src={Banner} alt="banner" />
                 </div>
               </div>
             </div>

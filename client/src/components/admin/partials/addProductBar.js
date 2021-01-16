@@ -204,7 +204,7 @@ const AddProductBar = (props) => {
                 </div>
                 {fileImage && (
                   <div className="SelectedImage mt-2">
-                    <img src={`${fileImage}`} />
+                    <img src={`${fileImage}`} alt={productName} />
                   </div>
                 )}
               </div>

@@ -17,6 +17,8 @@ import UserSingleProduct from "./components/user/pages/singleProduct";
 import UserWishlist from "./components/user/pages/wishlist";
 import UserSellerApplication from "./components/user/pages/sellerApplication";
 import UserSeller from "./components/user/pages/seller";
+import UserProfile from "./components/user/pages/profile";
+import UserOrder from "./components/user/pages/order";
 import PrivateRoute from "./components/admin/routing/PrivateRoute";
 import AdminPanel from "./components/admin/pages/home";
 import AdminPanelProducts from "./components/admin/pages/products";
@@ -70,6 +72,8 @@ function App() {
           <Route exact path="/checkout/:cartid" component={UserCheckout} />
           <Route exact path="/product" component={UserProduct} />
           <Route exact path="/wishlist" component={UserWishlist} />
+          <Route exact path="/profile" component={UserProfile} />
+          <Route exact path="/orders" component={UserOrder} />
           <Route
             exact
             path="/sellerapplication"

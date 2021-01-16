@@ -49,12 +49,14 @@ const LeftBar = () => {
                 </li>
               </>
             )}
-            <li>
-              <Link to="/admin/chat" className="ripple button-base">
-                <i className="mdi mdi-forum-outline leftbar_icon" />
-                <span> Chat Room</span>
-              </Link>
-            </li>
+            {user && user.role === "seller" && (
+              <li>
+                <Link to="/admin/chat" className="ripple button-base">
+                  <i className="mdi mdi-forum-outline leftbar_icon" />
+                  <span> Chat Room</span>
+                </Link>
+              </li>
+            )}
             <li>
               <Link to="/admin/setting" className="ripple button-base">
                 <i className="mdi mdi-cog-outline leftbar_icon" />

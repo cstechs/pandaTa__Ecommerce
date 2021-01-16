@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
@@ -20,7 +19,6 @@ import HomeRight from "../partials/HomeRight";
 import { Link } from "react-router-dom";
 import Loader from "../partials/loader";
 import { getSellers } from "../../../redux/_actions/sellerAction";
-// import { getUser } from "../../../redux/_actions/userAction";
 const Home = () => {
   const [responsive] = useState({
     0: {
@@ -73,22 +71,46 @@ const Home = () => {
         >
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src={SliderImage1} className="d-block w-100" alt="" />
+              <img
+                src={SliderImage1}
+                className="d-block w-100"
+                alt="pandata-slider-image"
+              />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage2} className="d-block w-100" alt="" />
+              <img
+                src={SliderImage2}
+                className="d-block w-100"
+                alt="pandata-slider-image"
+              />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage3} className="d-block w-100" alt="" />
+              <img
+                src={SliderImage3}
+                className="d-block w-100"
+                alt="pandata-slider-image"
+              />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage4} className="d-block w-100" alt="" />
+              <img
+                src={SliderImage4}
+                className="d-block w-100"
+                alt="pandata-slider-image"
+              />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage5} className="d-block w-100" alt="" />
+              <img
+                src={SliderImage5}
+                className="d-block w-100"
+                alt="pandata-slider-image"
+              />
             </div>
             <div className="carousel-item">
-              <img src={SliderImage6} className="d-block w-100" alt="" />
+              <img
+                src={SliderImage6}
+                className="d-block w-100"
+                alt="pandata-slider-image"
+              />
             </div>
           </div>
         </div>
@@ -202,7 +224,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-md-6">
-              <img src={whybecomebuyerimg} alt="" />
+              <img src={whybecomebuyerimg} alt="pandata-why-become-buyer" />
             </div>
           </div>
         </div>
@@ -212,7 +234,7 @@ const Home = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-6">
-              <img src={whybecomeSellerimg} alt="" />
+              <img src={whybecomeSellerimg} alt="pandata-why-become-seller" />
             </div>
             <div className="col-md-6">
               <div className="content">

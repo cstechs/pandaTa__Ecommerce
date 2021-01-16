@@ -7,19 +7,12 @@ import ProductItems from "../partials/productitems";
 import Footer from "../partials/footer";
 import { Link } from "react-router-dom";
 import { getProduct } from "../../../redux/_actions/productAction";
-import Pagination from "../partials/pagination";
 
-const Product = ({ history }) => {
+const Product = () => {
   const product = useSelector((state) => state.product);
-  // const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [proId, setProId] = useState([]);
   const [catId, setCatId] = useState([]);
-  const [currentPage, setcurrentPage] = useState(1);
-  const [productsPerPage] = useState(9);
-  const proIdProduct = product?.products?.data?.filter((x) =>
-    proId.find((val) => val === x.productSubCategory)
-  );
 
   const subCategory = useSelector((state) => state.subCategory);
   useEffect(() => {
@@ -50,19 +43,6 @@ const Product = ({ history }) => {
       setCatId((prev) => [...prev, productId]);
     }
   }
-
-  // get current products
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = product?.products?.data?.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  // change page
-  const paginate = (pageNumber) => {
-    setcurrentPage(pageNumber);
-  };
 
   return (
     <>
@@ -99,29 +79,6 @@ const Product = ({ history }) => {
                       proId={proId}
                       catId={catId}
                     />
-                    <div className="col-12 text-right">
-                      {/* {proId.length === 0 && catId.length === 0 && (
-                        <Pagination
-                          productsPerPage={productsPerPage}
-                          totalProducts={product?.products?.data?.length}
-                          paginate={paginate}
-                        />
-                      )}
-                      {proId.length > 0 && (
-                        <Pagination
-                          productsPerPage={productsPerPage}
-                          totalProducts={proId?.length}
-                          paginate={paginate}
-                        />
-                      )} */}
-                      {/* {catId.length > 0 && (
-                        <Pagination
-                          productsPerPage={productsPerPage}
-                          totalProducts={proId?.length}
-                          paginate={paginate}
-                        />
-                      )} */}
-                    </div>
                   </div>
                 </div>
               </div>

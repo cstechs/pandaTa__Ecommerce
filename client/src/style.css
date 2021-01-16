@@ -177,17 +177,6 @@ h2 {
 .breadcrumb .active {
   cursor: default;
 }
-.PageTitle {
-  margin: auto;
-  border-radius: 30px;
-  padding: 8px;
-  width: 170px;
-  text-align: center;
-  font-weight: 500;
-  margin-top: 1%;
-  background: #43425d;
-  color: white;
-}
 .empty {
   width: 100%;
   text-align: center;
@@ -200,9 +189,6 @@ h2 {
   .modal {
     width: 55% !important;
   }
-  .PageTitle {
-    font-size: 14px;
-  }
 }
 
 @media screen and (max-width: 1010px) {
@@ -211,10 +197,6 @@ h2 {
   }
   h2 {
     font-size: 25px;
-  }
-  .PageTitle {
-    width: 150px;
-    font-size: 13px;
   }
 }
 

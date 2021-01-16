@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
   const handleHide = () => {
     orderPreviewToggle();
@@ -124,7 +124,7 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
                           <div className="imageBox">
                             <img
                               src={`/${item.productId.productImage}`}
-                              alt=""
+                              alt={item.productId.productName}
                             />
                           </div>
                         </td>
@@ -142,14 +142,6 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
           </div>
           <div className="detail">
             <div className="float-right">
-              <p>
-                Subtotal
-                <span>{subTotal}</span>
-              </p>
-
-              <p>
-                Shipping<span>$0.00</span>
-              </p>
               <p>
                 Total Amount
                 <span>{subTotal}</span>

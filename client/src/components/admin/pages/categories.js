@@ -95,7 +95,11 @@ const Category = () => {
                   <div className="col-md-4">
                     <div className="card-box current-products-progress">
                       <div>
-                        <img src={productProgessImg1} draggable="false" />
+                        <img
+                          src={productProgessImg1}
+                          draggable="false"
+                          alt="product-progress-image"
+                        />
                       </div>
                       <div>
                         <h2 className="text-left text-lightblue">$50,000</h2>
@@ -106,7 +110,11 @@ const Category = () => {
                   <div className="col-md-4">
                     <div className="card-box current-products-progress">
                       <div>
-                        <img src={productProgessImg2} draggable="false" />
+                        <img
+                          src={productProgessImg2}
+                          draggable="false"
+                          alt="product-progress-image"
+                        />
                       </div>
                       <div>
                         <h2 className="text-left text-purple">20</h2>
@@ -117,7 +125,11 @@ const Category = () => {
                   <div className="col-md-4">
                     <div className="card-box current-products-progress">
                       <div>
-                        <img src={productProgessImg3} draggable="false" />
+                        <img
+                          src={productProgessImg3}
+                          draggable="false"
+                          alt="product-progress-image"
+                        />
                       </div>
                       <div>
                         <h2 className="text-left text-success">+2.0%</h2>

@@ -4,7 +4,7 @@ import loader from "../../../assets/images/loader.gif";
 const Loader = () => {
   return (
     <div id="loader">
-      <img src={loader} alt="Loading" />
+      <img src={loader} alt="pandata-LOader" />
     </div>
   );
 };

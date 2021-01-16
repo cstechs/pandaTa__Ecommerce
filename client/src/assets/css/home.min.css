@@ -474,6 +474,8 @@
   overflow: hidden;
   margin-left: -15px;
   align-items: center;
+  background-position: center;
+  background-size: cover;
   justify-content: center;
 }
 
@@ -861,8 +863,7 @@
   border: 1px solid #bebebe;
 }
 
-.shippingCharge {
-  border-top: 1px solid #bebebe;
+.totalPriceCharge {
   padding-right: 10%;
   padding-left: 22%;
   font-size: 14px;
@@ -2459,10 +2460,11 @@
   outline: none;
   background: #43425d;
   color: white;
-  margin: 20px 0;
+  margin: 5px 0;
   transition: 0.5s all;
   padding: 15px 25px;
   border-radius: 40px;
+  margin-left: 100px;
   font-family: "Raleway";
 }
 .Single_Product_Portion .chatButton:hover {
@@ -2648,6 +2650,51 @@
   }
   .Single_Product_Portion .product_detail .AddToCart {
     width: 100%;
+  }
+}
+.order {
+  margin: 40px 70px;
+}
+.order table {
+  width: 100%;
+}
+.order table thead {
+  background: #ececec;
+  font-size: 13px;
+  font-family: "raleway";
+}
+.order table th {
+  padding: 16px 20px;
+}
+.order table td {
+  padding: 12px 20px;
+  font-size: 14px;
+}
+.order table tbody tr {
+  border-bottom: 1px solid #ececec;
+}
+.profile {
+  margin: 20px;
+}
+.profile label {
+  display: block;
+  margin: 0;
+  margin-top: 20px;
+  color: #43425d;
+  font-family: "Roboto";
+  font-size: 15px;
+}
+.profile input {
+  display: block;
+  width: 100%;
+  padding: 9px;
+  font-size: 14px;
+  border-radius: 3px;
+  border: 1px solid #b3b3b3;
+}
+@media screen and (max-width: 1010px) {
+  .profile {
+    margin: 5px;
   }
 }
 footer {
@@ -2935,12 +2982,13 @@ header .btn-group {
 header .col-md-5 .fe-chevron-down {
   font-size: 22px;
   margin: 0;
-  top: 5px;
-  right: 10px;
+  top: 0px;
+  right: 15px;
 }
 
 header .col-md-5 .fa-user-circle {
-  font-size: 32px;
+  font-size: 34px;
+  top: 2px;
 }
 header .col-md-5 img {
   width: 35px;

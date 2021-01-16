@@ -57,7 +57,7 @@ const Navbar = () => {
                     />
                     <div className="input-group-append">
                       <button className="btn" type="submit">
-                        <i className="fe-search" alt="" />
+                        <i className="fe-search" />
                       </button>
                     </div>
                   </div>
@@ -72,7 +72,7 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="fe-search noti-icon" alt="" />
+                <i className="fe-search noti-icon" />
               </span>
               <div className="dropdown-menu dropdown-lg dropdown-menu-right p-0">
                 <form className="p-3">
@@ -93,21 +93,14 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="fe-message-square noti-icon" alt="" />
+                <i className="fe-message-square noti-icon" />
                 <span className="badge badge-danger rounded-circle noti-icon-badge">
                   {totalUsers?.length}
                 </span>
               </span>
               <div className="dropdown-menu dropdown-menu-right dropdown-lg">
                 <div className="dropdown-item noti-title">
-                  <h5 className="m-0">
-                    <span className="float-right">
-                      <span className="text-dark cursor-pointer">
-                        <small>Clear All</small>
-                      </span>
-                    </span>
-                    Messages
-                  </h5>
+                  <h5 className="m-0">Messages</h5>
                 </div>
                 <div className="noti-scroll" data-simplebar>
                   {totalUsers?.map((item, index) => (
@@ -127,10 +120,13 @@ const Navbar = () => {
                     </React.Fragment>
                   ))}
                 </div>
-                <span className="dropdown-item text-center text-primary notify-item notify-all cursor-pointer">
+                <Link
+                  to="/admin/chat"
+                  className="dropdown-item text-center text-primary notify-item notify-all cursor-pointer"
+                >
                   View all
                   <i className="fe-arrow-right" />
-                </span>
+                </Link>
               </div>
             </li>
             <li className="dropdown notification-list topbar-dropdown">
@@ -141,7 +137,7 @@ const Navbar = () => {
                 aria-haspopup="false"
                 aria-expanded="false"
               >
-                <i className="fe-bell noti-icon" alt="" />
+                <i className="fe-bell noti-icon" />
                 <span className="badge badge-danger rounded-circle noti-icon-badge">
                   0
                 </span>
@@ -163,7 +159,7 @@ const Navbar = () => {
                       <img
                         src={UserImage}
                         className="img-fluid rounded-circle"
-                        alt=""
+                        alt="user"
                       />
                     </div>
                     <p className="notify-details">Cristina Pride</p>
@@ -176,7 +172,7 @@ const Navbar = () => {
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all">
                   View all
-                  <i className="fe-arrow-right" alt="" />
+                  <i className="fe-arrow-right" />
                 </span>
               </div>
             </li>
@@ -201,7 +197,7 @@ const Navbar = () => {
               </span>
               <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
                 <span className="dropdown-item notify-item ripple button-base">
-                  <i className="fe-user" alt="" />
+                  <i className="fe-user" />
                   <span>
                     Status : <b className="text-success">online</b>
                   </span>
@@ -210,7 +206,7 @@ const Navbar = () => {
                   to="/admin/setting"
                   className="dropdown-item notify-item ripple button-base"
                 >
-                  <i className="fe-settings" alt="" />
+                  <i className="fe-settings" />
                   <span>Settings</span>
                 </Link>
                 <span
@@ -222,7 +218,7 @@ const Navbar = () => {
                     }, 500);
                   }}
                 >
-                  <i className="fe-log-out" alt="" />
+                  <i className="fe-log-out" />
                   <span>Logout</span>
                 </span>
               </div>
@@ -232,7 +228,7 @@ const Navbar = () => {
                 to="/admin/setting"
                 className="nav-link waves-effect waves-light ripple button-base"
               >
-                <i className="mdi mdi-cog-outline noti-icon " alt="" />
+                <i className="mdi mdi-cog-outline noti-icon " />
               </Link>
             </li>
           </ul>
@@ -241,12 +237,12 @@ const Navbar = () => {
               <span className="logo logo-light pl-3">
                 <span className="logo-sm">
                   <div className="pand-logo">
-                    <img src={SmLogo} alt="" />
+                    <img src={SmLogo} alt="pandata-logo" />
                   </div>
                 </span>
                 <span className="logo-lg">
                   <div className="pand-logo">
-                    <img src={SmLogo} alt="" />{" "}
+                    <img src={SmLogo} alt="pandata-logo" />
                     <span id="pandlogo">PANDA / TA </span>
                   </div>
                 </span>
@@ -259,7 +255,7 @@ const Navbar = () => {
                 className="button-menu-mobile waves-effect waves-light ripple button-base"
                 onClick={toggle}
               >
-                <i className="fe-menu" alt="" />
+                <i className="fe-menu" />
               </button>
             </li>
             <li>

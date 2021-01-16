@@ -14,16 +14,16 @@ const Invoice = () => {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-12">
-                  <div class="page-title-box">
-                    <div class="page-title-right">
-                      <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item">
+                  <div className="page-title-box">
+                    <div className="page-title-right">
+                      <ol className="breadcrumb m-0">
+                        <li className="breadcrumb-item">
                           <Link to="/admin">PANDA / TA</Link>
                         </li>
-                        <li class="breadcrumb-item active">Invoices</li>
+                        <li className="breadcrumb-item active">Invoices</li>
                       </ol>
                     </div>
-                    <h4 class="page-title">Invoice</h4>
+                    <h4 className="page-title">Invoice</h4>
                   </div>
                 </div>
               </div>

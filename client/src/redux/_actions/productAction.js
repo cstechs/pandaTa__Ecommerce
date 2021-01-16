@@ -12,10 +12,8 @@ import {
   PRODUCT_UPDATE_FAIL,
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_SUCCESS,
-  SET_ALERT,
 } from "../types";
 import axios from "axios";
-import { setAlert } from "./alertAction";
 
 export const addProduct = (product) => {
   return async (dispatch) => {

@@ -12,7 +12,7 @@ import {
 import Loader from "../partials/loader";
 import SellerProductitems from "../partials/sellerproductitems";
 
-const Category = () => {
+const Seller = () => {
   const dispatch = useDispatch();
   const seller = useSelector((state) => state.seller.seller);
   const sellerProducts = useSelector((state) => state.seller.sellerproducts);
@@ -106,4 +106,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Seller;

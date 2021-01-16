@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateCategory } from "../../../redux/_actions/categoryAction";
 
 const UpdateCategoryBar = (props) => {
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [update, setUpdate] = useState(props.newcategory?.categoryName);
   const dispatch = useDispatch();
 

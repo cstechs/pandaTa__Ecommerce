@@ -27,7 +27,6 @@ const Product = () => {
         </li>
         <li className="breadcrumb-item active">Wishlist</li>
       </ol>
-      <div className="PageTitle">WishList</div>
       <div className="wishList">
         <div className="container-fluid">
           <div className="row">
@@ -36,8 +35,12 @@ const Product = () => {
                 <div className="col-md-3 col-6">
                   <Link to={`/product/${item._id}`}>
                     <div className="product">
-                      {/* <i className="fa fa-heart"></i> */}
-                      <img src={item.productImage} alt="" />
+                      <div
+                        className="image-portion"
+                        style={{
+                          backgroundImage: `url(${item.productImage})`,
+                        }}
+                      ></div>
                       <div className="content">
                         <div className="content-left">
                           <span className="vendor">

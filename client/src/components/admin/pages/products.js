@@ -16,21 +16,24 @@ import { getOrder } from "../../../redux/_actions/orderAction";
 import { getCart } from "../../../redux/_actions/cartAction";
 
 const Products = () => {
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const product = useSelector((state) => state.product);
+  const productLength = product.products.data.length;
+  const sellerProductLength = product?.products?.data?.filter(
+    (x) => x.createdBy === user._id
+  )?.length;
   const orders = useSelector((state) => state.order.orders);
   const dispatch = useDispatch();
   const [addBarPreviewShown, setaddBarPreviewShown] = useState(false);
   const [updateBarPreviewShown, setupdateBarPreviewShown] = useState(false);
   const cart = useSelector((state) => state.cart.cartItems.data);
   const [products, setProduct] = useState(0);
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const PlacedOrders = cart
     ?.filter((cartitem) =>
       orders?.find((order) => order.cartId === cartitem._id)
     )
     ?.map((x) => x.subTotal)
     .reduce((a, b) => a + b, 0);
-
   const inStock = product?.products?.data?.filter(
     (x) =>
       (user.role === "admin" && x.productQuantity > 50) ||
@@ -47,15 +50,6 @@ const Products = () => {
       (x.productQuantity < 0 && x.createdBy === user._id)
   )?.length;
   const totalOrders = orders.length;
-
-  // console.log(
-  //   "lol",
-  //   cart
-  //     ?.filter((cartitem) =>
-  //       orders?.find((order) => order.cartId === cartitem._id)
-  //     )
-  //     ?.filter((oneitem) => oneitem.items.find((d) => d.sellerId === user._id))
-  // );
 
   const updatetogglePreview = () => {
     setupdateBarPreviewShown(!updateBarPreviewShown);
@@ -107,7 +101,11 @@ const Products = () => {
                   <div className="col-md-4">
                     <div className="card-box current-products-progress">
                       <div>
-                        <img src={productProgessImg1} draggable="false" />
+                        <img
+                          src={productProgessImg1}
+                          draggable="false"
+                          alt="product-progress"
+                        />
                       </div>
                       <div>
                         <h2 className="text-left text-lightblue">
@@ -120,7 +118,11 @@ const Products = () => {
                   <div className="col-md-4">
                     <div className="card-box current-products-progress">
                       <div>
-                        <img src={productProgessImg2} draggable="false" />
+                        <img
+                          src={productProgessImg2}
+                          draggable="false"
+                          alt="product-progress"
+                        />
                       </div>
                       <div>
                         <h2 className="text-left text-purple">{totalOrders}</h2>
@@ -131,7 +133,11 @@ const Products = () => {
                   <div className="col-md-4">
                     <div className="card-box current-products-progress">
                       <div>
-                        <img src={productProgessImg3} draggable="false" />
+                        <img
+                          src={productProgessImg3}
+                          draggable="false"
+                          alt="product-progress"
+                        />
                       </div>
                       <div>
                         <h2 className="text-left text-success">+2.0%</h2>
@@ -156,7 +162,18 @@ const Products = () => {
                   <div className="col-md-8">
                     <div className="card">
                       <div className="card-body">
-                        <h4 className="header-title">Products </h4>
+                        <h4 className="header-title d-inline-block">
+                          Products{" "}
+                        </h4>
+                        {user.role === "seller" ? (
+                          <span className="float-right font-12">
+                            {sellerProductLength} items
+                          </span>
+                        ) : (
+                          <span className="float-right font-12">
+                            {productLength} items
+                          </span>
+                        )}
                         <div className="table-responsive mt-3">
                           <table className="table table-hover mb-0 product-data-table">
                             <thead className="thead-light position-absolute">
@@ -173,7 +190,7 @@ const Products = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {user.role == "seller" &&
+                              {user.role === "seller" &&
                                 product.products.data?.map((item) => (
                                   <React.Fragment key={item._id}>
                                     {user._id === item.createdBy && (
@@ -184,7 +201,7 @@ const Products = () => {
                                               <img
                                                 src={`/${item.productImage}`}
                                                 className="mr-2"
-                                                alt="product-img"
+                                                alt={item.productName}
                                               />
                                             </div>
                                             <div className="product_name">
@@ -230,7 +247,7 @@ const Products = () => {
                                     )}
                                   </React.Fragment>
                                 ))}
-                              {user.role == "admin" &&
+                              {user.role === "admin" &&
                                 product.products.data?.map((item) => (
                                   <tr key={item._id}>
                                     <td className="productName">
@@ -239,7 +256,7 @@ const Products = () => {
                                           <img
                                             src={`/${item.productImage}`}
                                             className="mr-2"
-                                            alt="product-img"
+                                            alt={item.productName}
                                           />
                                         </div>
                                         <div className="product_name">

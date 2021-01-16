@@ -12,7 +12,6 @@ const SellerSideBar = ({
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const [categoryDropDown, setcategoryDropDown] = useState(true);
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [subcategoryDropDown, setSubcategoryDropDown] = useState([
     true,
     true,
@@ -56,7 +55,7 @@ const SellerSideBar = ({
         <p className="mt-3 font-14">MEET THE OWNER</p>
         <div className="underLine w-100"></div>
         <div className="sellerImage">
-          <img src={`/${seller.userImage}`} alt="sellerImage" />
+          <img src={`/${seller.userImage}`} alt={seller.userName} />
         </div>
         <h1 className="font-20 mt-2">{seller.userName}</h1>
         <p className="mt-2">

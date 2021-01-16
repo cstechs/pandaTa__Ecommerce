@@ -235,9 +235,9 @@ const UpdateProductBar = (props) => {
                 )}
                 <div className="SelectedImage">
                   {fileImage ? (
-                    <img src={`${fileImage}`} />
+                    <img src={`${fileImage}`} alt={productName} />
                   ) : (
-                    <img src={`/${productImage}`} />
+                    <img src={`/${productImage}`} alt={productName} />
                   )}
                 </div>
               </div>

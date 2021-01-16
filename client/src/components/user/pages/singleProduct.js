@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { addItemToCart } from "../../../redux/_actions/cartAction";
 import { getProductById } from "../../../redux/_actions/productAction";
 import { getChat } from "../../../redux/_actions/chatAction";
@@ -34,7 +34,7 @@ const SingleProduct = () => {
     if (product?.product?.data) {
       dispatch(getSellerById(product?.product?.data?.createdBy));
     }
-  }, [product?.product?.data]);
+  }, [dispatch]);
 
   const [StartChatShown, setStartChatShown] = useState(false);
   const [quantity, setquantity] = useState(1);
@@ -44,18 +44,21 @@ const SingleProduct = () => {
   const ChatHide = () => {
     setStartChatShown(false);
   };
+  const { id } = useParams();
+  console.log("id", id);
   useEffect(() => {
     var subId = window.location.pathname.split("/")[2];
+    console.log("id2", subId);
     dispatch(getProductById(subId));
   }, []);
 
   const increment = () => {
-    if (quantity != product?.product?.data.productQuantity) {
+    if (quantity !== product?.product?.data.productQuantity) {
       setquantity(quantity + 1);
     }
   };
   const decrement = () => {
-    if (quantity != 1) {
+    if (quantity !== 1) {
       setquantity(quantity - 1);
     }
   };
@@ -169,7 +172,6 @@ const SingleProduct = () => {
                           />
                         </div>
                         <button
-                          disabled={user ? false : true}
                           className="AddToCart ripple"
                           onClick={() =>
                             addToCart(product?.product?.data._id, user._id)
@@ -196,20 +198,22 @@ const SingleProduct = () => {
                       </button>
                     )}
                     <hr />
-                    <h6>
-                      <span className="mr-2 font-14">
-                        Category : {arr?.map((item) => item.subCategoryName)}
-                      </span>
-                    </h6>
-                    <h6 className="mt-3">
-                      <span className="mr-2 font-14">Supplier's Name : </span>
-                      <Link
-                        to={`/seller/${seller?._id}`}
-                        className="text-decoration-underline text-primary font-16"
-                      >
-                        {seller?.userName}
-                      </Link>
-                    </h6>
+                    <div className="float-left">
+                      <h6>
+                        <span className="mr-2 font-14">
+                          Category : {arr?.map((item) => item.subCategoryName)}
+                        </span>
+                      </h6>
+                      <h6 className="mt-3">
+                        <span className="mr-2 font-14">Supplier's Name : </span>
+                        <Link
+                          to={`/seller/${seller?._id}`}
+                          className="text-decoration-underline text-primary font-16"
+                        >
+                          {seller?.userName}
+                        </Link>
+                      </h6>
+                    </div>
                     {user && user.role === "customer" && (
                       <button className="chatButton" onClick={() => ChatShow()}>
                         <i className="fa fa-comments" />

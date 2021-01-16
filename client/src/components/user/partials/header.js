@@ -193,7 +193,7 @@ const Header = () => {
                           {user.role === "seller" ? (
                             <img
                               src={`/${user.userImage}`}
-                              alt="user-image"
+                              alt={user.userName}
                               className="rounded-circle"
                             />
                           ) : (
@@ -203,10 +203,36 @@ const Header = () => {
                         </span>
                         <div className="dropdown-menu dropdown-menu-right">
                           <div>
-                            <span className="dropdown-item">
-                              <i className="fa fa-user" />
-                              {user.userName}
-                            </span>
+                            {user.role === "seller" ? (
+                              <Link
+                                to="/admin/setting"
+                                className="dropdown-item"
+                              >
+                                <i className="fa fa-user" />
+                                {user.userName}
+                              </Link>
+                            ) : (
+                              <Link to="/profile" className="dropdown-item">
+                                <i className="fa fa-user" />
+                                {user.userName}
+                              </Link>
+                            )}
+                          </div>
+                          <div>
+                            {user.role === "seller" ? (
+                              <Link
+                                to="/admin/orders"
+                                className="dropdown-item"
+                              >
+                                <i className="fas fa-box-open" />
+                                Orders
+                              </Link>
+                            ) : (
+                              <Link to="/orders" className="dropdown-item">
+                                <i className="fas fa-box-open" />
+                                Orders
+                              </Link>
+                            )}
                           </div>
                           <div>
                             <span

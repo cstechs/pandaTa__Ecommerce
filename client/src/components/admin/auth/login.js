@@ -86,9 +86,6 @@ const Login = ({ history }) => {
                 className="ripple button-base"
                 value="Login"
               />
-              <Link to="/admin/register">
-                <button className="sign">Signup</button>
-              </Link>
             </form>
           </div>
         </div>
