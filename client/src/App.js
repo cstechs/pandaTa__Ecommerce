@@ -24,7 +24,6 @@ import AdminPanel from "./components/admin/pages/home";
 import AdminPanelProducts from "./components/admin/pages/products";
 import AdminPanelUpdateProducts from "./components/admin/partials/updateProductBar";
 import AdminPanelCategory from "./components/admin/pages/categories";
-import AdminPanelInvoice from "./components/admin/pages/invoice";
 import AdminPanelOrder from "./components/admin/pages/orders";
 import AdminPanelCustomer from "./components/admin/pages/customers";
 import AdminPanelChat from "./components/admin/pages/chat";
@@ -137,11 +136,6 @@ function App() {
             exact
             path="/admin/category/"
             component={AdminPanelCategory}
-          />
-          <PrivateRoute
-            exact
-            path="/admin/invoice/"
-            component={AdminPanelInvoice}
           />
           <PrivateRoute
             exact

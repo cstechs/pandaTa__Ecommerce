@@ -1,9 +1,8 @@
 import React from "react";
-const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
+const OrderDetail = ({ orderPreviewToggle, selectedOrder }) => {
   const handleHide = () => {
     orderPreviewToggle();
   };
-
   return (
     <>
       <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
@@ -13,11 +12,10 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
           <div className="cart-table">
             <table>
               <tbody>
-                {selectedOrder.items.map((item) => (
+                {selectedOrder.cartItems[0].items.map((item) => (
                   <tr key={item._id}>
                     <td>
                       <div className="imageBox">
-                        {console.log("object", item)}
                         <img
                           src={`/${item.productId.productImage}`}
                           alt={item.productId.productName}
@@ -32,7 +30,7 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
                         {
                           minimumFractionDigits: 0,
                         }
-                      )}{" "}
+                      )}
                     </td>
                     <td>
                       <span className="price">{item.quantity}</span>
@@ -41,21 +39,24 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder, orders }) => {
                       $
                       {item.total.toLocaleString(navigator.language, {
                         minimumFractionDigits: 0,
-                      })}{" "}
+                      })}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div className="detail">
+          <div className="detail mt-3">
             <div className="float-right">
               <p>
                 Total Amount
                 <span>
-                  {selectedOrder.subTotal.toLocaleString(navigator.language, {
-                    minimumFractionDigits: 0,
-                  })}
+                  {selectedOrder.cartItems[0].subTotal.toLocaleString(
+                    navigator.language,
+                    {
+                      minimumFractionDigits: 0,
+                    }
+                  )}
                 </span>
               </p>
             </div>

@@ -233,7 +233,7 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="logo-box" id="logoBox">
-            <Link to="/admin">
+            <Link to="/">
               <span className="logo logo-light pl-3">
                 <span className="logo-sm">
                   <div className="pand-logo">

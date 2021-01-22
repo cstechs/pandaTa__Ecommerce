@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrder } from "../../../redux/_actions/orderAction";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
@@ -9,10 +10,16 @@ import dateFormat from "dateformat";
 const Order = () => {
   const history = useHistory();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-  const cart = useSelector((state) => state.cart.cartItems?.data);
+  const orders = useSelector((state) => state.order.orders);
   const [selectedOrder, setSelectedOrder] = useState({});
   const [orderDetailShown, setorderDetailShown] = useState(false);
-  const customerProducts = cart?.filter((cart) => cart.createdBy === user._id);
+  const customerOrders = orders?.filter(
+    (order) => order.createdBy === user._id
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getOrder());
+  }, [dispatch]);
   if (!user || user.role !== "customer") {
     history.push("/");
   }
@@ -44,20 +51,24 @@ const Order = () => {
             </tr>
           </thead>
           <tbody>
-            {customerProducts?.length > 0 ? (
-              customerProducts?.map((products, index) => (
+            {customerOrders?.length > 0 ? (
+              customerOrders?.map((orders, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{dateFormat(products.createdAt, "dS mmmm , yyyy")}</td>
-                  <td className="pl-5">{products.items.length}</td>
+                  <td>{dateFormat(orders?.createdAt, "dS mmmm , yyyy")}</td>
+                  <td className="pl-5">{orders?.cartItems[0].items.length}</td>
                   <td>
-                    {products.subTotal.toLocaleString(navigator.language, {
-                      minimumFractionDigits: 0,
-                    })}
+                    $
+                    {orders?.cartItems[0].subTotal.toLocaleString(
+                      navigator.language,
+                      {
+                        minimumFractionDigits: 0,
+                      }
+                    )}
                   </td>
                   <td
                     className="font-13 text-success cursor-pointer"
-                    onClick={() => orderPreviewToggle(products)}
+                    onClick={() => orderPreviewToggle(orders)}
                   >
                     MoreDetail
                   </td>

@@ -39,6 +39,7 @@
     "react-dom": "^17.0.1",
     "react-infinite-scroll-component": "^5.1.0",
     "react-owl-carousel": "^2.3.1",
+    "react-to-pdf": "0.0.13",
     "react-uuid": "^1.0.2",
     "sendgrid": "^5.2.3",
     "xss-clean": "^0.1.1"

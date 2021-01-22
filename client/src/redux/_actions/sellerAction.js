@@ -3,6 +3,8 @@ import {
   SELLER_LOGIN_SUCCESS,
   SELLER_REGISTER_FAIL,
   SELLER_REGISTER_SUCCESS,
+  SELLER_UPDATE_SUCCESS,
+  SELLER_UPDATE_FAIL,
   SET_ALERT,
   SELLER_LOAD_SUCCESS,
   SELLER_LOAD_FAIL,
@@ -32,6 +34,28 @@ export const sellerregister = (seller) => {
         })
       );
       dispatch({ type: SELLER_REGISTER_FAIL, payload: err.response.data });
+    }
+  };
+};
+
+export const sellerupdate = (seller, sellerId) => {
+  return async (dispatch) => {
+    const config = { header: { "Content-Type": "multipart/form-data" } };
+    try {
+      const res = await axios.patch("/api/seller/" + sellerId, seller, config);
+
+      dispatch(
+        setAlert(SET_ALERT, { message: res.data.message, alertType: "success" })
+      );
+      dispatch({ type: SELLER_UPDATE_SUCCESS, payload: res.data });
+    } catch (err) {
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: err.response.data.message,
+          alertType: "danger",
+        })
+      );
+      dispatch({ type: SELLER_UPDATE_FAIL, payload: err.response.data });
     }
   };
 };

@@ -220,39 +220,19 @@ exports.update = async function (req, res) {
   try {
     const update = req.body;
     const id = req.params.id;
-    const sellerId = req.params.id;
 
-    //Make sure the passed id is that of the logged in user
-    // if (userId.toString() !== id.toString())
-    //   return res.status(401).json({
-    //     message: "Sorry, you don't have the permission to upd this data.",
-    //   });
+    if (req.file !== undefined) {
+      var userImages = req.file.filename.replace("C:\\fakepath\\", "");
+      update.userImage = userImages;
+    }
 
-    const seller = await Seller.findByIdAndUpdate(
-      id,
-      { $set: update },
-      { new: true }
-    );
+    const seller = await Seller.updateOne({ _id: id }, { $set: update });
 
-    //if there is no image, return success message
-    if (!req.file)
-      return res
-        .status(200)
-        .json({ seller, message: "Seller has been updated" });
-
-    //Attempt to upload to cloudinary
-    const result = await uploader(req);
-    const seller_ = await Seller.findByIdAndUpdate(
-      id,
-      { $set: update },
-      { $set: { profileImage: result.url } },
-      { new: true }
-    );
-
-    if (!req.file)
-      return res
-        .status(200)
-        .json({ seller: seller_, message: "Seller has been updated" });
+    res.status(200).json({
+      success: true,
+      seller: seller,
+      message: "Seller has been updated",
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

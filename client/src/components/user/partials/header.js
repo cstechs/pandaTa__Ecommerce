@@ -18,6 +18,7 @@ const Header = () => {
   };
 
   const [isPreviewShown, setPreviewShown] = useState(false);
+  const [MobileSearchView, setMobileSearchView] = useState(false);
   const [loginView, setLoginView] = useState(false);
   const [RegisterView, setRegisterView] = useState(false);
 
@@ -53,6 +54,9 @@ const Header = () => {
     cartLength = 0;
   }
 
+  const SearchBoxHandler = () => {
+    setMobileSearchView(!MobileSearchView);
+  };
   const LoginHandler = () => {
     setLoginView(!loginView);
   };
@@ -74,20 +78,7 @@ const Header = () => {
     } else {
       setPreviewShown(false);
     }
-
     dispatch(getProduct());
-    window.onclick = function (event) {
-      if (!event.target.matches(".searc")) {
-        var dropdowns = document.getElementsByClassName("SearchBox");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains("Searchshow")) {
-            openDropdown.classList.remove("Searchshow");
-          }
-        }
-      }
-    };
   }, [user]);
 
   useEffect(() => {
@@ -97,15 +88,24 @@ const Header = () => {
     <>
       {product ? (
         <div>
-          <div className="SearchBox" id="SeachBox">
-            <input
-              type="text"
-              id="SeachField"
-              autoFocus
-              placeholder="Search Here ..."
-            />
-            <i className="fa fa-search"></i>
-          </div>
+          {MobileSearchView && (
+            <div className="SearchBox">
+              <input
+                type="text"
+                autoFocus
+                placeholder="Search Here ..."
+                onChange={(e) => handleChange(e)}
+              />
+              <i className="fa fa-times" onClick={SearchBoxHandler} />
+              <div className="searchDropdown">
+                {searchProduct?.map(({ _id, productName }) => (
+                  <Link to={`/product/${_id}`} key={_id}>
+                    <span>{productName}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
           <header>
             <div className="container-fluid">
               <div className="row">
@@ -175,7 +175,10 @@ const Header = () => {
                           </button>
                         </Link>
                       )}
-                      <i className="fa fa-search searc" onClick={search}></i>
+                      <i
+                        className="fa fa-search"
+                        onClick={SearchBoxHandler}
+                      ></i>
                       <Link to="/wishlist">
                         <i className="fa fa-heart"></i>
                         <span className="badge-darkpurple rounded-circle notification-icon-badge">

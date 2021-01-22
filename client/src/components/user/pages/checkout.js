@@ -3,19 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
+import Invoice from "../partials/invoice";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { getCart } from "../../../redux/_actions/cartAction";
 import { createOrder } from "../../../redux/_actions/orderAction";
+import { deleteCart } from "../../../redux/_actions/cartAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { SET_ALERT } from "../../../redux/types";
 
 const CheckOut = () => {
   const [shippingShown, setshippingShown] = useState(true);
-  const [paymentShown, setpaymentShown] = useState(true);
-  const [successShown, setsuccessShown] = useState(false);
+  const [paymentShown, setpaymentShown] = useState(false);
+  const [invoiceShown, setinvoiceShown] = useState(false);
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const cartItem = useSelector((state) => state.cart.cartItems);
   let userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
+  let cartsellers = userCart?.items.map((user) => user.sellerId);
   const { cartid } = useParams();
   const history = useHistory();
 
@@ -23,14 +26,17 @@ const CheckOut = () => {
     history.push("/");
   }
   const [userProfile, setUserProfile] = useState({
-    firstName: "",
-    lastName: "",
+    orderNumber: 2,
+    cartItems: userCart,
+    cartSeller: cartsellers,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
     companyName: "",
     country: "",
     city: "",
     postalCode: "",
     address: "",
-    email: "",
+    email: user?.email,
     phone: "",
     cartId: cartid,
     createdBy: user?._id,
@@ -82,8 +88,9 @@ const CheckOut = () => {
   };
   const paymentSubmit = () => {
     setpaymentShown(false);
-    setsuccessShown(true);
     dispatch(createOrder(userProfile));
+    dispatch(deleteCart(cartid));
+    setinvoiceShown(true);
   };
   const paymentBack = () => {
     setpaymentShown(false);
@@ -412,16 +419,17 @@ const CheckOut = () => {
         )}
       </div>
 
-      {successShown && (
-        <div className="orderPlaced">
-          <h1>Congratulations</h1>
-          <p>Order Placed Successfully!</p>
-          <Link to="/product">
-            <button className="ripple button-base font-14 px-4">
-              BACK TO SHOPPING
-            </button>
-          </Link>
-        </div>
+      {invoiceShown && (
+        <>
+          <div className="orderPlaced">
+            <Link to="/product">
+              <button className="ripple button-base font-14 px-4">
+                BACK TO SHOPPING
+              </button>
+            </Link>
+          </div>
+          <Invoice userCart={userCart} />
+        </>
       )}
       <div className="component">
         <Footer />

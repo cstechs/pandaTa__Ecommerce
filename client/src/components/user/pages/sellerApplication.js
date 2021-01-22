@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import addImageIcon from "../../../assets/images/addPhoto.png";
 import { useDispatch } from "react-redux";
 import { sellerregister } from "../../../redux/_actions/sellerAction";
@@ -10,6 +10,7 @@ import { setAlert } from "../../../redux/_actions/alertAction";
 import { SET_ALERT } from "../../../redux/types";
 
 const SellerApplication = () => {
+  const history = useHistory();
   const [applicationShown, setapplicationShown] = useState(true);
   const [companyProfileShown, setcompanyProfileShown] = useState(false);
   const [webAndSocialMediaShown, setwebAndSocialMediaShown] = useState(false);
@@ -215,6 +216,7 @@ const SellerApplication = () => {
       data.append("userPhNumber", newUser.userPhNumber);
       dispatch(sellerregister(data));
       setcontactInfoShown(false);
+      history.push("/");
     }
   };
 
@@ -273,7 +275,6 @@ const SellerApplication = () => {
                           <img
                             src={addImageIcon}
                             className="w-50 d-block m-auto"
-                            alt={userName}
                           />
                         </div>
                       )}
@@ -602,7 +603,7 @@ const SellerApplication = () => {
                         <option>Mrs.</option>
                       </select>
                     </div>
-                    <div className="col-md-3 mt-4">
+                    <div className="col-md-3 mt-1">
                       <label>
                         First Name
                         <span className="text-danger font-16">*</span>
@@ -615,7 +616,7 @@ const SellerApplication = () => {
                         placeholder="First Name"
                       />
                     </div>
-                    <div className="col-md-3 mt-4">
+                    <div className="col-md-3 mt-1">
                       <label>
                         Middle Name
                         <span className="text-danger font-16">*</span>
@@ -628,7 +629,7 @@ const SellerApplication = () => {
                         placeholder="Middle Name "
                       />
                     </div>
-                    <div className="col-md-3 mt-4">
+                    <div className="col-md-3 mt-1">
                       <label>
                         Last Name
                         <span className="text-danger font-16">*</span>

@@ -1,5 +1,6 @@
 //const cartRepository = require('./repository.js')
 const Product = require("../models/Product");
+const Cart = require("../models/Cart");
 const car = require("../middleware/db");
 
 exports.addItemToCart = async (req, res) => {
@@ -279,7 +280,10 @@ exports.addQuantityCart = async (req, res) => {
   try {
     let cart = await car.cart1(cartId);
 
-    let quantity = await cart.items[0].quantity;
+    let quantity = await cart.items;
+
+    var resultObject = search(productId, quantity);
+
     let productDetails = await Product.findById({ _id: productId });
 
     if (!productDetails) {
@@ -288,7 +292,12 @@ exports.addQuantityCart = async (req, res) => {
         msg: "Invalid request",
       });
     }
-
+    if (productDetails.productQuantity <= resultObject.quantity) {
+      return res.status(500).json({
+        type: "Invalid",
+        msg: "Not available in stock",
+      });
+    }
     //if cart Exists ---
 
     if (cart) {
@@ -365,5 +374,26 @@ exports.addQuantityCart = async (req, res) => {
     res
       .status(400)
       .json({ type: "invalid", msg: "Something went wrong", err: err });
+  }
+};
+
+function search(nameKey, myArray) {
+  for (var i = 0; i < myArray.length; i++) {
+    if (myArray[i].productId._id.toString() == nameKey) {
+      return myArray[i];
+    }
+  }
+}
+
+// @Method: DELETE
+// @Route : api/cart/:id
+// @Desc  : Delete cart by id
+exports.removeCart = async (req, res) => {
+  try {
+    let id = req.params.id;
+    const removedCart = await Cart.remove({ _id: id });
+    res.status(200).json({ success: true, data: removedCart });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

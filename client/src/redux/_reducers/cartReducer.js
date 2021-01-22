@@ -10,6 +10,8 @@ import {
   CART_REMOVE_ITEM_SUCCESS,
   CART_REMOVE_ITEM_FAIL,
   CLEAR_ERRORS,
+  CART_DELETE_SUCCESS,
+  CART_DELETE_FAIL,
 } from "../types";
 
 const initState = {
@@ -50,7 +52,7 @@ const cartReducer = (state = initState, action) => {
     case CART_INCREMENT_FAIL:
       return {
         ...state,
-        cartItems: [],
+        // cartItems: [],
         error: action.payload,
       };
     case CART_DECREMENT_SUCCESS:
@@ -66,6 +68,10 @@ const cartReducer = (state = initState, action) => {
     case CART_REMOVE_ITEM_SUCCESS:
       return { ...state, cartItems: action.payload.data };
     case CART_REMOVE_ITEM_FAIL:
+      return { ...state };
+    case CART_DELETE_FAIL:
+      return { ...state, error: action.payload };
+    case CART_DELETE_SUCCESS:
       return { ...state };
     case CLEAR_ERRORS:
       return {

@@ -11,6 +11,8 @@ exports.createOrder = asyncHandlers(async (req, res, next) => {
   try {
     const {
       orderNumber,
+      cartSeller,
+      cartItems,
       firstName,
       lastName,
       companyName,
@@ -24,9 +26,12 @@ exports.createOrder = asyncHandlers(async (req, res, next) => {
       createdBy,
       updatedBy,
     } = req.body;
-
+    console.log("data", cartItems);
+    console.log("datas", cartSeller);
     order = await Order.create({
       orderNumber,
+      cartSeller,
+      cartItems,
       firstName,
       lastName,
       companyName,
@@ -41,6 +46,21 @@ exports.createOrder = asyncHandlers(async (req, res, next) => {
       updatedBy,
     });
 
+    for (var i = 0; i < cartItems.items.length; i++) {
+      let product = await Product.findById({
+        _id: cartItems.items[i].productId._id.toString(),
+      });
+
+      product.productQuantity =
+        product.productQuantity - cartItems.items[i].quantity;
+
+      const updatedProduct = await Product.updateOne(
+        { _id: cartItems.items[i].productId._id.toString() },
+        {
+          $set: { productQuantity: product.productQuantity },
+        }
+      );
+    }
     // let cart = await Cart.findById(cartId);
     // console.log("cart", cart);
 

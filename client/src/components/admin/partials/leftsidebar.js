@@ -22,12 +22,6 @@ const LeftBar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/admin/invoice" className="ripple button-base">
-                <i className="mdi mdi-bookmark-minus leftbar_icon" />
-                <span>Invoice</span>
-              </Link>
-            </li>
-            <li>
               <Link to="/admin/order" className="ripple button-base">
                 <i className="fas fa-box-open leftbar_icon font-14" />
                 <span>Orders</span>

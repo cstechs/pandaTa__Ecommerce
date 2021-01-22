@@ -940,29 +940,15 @@
 }
 
 .orderPlaced {
-  padding: 80px 0;
-  text-align: center;
-}
-
-.orderPlaced h1 {
-  color: #43425d;
-  font-size: 45px;
-  margin: 0;
-}
-
-.orderPlaced p {
-  color: #000000;
-  margin-top: 16px;
-  font-size: 17px;
-  font-family: "Roboto";
+  text-align: right;
+  padding-right: 40px;
 }
 
 .orderPlaced button {
   color: #fff;
   background-color: #43425d;
-  margin-top: 26px;
   font-size: 15px;
-  padding: 9px 28px;
+  padding: 10px 28px;
   border-radius: 5px;
 }
 
@@ -1400,7 +1386,7 @@
 
 .topseller .user {
   text-align: center;
-  margin-top: 1%;
+  margin-top: 8%;
   border: 1px solid rgb(230, 230, 230);
   padding-top: 4%;
   border-radius: 5px;
@@ -2229,7 +2215,7 @@
   position: absolute;
   width: 100%;
   bottom: 30px;
-  padding: 20px;
+  padding: 0 20px;
   left: 0;
 }
 
@@ -2842,12 +2828,7 @@ footer .col-md-3:nth-child(4) {
   z-index: 999;
   padding: 14px 10px;
   transition: 0.5s all;
-  transform: translateY(-60px);
   border-bottom: 1px solid grey;
-}
-
-.Searchshow {
-  transform: translateY(0);
 }
 
 .SearchBox input {
@@ -2922,7 +2903,7 @@ header .searchbox button:hover {
 header .searchbox button:focus {
   background: #2b2a3d;
 }
-header .searchDropdown {
+.searchDropdown {
   width: 83%;
   background: #fdfdfd;
   position: absolute;
@@ -2932,15 +2913,22 @@ header .searchDropdown {
   max-height: 240px;
   overflow-y: scroll;
 }
-header .searchDropdown a {
+.SearchBox .searchDropdown {
+  width: 100%;
+  left: 0;
+  margin-top: 10px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.searchDropdown a {
   display: block;
   border-bottom: 1px solid rgb(240, 240, 240);
   padding: 8px 15px;
 }
-header .searchDropdown a:hover {
+.searchDropdown a:hover {
   background: rgb(240, 240, 240);
 }
-header .searchDropdown span {
+.searchDropdown span {
   color: #34334b;
   font-family: "Raleway";
   font-size: 15px;
@@ -2980,9 +2968,9 @@ header .btn-group {
 }
 
 header .col-md-5 .fe-chevron-down {
-  font-size: 22px;
+  font-size: 20px;
   margin: 0;
-  top: 0px;
+  top: 8px;
   right: 15px;
 }
 
@@ -2996,7 +2984,6 @@ header .col-md-5 img {
   position: relative;
   transition: 0.5s all;
   cursor: pointer;
-  background: black;
   border: 1px solid #f7f7f7;
   margin: 0 14px;
 }
@@ -3683,4 +3670,87 @@ nav .dropdown:hover .dropdownlist {
 }
 .logoutBox button:hover {
   background: #2d2d47;
+}
+.Invoice {
+  margin: 50px 15%;
+  margin-bottom: 150px;
+  padding: 70px 30px;
+  padding-bottom: 90px;
+  border-radius: 5px;
+  border: 1px solid #ececec;
+}
+.InvoiceTop {
+  padding: 2% 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.Invoice h1 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 30px;
+  font-family: "Montserrat";
+  font-weight: 900;
+}
+.Invoice h2 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 28px;
+}
+.Invoice h6 {
+  margin: 0;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #25065e;
+}
+
+.Invoice h3 {
+  color: #25065e;
+  margin-top: 3%;
+  font-weight: 900;
+  font-size: 20px;
+  font-family: "Roboto";
+}
+
+.Invoice h4 {
+  margin: 0;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  font-family: "Roboto";
+}
+
+.Invoice h4 strong {
+  color: #25065e;
+  text-transform: uppercase;
+  margin-right: 4px;
+  font-family: "raleway";
+}
+
+.Invoice p {
+  margin: 0;
+  margin-top: 2px;
+}
+
+.Invoice p span {
+  font-weight: bold;
+  color: #25065e;
+}
+
+.Invoice .badge {
+  background: #f7b84b;
+  padding: 6px 12px;
+  margin-left: 3px;
+  border-radius: 10px;
+}
+
+.Invoice button {
+  padding: 10px 55px;
+  border-radius: 5px;
+}
+
+.Invoice .table td,
+.table th {
+  font-size: 13px;
+  padding: 0.9rem;
 }

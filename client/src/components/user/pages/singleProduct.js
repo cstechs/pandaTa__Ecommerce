@@ -19,7 +19,6 @@ const SingleProduct = () => {
   const product = useSelector((state) => state.product);
   const users = useSelector((state) => state.user.users);
   const seller = useSelector((state) => state.seller.seller);
-
   const subCategory = useSelector((state) => state.subCategory);
   const dispatch = useDispatch();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
@@ -30,11 +29,6 @@ const SingleProduct = () => {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-  useEffect(() => {
-    if (product?.product?.data) {
-      dispatch(getSellerById(product?.product?.data?.createdBy));
-    }
-  }, [dispatch]);
 
   const [StartChatShown, setStartChatShown] = useState(false);
   const [quantity, setquantity] = useState(1);
@@ -44,13 +38,15 @@ const SingleProduct = () => {
   const ChatHide = () => {
     setStartChatShown(false);
   };
-  const { id } = useParams();
-  console.log("id", id);
   useEffect(() => {
     var subId = window.location.pathname.split("/")[2];
-    console.log("id2", subId);
     dispatch(getProductById(subId));
   }, []);
+  useEffect(() => {
+    if (product?.product?.data) {
+      dispatch(getSellerById(product?.product?.data?.createdBy));
+    }
+  }, [dispatch]);
 
   const increment = () => {
     if (quantity !== product?.product?.data.productQuantity) {
@@ -114,7 +110,7 @@ const SingleProduct = () => {
 
   return (
     <>
-      {product && subCategory ? (
+      {product && seller ? (
         <div>
           <div className="component">
             <Header />

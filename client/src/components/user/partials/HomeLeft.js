@@ -49,7 +49,7 @@ const HomeLeft = ({ product }) => {
                             <i className="fa fa-caret-right"></i>
                           </div>
                         </div>
-                      </div>{" "}
+                      </div>
                     </Link>
                   </div>
                 )}

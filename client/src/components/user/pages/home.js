@@ -169,27 +169,29 @@ const Home = () => {
             {Sellers.length !== 0 ? (
               <>
                 {Sellers?.map((seller, index) => (
-                  <div key={seller._id} className="col-md-3 col-sm-6">
-                    <div className="user">
-                      <span></span>
-                      <div
-                        className="imgCircle"
-                        style={{
-                          backgroundImage: `url(${seller.userImage})`,
-                        }}
-                      ></div>
-                      <h5>{seller.userName}</h5>
-                      <p className="text-break">{seller.userBio}</p>
-                      <button>
-                        <Link
-                          to={`/seller/${seller._id}`}
-                          className="text-decoration-none text-white"
-                        >
-                          VIEW PROFILE
-                        </Link>
-                      </button>
-                    </div>
-                  </div>
+                  <React.Fragment key={index}>
+                    {index < 4 && index >= 0 && (
+                      <div key={seller._id} className="col-md-3 col-sm-6">
+                        <div className="user">
+                          <span></span>
+                          <div
+                            className="imgCircle"
+                            style={{
+                              backgroundImage: `url(${seller.userImage})`,
+                            }}
+                          ></div>
+                          <h5>{seller.userName}</h5>
+                          <p className="text-break">{seller.userBio}</p>
+                          <Link
+                            to={`/seller/${seller._id}`}
+                            className="text-decoration-none text-white"
+                          >
+                            <button>VIEW PROFILE</button>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
                 ))}
               </>
             ) : (

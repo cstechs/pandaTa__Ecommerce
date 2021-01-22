@@ -6,6 +6,12 @@ const orderSchema = mongoose.Schema({
   orderNumber: {
     type: String,
   },
+  cartSeller: {
+    type: Array,
+  },
+  cartItems: {
+    type: Array,
+  },
   firstName: {
     type: String,
     required: [true, "First name is required"],
@@ -43,7 +49,7 @@ const orderSchema = mongoose.Schema({
   },
   cartId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: [true, "Cart is required"],
+    // required: [true, "Cart is required"],
     ref: "Cart",
   },
   createdAt: {
