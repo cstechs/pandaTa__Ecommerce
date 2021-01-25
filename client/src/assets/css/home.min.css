@@ -1135,6 +1135,7 @@
   margin: auto;
   overflow: hidden;
   border-radius: 50%;
+  border: 1px solid #bebebe;
 }
 .seller .SideBar .sellerProfilePortion .sellerImage img {
   width: 100%;
@@ -1330,11 +1331,21 @@
   height: 200px;
   background-position: center;
   background-size: cover;
+  position: relative;
   background-repeat: no-repeat;
 }
-.categories .item img {
-  width: 150px !important;
-  margin: auto;
+.categories .overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  transition: .5s all;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transform: translateY(-200px);
+}
+.categories .item .image-portion:hover .overlay {
+  transform: translateY(0);
 }
 
 .categories .item P {
@@ -3198,7 +3209,7 @@ nav .dropdownlist {
   visibility: hidden;
   opacity: 0;
   transform: translateY(-25px);
-  transition: all 0.4s;
+  transition: transform 0.4s ease;
   position: absolute;
   margin-top: 1%;
   padding: 30px 16px;

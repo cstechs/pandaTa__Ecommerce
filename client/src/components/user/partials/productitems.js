@@ -39,7 +39,6 @@ const Productitems = ({ product, proId, catId }) => {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-  useEffect(() => {}, [product]);
   useEffect(() => {
     setCheck(proId);
   }, [proId]);
@@ -51,7 +50,7 @@ const Productitems = ({ product, proId, catId }) => {
   }
 
   if (!prolength) {
-    return <div>loading</div>;
+    return <Loader />;
   }
 
   return (

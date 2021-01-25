@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Login from "../auth/login";
 import { logout } from "../../../redux/_actions/authAction";
 import Register from "../auth/register";
 import Sidebar from "./sidebar";
 import { getCart } from "../../../redux/_actions/cartAction";
 import { getProduct } from "../../../redux/_actions/productAction";
+import { setAlert } from "../../../redux/_actions/alertAction";
+import { SET_ALERT } from "../../../redux/types";
 import Loader from "./loader";
 const Header = () => {
   const toggle = () => {
@@ -17,6 +19,7 @@ const Header = () => {
     document.getElementById("SeachField").focus();
   };
 
+  const history = useHistory();
   const [isPreviewShown, setPreviewShown] = useState(false);
   const [MobileSearchView, setMobileSearchView] = useState(false);
   const [loginView, setLoginView] = useState(false);
@@ -243,6 +246,12 @@ const Header = () => {
                               onClick={() => {
                                 dispatch(logout());
                                 window.location.reload();
+                                dispatch(
+                                  setAlert(SET_ALERT, {
+                                    message: "Logout Successfully.",
+                                    alertType: "danger",
+                                  })
+                                );
                               }}
                             >
                               <i className="fas fa-sign-out-alt" />

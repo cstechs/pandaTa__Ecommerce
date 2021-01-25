@@ -104,7 +104,7 @@ const Home = () => {
                     <h4 className="mt-0 font-13">Products Sold</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        <span>200</span>
+                        <span>0</span>
                       </h2>
                     </div>
                     <div className="float-right">

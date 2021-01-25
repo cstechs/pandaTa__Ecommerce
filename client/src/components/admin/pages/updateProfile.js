@@ -1,48 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Navbar from "../partials/header";
 import Footer from "../partials/footer";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { sellerupdate } from "../../../redux/_actions/sellerAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
-import { SET_ALERT } from "../../../redux/types";
+import { getSellerById } from "../../../redux/_actions/sellerAction";
 
 const UpdateProfile = () => {
   const history = useHistory();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const users = useSelector((state) => state.seller?.seller);
   const [fileImage, setfileImage] = useState(null);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSellerById(user._id));
+  }, [dispatch]);
   if (user.role != "seller") {
     history.push("/");
   }
   const [newSeller, setNewSeller] = useState({
     _id: user._id,
-    userFirstName: user.userFirstName,
-    userMiddleName: user.userMiddleName,
-    userLastName: user.userLastName,
-    UserName: user.userName,
-    userEmail: user.userEmail,
-    userBio: user.userBio,
-    userTitle: user.userTitle,
-    userAddress: user.userAddress,
-    userAppartment: user.userAppartment,
-    userCity: user.userCity,
-    userZipCode: user.userZipCode,
-    userCountry: user.userCountry,
-    userPhNumber: user.userPhNumber,
-    userpassword: user.userpassword,
-    businessName: user.businessName,
-    businessType: user.businessType,
-    businessMainSaleChannel: user.businessMainSaleChannel,
-    businessYearEstablish: user.businessYearEstablish,
-    businessIdentityType: user.businessIdentityType,
-    businessIdNumber: user.businessIdNumber,
-    fbSocialAccountLink: user.fbSocialAccountLink,
-    pinterestSocialAccountLink: user.pinterestSocialAccountLink,
-    twitterSocialAccountLink: user.twitterSocialAccountLink,
-    instagramSocialAccountLink: user.instagramSocialAccountLink,
-    userGender: user.userGender,
-    userImage: user.userImage,
+    userFirstName: users?.userFirstName,
+    userMiddleName: users?.userMiddleName,
+    userLastName: users?.userLastName,
+    UserName: users?.userName,
+    userEmail: users?.userEmail,
+    userBio: users?.userBio,
+    userTitle: users?.userTitle,
+    userAddress: users?.userAddress,
+    userAppartment: users?.userAppartment,
+    userCity: users?.userCity,
+    userZipCode: users?.userZipCode,
+    userCountry: users?.userCountry,
+    userPhNumber: users?.userPhNumber,
+    userpassword: users?.userpassword,
+    businessName: users?.businessName,
+    businessType: users?.businessType,
+    businessMainSaleChannel: users?.businessMainSaleChannel,
+    businessYearEstablish: users?.businessYearEstablish,
+    businessIdentityType: users?.businessIdentityType,
+    businessIdNumber: users?.businessIdNumber,
+    fbSocialAccountLink: users?.fbSocialAccountLink,
+    pinterestSocialAccountLink: users?.pinterestSocialAccountLink,
+    twitterSocialAccountLink: users?.twitterSocialAccountLink,
+    instagramSocialAccountLink: users?.instagramSocialAccountLink,
+    userGender: users?.userGender,
+    userImage: users?.userImage,
   });
 
   const {
@@ -145,9 +149,9 @@ const UpdateProfile = () => {
       data.append("userCountry", newSeller.userCountry);
       data.append("userPhNumber", newSeller.userPhNumber);
       dispatch(sellerupdate(data, user._id));
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 2000);
+      setTimeout(() => {
+        history.push("/admin");
+      }, 2000);
     }
   };
 
@@ -165,6 +169,9 @@ const UpdateProfile = () => {
                       <ol className="breadcrumb m-0">
                         <li className="breadcrumb-item">
                           <Link to="/admin">PANDA / TA</Link>
+                        </li>
+                        <li className="breadcrumb-item">
+                          <Link to="/admin/setting">Profile</Link>
                         </li>
                         <li className="breadcrumb-item active">Setting</li>
                       </ol>

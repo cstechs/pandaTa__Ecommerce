@@ -25,15 +25,15 @@ const Cart = () => {
   let userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
   // const [quantity, setQuantity] = useState([]);
   const dispatch = useDispatch();
-  if (!user) {
-    history.push("/");
-    dispatch(
-      setAlert(SET_ALERT, {
-        message: "Login now to proceed",
-        alertType: "danger",
-      })
-    );
-  }
+  // if (!user) {
+  //   history.push("/");
+  //   dispatch(
+  //     setAlert(SET_ALERT, {
+  //       message: "Login now to proceed",
+  //       alertType: "danger",
+  //     })
+  //   );
+  // }
   useEffect(() => {
     dispatch(getUser());
     dispatch(getOrder());
@@ -105,7 +105,7 @@ const Cart = () => {
                     </thead>
                     <tbody>
                       {userCart?.items?.length > 0 ? (
-                        userCart?.items?.map((item, index) => {
+                        userCart?.items?.map((item) => {
                           return (
                             <tr key={item._id}>
                               <td>

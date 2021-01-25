@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../redux/_actions/authAction";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
-import { CLEAR_ERRORS } from "../../../redux/types";
+import { CLEAR_ERRORS, SET_ALERT } from "../../../redux/types";
 import { getUser } from "../../../redux/_actions/userAction";
 
 const Login = ({ history }) => {
@@ -40,6 +40,12 @@ const Login = ({ history }) => {
       dispatch(setAlert("Please enter all the fields.", "danger"));
     } else if (users.find((user) => user.email === email)?.role === "admin") {
       dispatch(login(email, password));
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Login Successfully.",
+          alertType: "success",
+        })
+      );
     }
   };
 

@@ -13,12 +13,12 @@ import SliderImage5 from "../../../assets/images/user/SliderImage5.jpg";
 import SliderImage6 from "../../../assets/images/user/SliderImage6.jpg";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
 import { getProduct } from "../../../redux/_actions/productAction";
+import { getSellers } from "../../../redux/_actions/sellerAction";
 import OwlCarousel from "react-owl-carousel";
 import HomeLeft from "../partials/HomeLeft";
 import HomeRight from "../partials/HomeRight";
 import { Link } from "react-router-dom";
 import Loader from "../partials/loader";
-import { getSellers } from "../../../redux/_actions/sellerAction";
 const Home = () => {
   const [responsive] = useState({
     0: {
@@ -146,7 +146,9 @@ const Home = () => {
                       )?.productImage
                     })`,
                   }}
-                ></div>
+                >
+                  <div className="overlay" />
+                </div>
                 <p>{subCategoryName}</p>
               </div>
             </Link>
@@ -173,7 +175,6 @@ const Home = () => {
                     {index < 4 && index >= 0 && (
                       <div key={seller._id} className="col-md-3 col-sm-6">
                         <div className="user">
-                          <span></span>
                           <div
                             className="imgCircle"
                             style={{
@@ -201,9 +202,9 @@ const Home = () => {
         </div>
         {Sellers.length !== 0 && (
           <p>
-            <span>
+            <Link to="/seller" className="text-darkpurple">
               Explore More <i className="fa fa-caret-right"></i>
-            </span>
+            </Link>
           </p>
         )}
       </div>

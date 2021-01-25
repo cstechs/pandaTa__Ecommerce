@@ -17,6 +17,7 @@ import UserSingleProduct from "./components/user/pages/singleProduct";
 import UserWishlist from "./components/user/pages/wishlist";
 import UserSellerApplication from "./components/user/pages/sellerApplication";
 import UserSeller from "./components/user/pages/seller";
+import UserSingleSeller from "./components/user/pages/singleSeller";
 import UserProfile from "./components/user/pages/profile";
 import UserOrder from "./components/user/pages/order";
 import PrivateRoute from "./components/admin/routing/PrivateRoute";
@@ -78,17 +79,16 @@ function App() {
             path="/sellerapplication"
             component={UserSellerApplication}
           />
-          {/* <Route exact path="/seller" component={UserSeller} /> */}
           <Route exact path="/verify/:token" component={VerifyView} />
           <Route exact path="/reset/:token" component={ResetPassword} />
-
+          <Route exact path="/seller" component={UserSeller} />
           {Sellers ? (
             Sellers?.map(({ _id }) => (
               <Route
                 exact
                 key={_id}
                 path={`/seller/:id`}
-                component={UserSeller}
+                component={UserSingleSeller}
               />
             ))
           ) : (

@@ -38,14 +38,21 @@ exports.addItemToCart = async (req, res) => {
       }
       //----------Check if product exist, just add the previous quantity with the new quantity and update the total price-------
       else if (indexFound !== -1) {
-        cart.items[indexFound].quantity =
-          cart.items[indexFound].quantity + quantity;
-        cart.items[indexFound].total =
-          cart.items[indexFound].quantity * productDetails.productPrice;
-        cart.items[indexFound].price = productDetails.productPrice;
-        cart.subTotal = cart.items
-          .map((item) => item.total)
-          .reduce((acc, next) => acc + next);
+        if (productDetails.productQuantity <= cart.items[indexFound].quantity) {
+          return res.status(500).json({
+            type: "Invalid",
+            msg: "Not available in stock",
+          });
+        } else {
+          cart.items[indexFound].quantity =
+            cart.items[indexFound].quantity + quantity;
+          cart.items[indexFound].total =
+            cart.items[indexFound].quantity * productDetails.productPrice;
+          cart.items[indexFound].price = productDetails.productPrice;
+          cart.subTotal = cart.items
+            .map((item) => item.total)
+            .reduce((acc, next) => acc + next);
+        }
       }
       //----------Check if product exist, just remove the previous quantity with the new quantity and update the total price-------
       else if (indexFound !== -1) {

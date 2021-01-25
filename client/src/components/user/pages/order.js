@@ -56,10 +56,10 @@ const Order = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{dateFormat(orders?.createdAt, "dS mmmm , yyyy")}</td>
-                  <td className="pl-5">{orders?.cartItems[0].items.length}</td>
+                  <td className="pl-5">{orders?.cartItems[0]?.items.length}</td>
                   <td>
                     $
-                    {orders?.cartItems[0].subTotal.toLocaleString(
+                    {orders?.cartItems[0]?.subTotal.toLocaleString(
                       navigator.language,
                       {
                         minimumFractionDigits: 0,

@@ -9,10 +9,12 @@ WORKDIR /usr/src/app
 # Install Dependencies
 COPY package*.json ./
 
-RUN npm install --silent
-
 # Copy app source code
 COPY . .
+
+RUN npm install --silent
+
+
 
 # Exports
 EXPOSE 5001

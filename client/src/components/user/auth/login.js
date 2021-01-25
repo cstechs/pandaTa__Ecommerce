@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../../redux/_actions/authAction";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
-import { CLEAR_ERRORS, SET_ALERT } from "../../../redux/types";
-import Register from "./register";
+import { SET_ALERT } from "../../../redux/types";
 import { getUser } from "../../../redux/_actions/userAction";
 import { sellerlogin } from "../../../redux/_actions/sellerAction";
 
 const Login = (props) => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const users = useSelector((state) => state.user.users);
   const sellers = useSelector((state) => state.seller.sellers);
 
@@ -31,18 +29,24 @@ const Login = (props) => {
         role === "customer" &&
         users.find((user) => user.email === email)?.role === "customer"
       ) {
-        setTimeout(() => {
-          history.push("/");
-        }, 300);
         dispatch(login(email, password));
+        dispatch(
+          setAlert(SET_ALERT, {
+            message: "Login Successfully.",
+            alertType: "success",
+          })
+        );
       } else if (
         role === "seller" &&
         sellers.find((seller) => seller.userEmail === email)?.role === "seller"
       ) {
-        setTimeout(() => {
-          history.push("/");
-        }, 300);
         dispatch(sellerlogin(email, password));
+        dispatch(
+          setAlert(SET_ALERT, {
+            message: "Login Successfully.",
+            alertType: "success",
+          })
+        );
       } else {
         dispatch(
           setAlert(SET_ALERT, {
@@ -51,7 +55,6 @@ const Login = (props) => {
           })
         );
       }
-      //window.location.reload();
     }
   };
   const LoginClose = () => {

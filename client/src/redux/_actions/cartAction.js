@@ -32,9 +32,12 @@ export const addItemToCart = (productId, createdBy, quantity) => {
       dispatch({ type: CART_CREATE_SUCCESS, payload: res.data });
     } catch (err) {
       dispatch(
-        setAlert(SET_ALERT, { message: err.message, alertType: "danger" })
+        setAlert(SET_ALERT, {
+          message: err.response.data.msg,
+          alertType: "danger",
+        })
       );
-      dispatch({ type: CART_CREATE_FAIL, payload: err.response.data.message });
+      dispatch({ type: CART_CREATE_FAIL, payload: err.response.data.msg });
     }
   };
 };

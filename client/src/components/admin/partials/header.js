@@ -1,30 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import UserImage from "../../../assets/images/admin/user.jpg";
 import SmLogo from "../../../assets/images/admin/logo-sm.png";
 import LeftBar from "./leftsidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/_actions/authAction";
 import { getUser } from "../../../redux/_actions/userAction";
+import { setAlert } from "../../../redux/_actions/alertAction";
+import { SET_ALERT } from "../../../redux/types";
+import { getProduct } from "../../../redux/_actions/productAction";
 import { getChat } from "../../../redux/_actions/chatAction";
+import { getSellerById } from "../../../redux/_actions/sellerAction";
 
 const Navbar = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const dispatch = useDispatch();
   const chat = useSelector((state) => state.chat.chats);
   const users = useSelector((state) => state.user.users);
+  const seller = useSelector((state) => state.seller?.seller);
+  const product = useSelector((state) => state.product);
+  const [searchProduct, setSearchProduct] = useState([]);
   const history = useHistory();
 
+  const handleChange = (e) => {
+    let temp = product?.products?.data?.filter((item) =>
+      item.productName.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    if (e.target.value === "") {
+      temp = [];
+    }
+    setSearchProduct(temp);
+  };
   const totalUsers = users.filter((z) =>
     chat?.data?.find((x) => x.createdBy === z._id && x.sellerId === user._id)
   );
 
   useEffect(() => {
     dispatch(getUser());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(getChat());
+    dispatch(getSellerById(user._id));
+    dispatch(getProduct());
   }, [dispatch]);
 
   function toggle() {
@@ -52,14 +66,21 @@ const Navbar = () => {
                     <input
                       type="search"
                       className="form-control"
-                      placeholder="Search transactions, invoices or help "
-                      id="top-search"
+                      placeholder="Search Products Here ..."
+                      onChange={(e) => handleChange(e)}
                     />
                     <div className="input-group-append">
                       <button className="btn" type="submit">
                         <i className="fe-search" />
                       </button>
                     </div>
+                  </div>
+                  <div className="searchDropdown">
+                    {searchProduct?.map(({ _id, productName }) => (
+                      <Link to={`/product/${_id}`} key={_id}>
+                        <span>{productName}</span>
+                      </Link>
+                    ))}
                   </div>
                 </div>
               </form>
@@ -77,12 +98,19 @@ const Navbar = () => {
               <div className="dropdown-menu dropdown-lg dropdown-menu-right p-0">
                 <form className="p-3">
                   <input
-                    type="text"
+                    type="search"
                     className="form-control"
-                    placeholder="Search ..."
-                    aria-label="Recipient's username"
+                    placeholder="Search Products Here ..."
+                    onChange={(e) => handleChange(e)}
                   />
                 </form>
+                <div className="searchDropdown ">
+                  {searchProduct?.map(({ _id, productName }) => (
+                    <Link to={`/product/${_id}`} key={_id}>
+                      <span>{productName}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </li>
             <li className="dropdown message-list notification-list topbar-dropdown">
@@ -106,16 +134,12 @@ const Navbar = () => {
                   {totalUsers?.map((item, index) => (
                     <React.Fragment key={item._id}>
                       {index < 4 && (
-                        <Link to="/admin/chat">
-                          <span className="dropdown-item notify-item">
-                            <div className="notify-icon bg-secondary">
-                              <i className="mdi mdi-forum" />
-                            </div>
-                            <p className="notify-details pt-1">
-                              {item.userName}
-                            </p>
-                          </span>
-                        </Link>
+                        <span className="dropdown-item notify-item">
+                          <div className="notify-icon bg-secondary">
+                            <i className="mdi mdi-forum" />
+                          </div>
+                          <p className="notify-details pt-1">{item.userName}</p>
+                        </span>
                       )}
                     </React.Fragment>
                   ))}
@@ -154,7 +178,7 @@ const Navbar = () => {
                   </h5>
                 </div>
                 <div className="noti-scroll" data-simplebar>
-                  <span className="dropdown-item notify-item active">
+                  {/* <span className="dropdown-item notify-item active">
                     <div className="notify-icon">
                       <img
                         src={UserImage}
@@ -168,7 +192,7 @@ const Navbar = () => {
                         Hi, How are you? What about our next meeting
                       </small>
                     </p>
-                  </span>
+                  </span> */}
                 </div>
                 <span className="dropdown-item text-center text-primary notify-item notify-all">
                   View all
@@ -178,7 +202,7 @@ const Navbar = () => {
             </li>
             <li className="dropdown notification-list topbar-dropdown">
               <span
-                className="nav-link dropdown-tog nav-user mr-0 waves-effect waves-light ripple button-base"
+                className="nav-link profile-dropdown dropdown-tog nav-user mr-0 waves-effect waves-light ripple button-base"
                 data-toggle="dropdown"
                 role="button"
                 aria-haspopup="false"
@@ -186,29 +210,32 @@ const Navbar = () => {
               >
                 {user.role === "seller" && (
                   <img
-                    src={`/${user.userImage}`}
-                    alt={user.userName}
+                    src={`/${seller?.userImage}`}
+                    alt={seller?.userName}
                     className="rounded-circle"
                   />
                 )}
                 <span className="pro-user-name ml-1">
-                  {user.userName} <i className="mdi mdi-chevron-down" />
+                  {user.role === "admin" && user.userName}
+                  <i className="mdi mdi-chevron-down font-20" />
                 </span>
               </span>
               <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
-                <span className="dropdown-item notify-item ripple button-base">
-                  <i className="fe-user" />
-                  <span>
-                    Status : <b className="text-success">online</b>
-                  </span>
-                </span>
                 <Link
                   to="/admin/setting"
                   className="dropdown-item notify-item ripple button-base"
                 >
-                  <i className="fe-settings" />
-                  <span>Settings</span>
+                  <i className="fe-user" />
+                  <span>
+                    {user.role === "seller" ? seller?.userName : "Profile"}
+                  </span>
                 </Link>
+                <span className="dropdown-item notify-item ripple button-base">
+                  <i className="fe-settings" />
+                  <span>
+                    Status : <b className="text-success">online</b>
+                  </span>
+                </span>
                 <span
                   className="dropdown-item notify-item ripple button-base cursor-pointer"
                   onClick={() => {
@@ -216,6 +243,12 @@ const Navbar = () => {
                     setTimeout(() => {
                       history.push("/");
                     }, 500);
+                    dispatch(
+                      setAlert(SET_ALERT, {
+                        message: "Logout Successfully.",
+                        alertType: "danger",
+                      })
+                    );
                   }}
                 >
                   <i className="fe-log-out" />

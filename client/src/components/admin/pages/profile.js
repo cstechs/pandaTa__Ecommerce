@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Navbar from "../partials/header";
 import Footer from "../partials/footer";
+import { getSellerById } from "../../../redux/_actions/sellerAction";
 
 const Profile = () => {
-  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+  const [users] = useState(JSON.parse(localStorage.getItem("user")));
+  const seller = useSelector((state) => state.seller?.seller);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getSellerById(users._id));
+  }, [dispatch]);
   return (
     <div className="Dashobard">
       <div id="wrapper">
@@ -33,34 +40,36 @@ const Profile = () => {
                     <div className="profile-setting">
                       <div className="card-body">
                         <div className="text-right mt-3">
-                          <Link to="/admin/setting/edit">
-                            <button className="btn btn-secondary px-4 ripple mr-2">
-                              EDIT PROFILE
-                            </button>
-                          </Link>
+                          {users.role === "seller" && (
+                            <Link to="/admin/setting/edit">
+                              <button className="btn btn-secondary px-4 ripple mr-2">
+                                EDIT PROFILE
+                              </button>
+                            </Link>
+                          )}
                           <Link to="/admin/forgetpassword">
                             <button className="btn btn-secondary px-4 ripple">
                               CHANGE PASSWORD
                             </button>
                           </Link>
                         </div>
-                        {user.role === "seller" && (
+                        {users.role === "seller" && (
                           <>
                             <div className="row mt-3 pl-2">
                               <div className="col-md-2">
                                 <div
                                   className="profilePic"
                                   style={{
-                                    backgroundImage: `url(/${user.userImage})`,
+                                    backgroundImage: `url(/${seller?.userImage})`,
                                   }}
                                 ></div>
                               </div>
                               <div className="col-md-10">
-                                <h2 className="mt-3">{user.userName}</h2>
+                                <h2 className="mt-3">{seller?.userName}</h2>
                                 <h4 className="mt-1">
-                                  {user.userCity} , {user.userCountry}
+                                  {seller?.userCity} , {seller?.userCountry}
                                 </h4>
-                                <p className="Bio mt-1">{user.userBio}</p>
+                                <p className="Bio mt-1">{seller?.userBio}</p>
                               </div>
                             </div>
                             <div className="row mt-3 pl-2 mb-5">
@@ -74,7 +83,7 @@ const Profile = () => {
                                 <label>Gender</label>
                                 <input
                                   type="text"
-                                  value={user.userGender}
+                                  value={seller?.userGender}
                                   disabled
                                 />
                               </div>
@@ -82,7 +91,7 @@ const Profile = () => {
                                 <label>First Name</label>
                                 <input
                                   type="text"
-                                  value={user.userFirstName}
+                                  value={seller?.userFirstName}
                                   disabled
                                 />
                               </div>
@@ -90,7 +99,7 @@ const Profile = () => {
                                 <label>Middle Name</label>
                                 <input
                                   type="text"
-                                  value={user.userMiddleName}
+                                  value={seller?.userMiddleName}
                                   disabled
                                 />
                               </div>
@@ -98,7 +107,7 @@ const Profile = () => {
                                 <label>Last Name</label>
                                 <input
                                   type="text"
-                                  value={user.userLastName}
+                                  value={seller?.userLastName}
                                   disabled
                                 />
                               </div>
@@ -106,7 +115,7 @@ const Profile = () => {
                                 <label>Email Address</label>
                                 <input
                                   type="email"
-                                  value={user.userEmail}
+                                  value={seller?.userEmail}
                                   disabled
                                 />
                               </div>
@@ -114,7 +123,7 @@ const Profile = () => {
                                 <label>Phone Number</label>
                                 <input
                                   type="number"
-                                  value={user.userPhNumber}
+                                  value={seller?.userPhNumber}
                                   disabled
                                 />
                               </div>
@@ -122,7 +131,7 @@ const Profile = () => {
                                 <label>Street Address</label>
                                 <input
                                   type="text"
-                                  value={user.userAddress}
+                                  value={seller?.userAddress}
                                   disabled
                                 />
                               </div>
@@ -130,7 +139,7 @@ const Profile = () => {
                                 <label>Apt / Suite / Other</label>
                                 <input
                                   type="text"
-                                  value={user.userAppartment}
+                                  value={seller?.userAppartment}
                                   disabled
                                 />
                               </div>
@@ -138,7 +147,7 @@ const Profile = () => {
                                 <label>Zip / Postal Code</label>
                                 <input
                                   type="text"
-                                  value={user.userZipCode}
+                                  value={seller?.userZipCode}
                                   disabled
                                 />
                               </div>
@@ -152,7 +161,7 @@ const Profile = () => {
                                 <label>Business Name</label>
                                 <input
                                   type="text"
-                                  value={user.businessName}
+                                  value={seller?.businessName}
                                   disabled
                                 />
                               </div>
@@ -160,7 +169,7 @@ const Profile = () => {
                                 <label>Title</label>
                                 <input
                                   type="text"
-                                  value={user.userTitle}
+                                  value={seller?.userTitle}
                                   disabled
                                 />
                               </div>
@@ -168,7 +177,7 @@ const Profile = () => {
                                 <label>Business Type</label>
                                 <input
                                   type="text"
-                                  value={user.businessType}
+                                  value={seller?.businessType}
                                   disabled
                                 />
                               </div>
@@ -176,7 +185,7 @@ const Profile = () => {
                                 <label>Business Main Channel</label>
                                 <input
                                   type="text"
-                                  value={user.businessMainSaleChannel}
+                                  value={seller?.businessMainSaleChannel}
                                   disabled
                                 />
                               </div>
@@ -184,7 +193,7 @@ const Profile = () => {
                                 <label>Business Year Establish</label>
                                 <input
                                   type="text"
-                                  value={user.businessYearEstablish}
+                                  value={seller?.businessYearEstablish}
                                   disabled
                                 />
                               </div>
@@ -192,7 +201,7 @@ const Profile = () => {
                                 <label>Busienss Identity type</label>
                                 <input
                                   type="text"
-                                  value={user.businessIdentityType}
+                                  value={seller?.businessIdentityType}
                                   disabled
                                 />
                               </div>
@@ -200,7 +209,7 @@ const Profile = () => {
                                 <label>Business ID Number</label>
                                 <input
                                   type="number"
-                                  value={user.businessIdNumber}
+                                  value={seller?.businessIdNumber}
                                   disabled
                                 />
                               </div>
@@ -210,7 +219,7 @@ const Profile = () => {
                                 </label>
                                 <div className="underLine w-100"></div>
                               </div>
-                              {user.fbSocialAccountLink !== "" && (
+                              {seller?.fbSocialAccountLink !== "" && (
                                 <div className="col-12 mt-2">
                                   <label>
                                     <i className="fab fa-facebook-f font-17 mr-1"></i>
@@ -218,12 +227,12 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="url"
-                                    value={user.fbSocialAccountLink}
+                                    value={seller?.fbSocialAccountLink}
                                     disabled
                                   />
                                 </div>
                               )}
-                              {user.pinterestSocialAccountLink !== "" && (
+                              {seller?.pinterestSocialAccountLink !== "" && (
                                 <div className="col-12 mt-2">
                                   <label>
                                     <i className="fab fa-pinterest font-17 mr-1"></i>
@@ -231,12 +240,12 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="url"
-                                    value={user.pinterestSocialAccountLink}
+                                    value={seller?.pinterestSocialAccountLink}
                                     disabled
                                   />
                                 </div>
                               )}
-                              {user.twitterSocialAccountLink !== "" && (
+                              {seller?.twitterSocialAccountLink !== "" && (
                                 <div className="col-12 mt-2">
                                   <label>
                                     <i className="fab fa-twitter font-17 mr-1"></i>
@@ -244,12 +253,12 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="url"
-                                    value={user.twitterSocialAccountLink}
+                                    value={seller?.twitterSocialAccountLink}
                                     disabled
                                   />
                                 </div>
                               )}
-                              {user.instagramSocialAccountLink !== "" && (
+                              {seller?.instagramSocialAccountLink !== "" && (
                                 <div className="col-12 mt-2">
                                   <label>
                                     <i className="fab fa-instagram font-17 mr-1"></i>
@@ -257,7 +266,7 @@ const Profile = () => {
                                   </label>
                                   <input
                                     type="url"
-                                    value={user.instagramSocialAccountLink}
+                                    value={seller?.instagramSocialAccountLink}
                                     disabled
                                   />
                                 </div>
@@ -265,14 +274,14 @@ const Profile = () => {
                             </div>
                           </>
                         )}
-                        {user.role === "admin" && (
+                        {users.role === "admin" && (
                           <>
                             <div className="row mt-3 pl-2 mb-5">
                               <div className="col-12 mt-2">
                                 <label>User Name</label>
                                 <input
                                   type="text"
-                                  value={user.userName}
+                                  value={users.userName}
                                   disabled
                                 />
                               </div>
@@ -280,7 +289,7 @@ const Profile = () => {
                                 <label>First Name</label>
                                 <input
                                   type="text"
-                                  value={user.firstName}
+                                  value={users.firstName}
                                   disabled
                                 />
                               </div>
@@ -288,7 +297,7 @@ const Profile = () => {
                                 <label>Last Name</label>
                                 <input
                                   type="text"
-                                  value={user.lastName}
+                                  value={users.lastName}
                                   disabled
                                 />
                               </div>
@@ -296,7 +305,7 @@ const Profile = () => {
                                 <label>Email Address</label>
                                 <input
                                   type="email"
-                                  value={user.email}
+                                  value={users.email}
                                   disabled
                                 />
                               </div>

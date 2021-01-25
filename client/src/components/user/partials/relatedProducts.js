@@ -43,7 +43,14 @@ const RelatedProduct = (props) => {
         {relatedProduct?.data?.map(
           ({ _id, productName, productPrice, productImage, createdBy }) => (
             <div className="item" key={_id}>
-              <Link to={`/product/${_id}`}>
+              <Link
+                to={{
+                  pathname: `/product/${_id}`,
+                  state: {
+                    _id: _id,
+                  },
+                }}
+              >
                 <img src={`/${productImage}`} alt={productName} />
                 <div className="content">
                   <h6 className="font-13">

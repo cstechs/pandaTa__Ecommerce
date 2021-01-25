@@ -60,24 +60,24 @@ const SellerSideBar = ({
         <h1 className="font-20 mt-2">{seller.userName}</h1>
         <p className="mt-2">
           {seller.fbSocialAccountLink !== "" && (
-            <Link to={`${seller.fbSocialAccountLink}`}>
+            <a href={`${seller.fbSocialAccountLink}`} target="_blank">
               <i className="fab fa-facebook-f text-darkpurple mr-2 font-18"></i>
-            </Link>
+            </a>
           )}
           {seller.pinterestSocialAccountLink !== "" && (
-            <Link to={`${seller.pinterestSocialAccountLink}`}>
+            <a href={`${seller.pinterestSocialAccountLink}`} target="_blank">
               <i className="fab fa-pinterest text-darkpurple mr-2 font-18"></i>
-            </Link>
+            </a>
           )}
           {seller.twitterSocialAccountLink !== "" && (
-            <Link to={`${seller.twitterSocialAccountLink}`}>
+            <a href={`${seller.twitterSocialAccountLink}`} target="_blank">
               <i className="fab fa-twitter text-darkpurple mr-2 font-18"></i>
-            </Link>
+            </a>
           )}
           {seller.instagramSocialAccountLink !== "" && (
-            <Link to={`${seller.instagramSocialAccountLink}`}>
+            <a href={`${seller.instagramSocialAccountLink}`} target="_blank">
               <i className="fab fa-instagram text-darkpurple mr-2 font-18"></i>
-            </Link>
+            </a>
           )}
         </p>
       </div>

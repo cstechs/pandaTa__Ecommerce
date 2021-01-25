@@ -30,7 +30,7 @@ const Orders = () => {
   console.log("ORDER CART ", orderCart);
 
   const AdminOrdersRevenue = orders
-    .map((x) => x.cartItems[0].subTotal)
+    ?.map((x) => x.cartItems[0]?.subTotal)
     .reduce((a, b) => a + b, 0);
   // const SellerOrdersRevenue = orderCart.map((secondArray) =>
   //   secondArray.map((element) => element.total)
