@@ -18,6 +18,7 @@ import { getCart } from "../../../redux/_actions/cartAction";
 const Products = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const product = useSelector((state) => state.product);
+  const productData = useSelector((state) => state.product.products.data);
   const productLength = product.products.data.length;
   const sellerProductLength = product?.products?.data?.filter(
     (x) => x.createdBy === user._id
@@ -26,14 +27,11 @@ const Products = () => {
   const dispatch = useDispatch();
   const [addBarPreviewShown, setaddBarPreviewShown] = useState(false);
   const [updateBarPreviewShown, setupdateBarPreviewShown] = useState(false);
-  const cart = useSelector((state) => state.cart.cartItems.data);
   const [products, setProduct] = useState(0);
-  const PlacedOrders = cart
-    ?.filter((cartitem) =>
-      orders?.find((order) => order.cartId === cartitem._id)
-    )
-    ?.map((x) => x.subTotal)
-    .reduce((a, b) => a + b, 0);
+  const customers = useSelector((state) => state.user.users);
+  const customerLength = customers.filter(
+    (customer) => customer.role === "customer"
+  )?.length;
   const inStock = product?.products?.data?.filter(
     (x) =>
       (user.role === "admin" && x.productQuantity > 50) ||
@@ -50,6 +48,10 @@ const Products = () => {
       (x.productQuantity < 0 && x.createdBy === user._id)
   )?.length;
   const totalOrders = orders.length;
+  const SellerproductsLength = productData.filter(
+    (product) => product.createdBy === user._id
+  )?.length;
+  const TotalproductsLength = productData.length;
 
   const updatetogglePreview = () => {
     setupdateBarPreviewShown(!updateBarPreviewShown);
@@ -109,9 +111,9 @@ const Products = () => {
                       </div>
                       <div>
                         <h2 className="text-left text-lightblue">
-                          ${PlacedOrders}
+                          {customerLength}
                         </h2>
-                        <p className="text-secondary ">Total Revenue</p>
+                        <p className="text-secondary ">Total Customers</p>
                       </div>
                     </div>
                   </div>
@@ -140,8 +142,14 @@ const Products = () => {
                         />
                       </div>
                       <div>
-                        <h2 className="text-left text-success">+2.0%</h2>
-                        <p className="text-secondary">Growth</p>
+                        <h2 className="text-left text-success">
+                          {user && user.role === "seller" ? (
+                            <span>{SellerproductsLength}</span>
+                          ) : (
+                            <span>{TotalproductsLength}</span>
+                          )}
+                        </h2>
+                        <p className="text-secondary">Total Products</p>
                       </div>
                     </div>
                   </div>

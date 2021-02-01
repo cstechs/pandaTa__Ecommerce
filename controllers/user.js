@@ -76,6 +76,16 @@ exports.show = async function (req, res) {
   }
 };
 
+// exports.getUserById = async (req, res) => {
+//   try {
+//     let id = req.params.id;
+//     const seller = await User.findById(id);
+//     res.status(200).json({ success: true, data: seller });
+//   } catch (err) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 // @route PUT api/user/{id}
 // @desc Update user details
 // @access Public
@@ -83,7 +93,6 @@ exports.update = async function (req, res) {
   try {
     const update = req.body;
     const id = req.params.id;
-    const userId = req.params.id;
 
     //Make sure the passed id is that of the logged in user
     // if (userId.toString() !== id.toString())
@@ -99,7 +108,9 @@ exports.update = async function (req, res) {
 
     //if there is no image, return success message
     if (!req.file)
-      return res.status(200).json({ user, message: "User has been updated" });
+      return res
+        .status(200)
+        .json({ user, message: "Your Password has been updated" });
 
     //Attempt to upload to cloudinary
     const result = await uploader(req);

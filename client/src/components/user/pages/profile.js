@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
@@ -6,9 +6,11 @@ import { Link, useHistory } from "react-router-dom";
 const Profile = () => {
   const history = useHistory();
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
-  if (!user || user.role != "customer") {
-    history.push("/");
-  }
+  useEffect(() => {
+    if (user === null || user.role != "customer") {
+      history.push("/");
+    }
+  });
   return (
     <>
       <div className="component">
@@ -24,6 +26,14 @@ const Profile = () => {
       <div className="profile">
         <div className="container-fluid">
           <div className="row">
+            <div className="col-12 text-right">
+              <Link
+                to="/changepassword"
+                className="btn btn-darkpurple py-2 px-4 ripple button-base"
+              >
+                CHANGE PASSWORD
+              </Link>
+            </div>
             <div className="col-12">
               <label>Username</label>
               <input type="text" value={user.userName} disabled />

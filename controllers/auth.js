@@ -49,6 +49,10 @@ exports.login = async (req, res) => {
     // if (!user.comparePassword(password))
     //   return res.status(401).json({ message: "Invalid Credentials" });
 
+    // validate password
+    if (!user.comparePassword(password))
+      return res.status(401).json({ message: "Invalid Credentials" });
+
     // Make sure the user has been verified
     if (!user.isVerified) {
       return res.status(401).json({

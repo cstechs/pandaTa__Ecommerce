@@ -100,7 +100,7 @@ body ::-webkit-scrollbar-thumb {
 .terms {
   color: #838996;
   font-size: 13px;
-  position: fixed;
+  position: absolute;
   bottom: 2px;
   right: 20%;
   font-weight: 600;

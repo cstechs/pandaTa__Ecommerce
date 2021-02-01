@@ -37,4 +37,6 @@ router.put("/:id", upload, User.update);
 //DELETE
 router.delete("/:id", User.destroy);
 
+// router.get("/getUserById/:id", User.getUserById);
+
 module.exports = router;

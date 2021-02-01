@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../partials/header";
 import NavBar from "../partials/navbar";
 import Footer from "../partials/footer";
 import { Link, useHistory } from "react-router-dom";
 import addImageIcon from "../../../assets/images/addPhoto.png";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { sellerregister } from "../../../redux/_actions/sellerAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { SET_ALERT } from "../../../redux/types";
 
 const SellerApplication = () => {
   const history = useHistory();
+  const state = useSelector((state) => state.auth);
   const [applicationShown, setapplicationShown] = useState(true);
   const [companyProfileShown, setcompanyProfileShown] = useState(false);
   const [webAndSocialMediaShown, setwebAndSocialMediaShown] = useState(false);
   const [contactInfoShown, setcontactInfoShown] = useState(false);
   const [fileImage, setfileImage] = useState(null);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      history.push("/");
+    }
+  });
 
   const [newUser, setNewUser] = useState({
     userEmail: "",

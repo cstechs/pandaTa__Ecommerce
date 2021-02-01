@@ -226,10 +226,7 @@ const Header = () => {
                           </div>
                           <div>
                             {user.role === "seller" ? (
-                              <Link
-                                to="/admin/orders"
-                                className="dropdown-item"
-                              >
+                              <Link to="/admin/order" className="dropdown-item">
                                 <i className="fas fa-box-open" />
                                 Orders
                               </Link>
@@ -245,6 +242,7 @@ const Header = () => {
                               className="dropdown-item"
                               onClick={() => {
                                 dispatch(logout());
+                                history.push("/");
                                 window.location.reload();
                                 dispatch(
                                   setAlert(SET_ALERT, {

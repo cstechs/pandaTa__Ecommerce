@@ -20,6 +20,8 @@ import {
 } from "../../../redux/_actions/subCategoryAction";
 
 const Category = () => {
+  const products = useSelector((state) => state.product.products.data);
+  const TotalproductsLength = products.length;
   const [newcategory, setnewcategory] = useState(0);
   const [catAddPreviewShown, setAddcatPreviewShown] = useState(false);
   const [catUpdatePreviewShown, setUpdatecatPreviewShown] = useState(false);
@@ -27,6 +29,10 @@ const Category = () => {
   const [subCatUpdatePreviewShown, setsubUpdateCatPreviewShown] = useState(
     false
   );
+  const customers = useSelector((state) => state.user.users);
+  const customerLength = customers.filter(
+    (customer) => customer.role === "customer"
+  )?.length;
   const [newSubcategory, setnewSubcategory] = useState(0);
   const category = useSelector((state) => state.category);
   const subCategory = useSelector((state) => state.subCategory);
@@ -102,8 +108,10 @@ const Category = () => {
                         />
                       </div>
                       <div>
-                        <h2 className="text-left text-lightblue">$50,000</h2>
-                        <p className="text-secondary ">Total Revenue</p>
+                        <h2 className="text-left text-lightblue">
+                          {customerLength}
+                        </h2>
+                        <p className="text-secondary ">Total Customers</p>
                       </div>
                     </div>
                   </div>
@@ -132,8 +140,10 @@ const Category = () => {
                         />
                       </div>
                       <div>
-                        <h2 className="text-left text-success">+2.0%</h2>
-                        <p className="text-secondary">Growth</p>
+                        <h2 className="text-left text-success">
+                          {TotalproductsLength}
+                        </h2>
+                        <p className="text-secondary">Total Products</p>
                       </div>
                     </div>
                   </div>

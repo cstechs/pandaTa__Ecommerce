@@ -43,6 +43,14 @@ exports.addItemToCart = async (req, res) => {
             type: "Invalid",
             msg: "Not available in stock",
           });
+        } else if (
+          productDetails.productQuantity <
+          cart.items[indexFound].quantity + quantity
+        ) {
+          return res.status(500).json({
+            type: "Invalid",
+            msg: "Not available in stock",
+          });
         } else {
           cart.items[indexFound].quantity =
             cart.items[indexFound].quantity + quantity;

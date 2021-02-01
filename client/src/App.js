@@ -20,6 +20,7 @@ import UserSeller from "./components/user/pages/seller";
 import UserSingleSeller from "./components/user/pages/singleSeller";
 import UserProfile from "./components/user/pages/profile";
 import UserOrder from "./components/user/pages/order";
+import UserChangePassword from "./components/user/auth/changePassword";
 import PrivateRoute from "./components/admin/routing/PrivateRoute";
 import AdminPanel from "./components/admin/pages/home";
 import AdminPanelProducts from "./components/admin/pages/products";
@@ -82,6 +83,7 @@ function App() {
           <Route exact path="/verify/:token" component={VerifyView} />
           <Route exact path="/reset/:token" component={ResetPassword} />
           <Route exact path="/seller" component={UserSeller} />
+          <Route exact path="/changePassword" component={UserChangePassword} />
           {Sellers ? (
             Sellers?.map(({ _id }) => (
               <Route

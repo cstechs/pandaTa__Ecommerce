@@ -71,6 +71,12 @@ export const sellerlogin = (userEmail, userpassword) => {
       );
 
       dispatch({ type: SELLER_LOGIN_SUCCESS, payload: res.data });
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Login Successfully.",
+          alertType: "success",
+        })
+      );
       setTimeout(() => {
         window.location.reload();
       }, 2000);

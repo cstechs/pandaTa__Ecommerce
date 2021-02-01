@@ -5,6 +5,15 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder }) => {
   };
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const sellerOrder = selectedOrder?.cartItems[0].items.filter(
+    (item) => item.sellerId === user._id
+  );
+  const sellerOrderTotalDetail = selectedOrder?.cartItems[0].items.filter(
+    (item) => item.sellerId === user._id
+  );
+  const SelerOrderTotal = sellerOrderTotalDetail
+    ?.map((item) => item.total)
+    ?.reduce((a, b) => a + b, 0);
   return (
     <>
       <i className="fas fa-times-circle closeIcon" onClick={handleHide}></i>
@@ -109,40 +118,10 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder }) => {
           <div className="cart-table">
             <table>
               <tbody>
-                {selectedOrder.cartItems[0].items.map((item) => (
-                  <>
-                    {user.role === "seller" ? (
-                      item.sellerId === user._id ? (
-                        <tr>
-                          <td>
-                            <div className="imageBox">
-                              <img
-                                src={`/${item.productId.productImage}`}
-                                alt={item.productId.productName}
-                              />
-                            </div>
-                          </td>
-                          <td>{item.productId.productName}</td>
-                          <td>
-                            <span className="price">{item.quantity}</span>
-                          </td>
-                          <td>${item.productId.productPrice} </td>
-                        </tr>
-                      ) : (
-                        <tr>
-                          <td />
-                          <td />
-                          <td>
-                            <p className="empty my-5 py-3 text-dark font-15 text-center">
-                              NO ORDERS FOUND
-                            </p>
-                          </td>
-                          <td />
-                          <td />
-                        </tr>
-                      )
-                    ) : (
-                      <tr>
+                {user.role === "seller" ? (
+                  sellerOrder.length > 0 ? (
+                    sellerOrder.map((item) => (
+                      <tr key={item._id}>
                         <td>
                           <div className="imageBox">
                             <img
@@ -157,9 +136,39 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder }) => {
                         </td>
                         <td>${item.productId.productPrice} </td>
                       </tr>
-                    )}
-                  </>
-                ))}
+                    ))
+                  ) : (
+                    <tr>
+                      <td />
+                      <td />
+                      <td>
+                        <p className="empty my-5 py-3 text-dark font-15 text-center">
+                          NO ORDERS FOUND
+                        </p>
+                      </td>
+                      <td />
+                      <td />
+                    </tr>
+                  )
+                ) : (
+                  selectedOrder.cartItems[0].items.map((item) => (
+                    <tr key={item._id}>
+                      <td>
+                        <div className="imageBox">
+                          <img
+                            src={`/${item.productId.productImage}`}
+                            alt={item.productId.productName}
+                          />
+                        </div>
+                      </td>
+                      <td>{item.productId.productName}</td>
+                      <td>
+                        <span className="price">{item.quantity}</span>
+                      </td>
+                      <td>${item.productId.productPrice} </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -167,7 +176,11 @@ const OrderDetail = ({ orderPreviewToggle, selectedOrder }) => {
             <div className="float-right">
               <p>
                 Total Amount
-                <span>${selectedOrder.cartItems[0].subTotal.toFixed(2)}</span>
+                {user.role === "seller" ? (
+                  <span>${SelerOrderTotal?.toFixed(2)}</span>
+                ) : (
+                  <span>${selectedOrder.cartItems[0].subTotal.toFixed(2)}</span>
+                )}
               </p>
             </div>
           </div>

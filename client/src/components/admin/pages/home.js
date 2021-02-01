@@ -9,10 +9,12 @@ import UserImage from "../../../assets/images/admin/user.jpg";
 import { Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { getChat } from "../../../redux/_actions/chatAction";
+import { getOrder } from "../../../redux/_actions/orderAction";
 
 const Home = () => {
   const [chartData, setChartData] = useState({});
   const user = JSON.parse(localStorage.getItem("user"));
+  const orders = useSelector((state) => state.order.orders);
   const products = useSelector((state) => state.product.products.data);
   const SellerproductsLength = products.filter(
     (product) => product.createdBy === user._id
@@ -28,7 +30,9 @@ const Home = () => {
   const totalUsers = users.filter((z) =>
     chat?.data?.find((x) => x.createdBy === z._id && x.sellerId === user._id)
   );
-
+  const ProductsSold = orders
+    ?.map((x) => x.cartItems[0]?.items.length)
+    .reduce((a, b) => a + b, 0);
   const chart = () => {
     setChartData({
       labels: ["June", "July", "Augest", "September", "Octuber", "November"],
@@ -59,6 +63,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getChat());
+    dispatch(getOrder());
   }, [dispatch]);
 
   useEffect(() => {
@@ -104,7 +109,7 @@ const Home = () => {
                     <h4 className="mt-0 font-13">Products Sold</h4>
                     <div className="float-left">
                       <h2 className="text-primary my-2 text-left">
-                        <span>0</span>
+                        <span>{ProductsSold}</span>
                       </h2>
                     </div>
                     <div className="float-right">

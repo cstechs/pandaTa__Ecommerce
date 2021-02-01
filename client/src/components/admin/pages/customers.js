@@ -76,11 +76,11 @@ const Customers = () => {
                       <div className="col-lg-4">
                         <div className="text-center customer-card">
                           <div className="float-left">
-                            <i className="fas fa-pencil-alt"></i>
+                            {/* <i className="fas fa-pencil-alt"></i> */}
                           </div>
                           <div className="float-right">
                             <i
-                              className="fas fa-times"
+                              className="fas fa-trash"
                               onClick={() => {
                                 dispatch(deleteUser(item._id, item._id));
                                 setTimeout(() => {

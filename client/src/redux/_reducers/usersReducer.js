@@ -24,7 +24,6 @@ const userReducer = (state = initState, action) => {
     case USER_UPDATE_FAIL:
       return { ...state };
     case USER_UPDATE_SUCCESS:
-      localStorage.setItem("user", action.payload.user);
       return {
         ...state,
       };

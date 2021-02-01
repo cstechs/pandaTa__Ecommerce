@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgot } from "../../../redux/_actions/authAction";
 import { setAlert } from "../../../redux/_actions/alertAction";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const ForgetPasssword = () => {
   const dispatch = useDispatch();
@@ -41,9 +41,15 @@ const ForgetPasssword = () => {
               />
               <input
                 type="submit"
-                className="ripple button-base"
+                className="ripple button-base mb-0"
                 value="Send request"
               />
+              <Link
+                to="/"
+                className="d-block text-center font-13 font-weight-bold mt-2 text-darkpurple"
+              >
+                GO BACK
+              </Link>
             </form>
           </div>
         </div>

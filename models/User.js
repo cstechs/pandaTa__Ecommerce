@@ -93,6 +93,10 @@ const UserSchema = new mongoose.Schema(
 //   return bcrypt.compareSync(password, this.password);
 // };
 
+UserSchema.methods.comparePassword = function (password) {
+  return password == this.password;
+};
+
 UserSchema.methods.generateJWT = function () {
   const today = new Date();
   const expirationDate = new Date(today);

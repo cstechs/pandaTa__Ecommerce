@@ -30,23 +30,11 @@ const Login = (props) => {
         users.find((user) => user.email === email)?.role === "customer"
       ) {
         dispatch(login(email, password));
-        dispatch(
-          setAlert(SET_ALERT, {
-            message: "Login Successfully.",
-            alertType: "success",
-          })
-        );
       } else if (
         role === "seller" &&
         sellers.find((seller) => seller.userEmail === email)?.role === "seller"
       ) {
         dispatch(sellerlogin(email, password));
-        dispatch(
-          setAlert(SET_ALERT, {
-            message: "Login Successfully.",
-            alertType: "success",
-          })
-        );
       } else {
         dispatch(
           setAlert(SET_ALERT, {

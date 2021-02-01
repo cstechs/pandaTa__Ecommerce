@@ -15,8 +15,7 @@ import dateFormat from "dateformat";
 const Orders = () => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders);
-  console.log("ORDERS ", orders);
-  const cart = useSelector((state) => state.cart.cartItems?.data);
+  const products = useSelector((state) => state.product.products.data);
   const user = JSON.parse(localStorage.getItem("user"));
   const users = useSelector((state) => state.user.users);
   const [orderDetailShown, setorderDetailShown] = useState(false);
@@ -26,48 +25,23 @@ const Orders = () => {
     setorderDetailShown(!orderDetailShown);
     setSelectedOrder(item);
   };
-  const orderCart = orders?.map((order) => order.cartSeller);
-  console.log("ORDER CART ", orderCart);
+  const SellerproductsLength = products.filter(
+    (product) => product.createdBy === user._id
+  )?.length;
+  const TotalproductsLength = products.length;
 
-  const AdminOrdersRevenue = orders
-    ?.map((x) => x.cartItems[0]?.subTotal)
-    .reduce((a, b) => a + b, 0);
-  // const SellerOrdersRevenue = orderCart.map((secondArray) =>
-  //   secondArray.map((element) => element.total)
-  // );
-  const getSellerId = orderCart.filter((order) => order === user._id);
-  const sellerIdArray = Object.values(getSellerId);
-
-  // console.log("SELLER ID ARRAY ", sellerIdArray);
-
-  // const sellerId = sellerIdArray.filter((sellerId) => sellerId === user._id);
-
-  // console.log("hy", getSellerId);
-
-  // const currentSellerOrders = orders.map((order) =>
-  //   order.cartSeller.find((sellerId) => sellerId === user._id)
-  // );
-  // console.log("SELLER IDS IN ORDER TABLE ", currentSellerOrders);
-
-  // const matchId = currentSellerOrders.find((item) => item === user._id);
-  // const matchIdWithCurrentSeller = orders.filter((item) =>
-  //   currentSellerOrders.includes(item.cartSeller.find(matchId))
-  // );
-
-  // console.log(currentSellerOrders.find((item) => item === user._id));
-
-  console.log("USER ID ", user._id);
-
-  // console.log("MATCHED ", matchIdWithCurrentSeller);
-
-  const data =
-    // console.log("CURRENT SELLER ORDER", currentSellerOrders);
-
-    useEffect(() => {
-      dispatch(getOrder());
-      dispatch(getCart());
-      dispatch(getUser());
-    }, [dispatch]);
+  const customers = useSelector((state) => state.user.users);
+  const customerLength = customers.filter(
+    (customer) => customer.role === "customer"
+  )?.length;
+  const sellerOrder = orders.filter((order) =>
+    order.cartSeller.find((seller) => seller === user._id)
+  );
+  useEffect(() => {
+    dispatch(getOrder());
+    dispatch(getCart());
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <div className="Dashobard">
@@ -103,9 +77,9 @@ const Orders = () => {
                     </div>
                     <div>
                       <h2 className="text-left text-lightblue">
-                        ${AdminOrdersRevenue}
+                        {customerLength}
                       </h2>
-                      <p className="text-secondary ">Total Revenue</p>
+                      <p className="text-secondary ">Total Customers</p>
                     </div>
                   </div>
                 </div>
@@ -134,8 +108,14 @@ const Orders = () => {
                       />
                     </div>
                     <div>
-                      <h2 className="text-left text-success">+2.0%</h2>
-                      <p className="text-secondary">Growth</p>
+                      <h2 className="text-left text-success">
+                        {user && user.role === "seller" ? (
+                          <span>{SellerproductsLength}</span>
+                        ) : (
+                          <span>{TotalproductsLength}</span>
+                        )}
+                      </h2>
+                      <p className="text-secondary">Total Products</p>
                     </div>
                   </div>
                 </div>
@@ -159,57 +139,55 @@ const Orders = () => {
                             </thead>
                             <tbody>
                               {user.role === "seller" ? (
-                                orders?.map((orders, index) => (
-                                  <React.Fragment key={index}>
-                                    {sellerIdArray.filter(
-                                      (elements) =>
-                                        elements === user._id && (
-                                          <tr key={index}>
-                                            <td>{index + 1}</td>
-                                            <td>
-                                              {dateFormat(
-                                                orders.createdAt,
-                                                "dS mmmm , yyyy"
-                                              )}
-                                            </td>
-                                            <td className="pl-5">
-                                              {orders.cartItems[0].items.length}
-                                            </td>
-                                            <td>
-                                              {
-                                                users.find(
-                                                  (user) =>
-                                                    user._id ===
-                                                    orders.createdBy
-                                                )?.userName
-                                              }
-                                            </td>
-                                            <td
-                                              className="font-11 text-success cursor-pointer"
-                                              onClick={() =>
-                                                orderPreviewToggle(orders)
-                                              }
-                                            >
-                                              MoreDetail
-                                            </td>
-                                          </tr>
-                                        )
-                                      //: (
-                                      //   <tr>
-                                      //     <td />
-                                      //     <td />
-                                      //     <td>
-                                      //       <p className="empty my-5 py-3 text-dark font-15 text-center">
-                                      //         NO ORDERS FOUND
-                                      //       </p>
-                                      //     </td>
-                                      //     <td />
-                                      //     <td />
-                                      //   </tr>
-                                      // )
-                                    )}
-                                  </React.Fragment>
-                                ))
+                                sellerOrder?.length >= 1 ? (
+                                  sellerOrder?.map((orders, index) => (
+                                    <tr key={index}>
+                                      <td>{index + 1}</td>
+                                      <td>
+                                        {dateFormat(
+                                          orders.createdAt,
+                                          "dS mmmm , yyyy"
+                                        )}
+                                      </td>
+                                      <td className="pl-5">
+                                        {
+                                          orders.cartItems[0].items.filter(
+                                            (seller) =>
+                                              seller.sellerId === user._id
+                                          )?.length
+                                        }
+                                      </td>
+                                      <td>
+                                        {
+                                          users.find(
+                                            (user) =>
+                                              user._id === orders.createdBy
+                                          )?.userName
+                                        }
+                                      </td>
+                                      <td
+                                        className="font-11 text-success cursor-pointer"
+                                        onClick={() =>
+                                          orderPreviewToggle(orders)
+                                        }
+                                      >
+                                        MoreDetail
+                                      </td>
+                                    </tr>
+                                  ))
+                                ) : (
+                                  <tr>
+                                    <td />
+                                    <td />
+                                    <td>
+                                      <p className="empty my-5 py-3 text-dark font-15 text-center">
+                                        NO ORDERS FOUND
+                                      </p>
+                                    </td>
+                                    <td />
+                                    <td />
+                                  </tr>
+                                )
                               ) : orders?.length > 0 ? (
                                 orders?.map((orders, index) => (
                                   <tr key={index}>

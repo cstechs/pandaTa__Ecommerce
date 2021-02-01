@@ -19,6 +19,7 @@ const CheckOut = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   let userCart = cartItem?.data?.find((x) => x.createdBy === user?._id);
   let cartsellers = userCart?.items.map((user) => user.sellerId);
+  console.log("seller", cartsellers);
   const { cartid } = useParams();
   const history = useHistory();
 

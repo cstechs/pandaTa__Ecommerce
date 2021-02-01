@@ -47,7 +47,7 @@ const Profile = () => {
                               </button>
                             </Link>
                           )}
-                          <Link to="/admin/forgetpassword">
+                          <Link to="/changepassword">
                             <button className="btn btn-secondary px-4 ripple">
                               CHANGE PASSWORD
                             </button>

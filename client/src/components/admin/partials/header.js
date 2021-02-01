@@ -240,9 +240,7 @@ const Navbar = () => {
                   className="dropdown-item notify-item ripple button-base cursor-pointer"
                   onClick={() => {
                     dispatch(logout());
-                    setTimeout(() => {
-                      history.push("/");
-                    }, 500);
+                    history.push("/");
                     dispatch(
                       setAlert(SET_ALERT, {
                         message: "Logout Successfully.",

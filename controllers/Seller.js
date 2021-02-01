@@ -117,6 +117,9 @@ exports.login = async (req, res, next) => {
       });
 
     //validate password
+    if (!seller.comparePassword(userpassword))
+      return res.status(401).json({ message: "Invalid Credentials.." });
+
     // if (!seller.comparePassword(userpassword))
     //   return res.status(401).json({ message: "Invalid Creds.." });
 
@@ -231,7 +234,7 @@ exports.update = async function (req, res) {
     res.status(200).json({
       success: true,
       seller: seller,
-      message: "Seller has been updated",
+      message: "Your Profile has been updated",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import Login from "../auth/login";
-import Register from "../auth/register";
 import { getCategory } from "../../../redux/_actions/categoryAction";
 import { getSubCategory } from "../../../redux/_actions/subCategoryAction";
-import { register } from "../../../redux/_actions/authAction";
 
 const Sidebar = ({ LoginHandler, RegisterHandler }) => {
   function toggle() {
     document.getElementById("sideBar").classList.toggle("Toggleshow");
-  }
-
-  function DropDowntoggle() {
-    document.getElementsByClassName("fa-caret-up")[0].classList.toggle("show");
-    document
-      .getElementsByClassName("fa-caret-down")[0]
-      .classList.toggle("hide");
   }
   function menu() {
     document.getElementById("Account").style.display = "none";
@@ -66,14 +56,11 @@ const Sidebar = ({ LoginHandler, RegisterHandler }) => {
         <ul>
           {category.categories.data?.map(({ _id, categoryName }) => (
             <div className="btn-group" key={_id}>
-              <li
-                onClick={DropDowntoggle}
-                data-toggle="dropdown"
-                aria-expanded="true"
-              >
+              <li data-toggle="dropdown" aria-expanded="true">
                 {categoryName}
-                <i className="fa fa-caret-down"></i>
-                <i className="fa fa-caret-up"></i>
+                {subCategory.subCategories?.data?.find(
+                  (item) => item.categoryId === _id
+                ) !== undefined && <i className="fa fa-caret-down"></i>}
               </li>
               <div className="dpdownlist dropdown-menu">
                 {subCategory.subCategories.data?.map((item, i) => {

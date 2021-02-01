@@ -116,9 +116,9 @@ const SellerSchema = mongoose.Schema(
 //   });
 // });
 
-// SellerSchema.methods.comparePassword = function (userpassword) {
-//   return bcrypt.compareSync(userpassword, this.userpassword);
-// };
+SellerSchema.methods.comparePassword = function (userpassword) {
+  return userpassword == this.userpassword;
+};
 
 SellerSchema.methods.generateJWT = function () {
   const today = new Date();

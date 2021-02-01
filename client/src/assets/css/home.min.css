@@ -1338,7 +1338,7 @@
   position: absolute;
   background: rgba(0, 0, 0, 0.5);
   height: 100%;
-  transition: .5s all;
+  transition: 0.5s all;
   width: 100%;
   top: 0;
   left: 0;
@@ -3209,7 +3209,7 @@ nav .dropdownlist {
   visibility: hidden;
   opacity: 0;
   transform: translateY(-25px);
-  transition: transform 0.4s ease;
+  transition: 0.4s all;
   position: absolute;
   margin-top: 1%;
   padding: 30px 16px;
