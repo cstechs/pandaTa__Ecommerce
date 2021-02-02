@@ -4,6 +4,7 @@ import { login } from "../../../redux/_actions/authAction";
 import { Link } from "react-router-dom";
 import { setAlert } from "../../../redux/_actions/alertAction";
 import { CLEAR_ERRORS } from "../../../redux/types";
+import { SET_ALERT } from "../../../redux/types";
 import { getUser } from "../../../redux/_actions/userAction";
 
 const Login = ({ history }) => {
@@ -15,18 +16,7 @@ const Login = ({ history }) => {
     if (state.isAuthenticated) {
       history.push("/admin");
     }
-    if (state.error === "Invalid Creds..") {
-      dispatch(setAlert(state.error, "danger"));
-      dispatch({ type: CLEAR_ERRORS });
-    } else if (state.error?.toString().startsWith("The email address")) {
-      dispatch(setAlert(state.error, "danger"));
-      dispatch({ type: CLEAR_ERRORS });
-    } else if (state.error === "Your account has not been verified.") {
-      dispatch(setAlert(state.error, "danger"));
-      dispatch({ type: CLEAR_ERRORS });
-    }
-    // eslint-disable-next-line
-  }, [state.isAuthenticated, state.error]);
+  });
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
@@ -37,9 +27,23 @@ const Login = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
-      dispatch(setAlert("Please enter all the fields.", "danger"));
-    } else if (users.find((user) => user.email === email)?.role === "admin") {
-      dispatch(login(email, password));
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please enter all the fields.",
+          alertType: "danger",
+        })
+      );
+    } else {
+      if (users.find((user) => user.email === email)?.role === "admin") {
+        dispatch(login(email, password));
+      } else {
+        dispatch(
+          setAlert(SET_ALERT, {
+            message: "Invalid Credentials.",
+            alertType: "danger",
+          })
+        );
+      }
     }
   };
 
@@ -55,7 +59,6 @@ const Login = ({ history }) => {
               <input
                 type="email"
                 name="email"
-                required
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +68,6 @@ const Login = ({ history }) => {
                 type="password"
                 name="password"
                 value={password}
-                required
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
               />

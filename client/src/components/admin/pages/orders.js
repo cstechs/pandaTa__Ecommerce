@@ -20,7 +20,10 @@ const Orders = () => {
   const users = useSelector((state) => state.user.users);
   const [orderDetailShown, setorderDetailShown] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
-  const totalOrders = orders.length;
+  const totalOrdersLength = orders.length;
+  const sellerOrdersLength = orders.filter((order) =>
+    order.cartSeller.find((seller) => seller === user._id)
+  )?.length;
   const orderPreviewToggle = (item) => {
     setorderDetailShown(!orderDetailShown);
     setSelectedOrder(item);
@@ -93,7 +96,11 @@ const Orders = () => {
                       />
                     </div>
                     <div>
-                      <h2 className="text-left text-purple">{totalOrders}</h2>
+                      <h2 className="text-left text-purple">
+                        {user.role === "seller"
+                          ? sellerOrdersLength
+                          : totalOrdersLength}
+                      </h2>
                       <p className="text-secondary ">Total Orders</p>
                     </div>
                   </div>

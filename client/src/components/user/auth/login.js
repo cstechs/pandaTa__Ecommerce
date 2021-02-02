@@ -23,7 +23,12 @@ const Login = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === "" || password === "" || role === "") {
-      dispatch(setAlert("Please enter all the fields.", "danger"));
+      dispatch(
+        setAlert(SET_ALERT, {
+          message: "Please enter all the fields.",
+          alertType: "danger",
+        })
+      );
     } else {
       if (
         role === "customer" &&

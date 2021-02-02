@@ -110,7 +110,7 @@ const SingleProduct = () => {
 
   return (
     <>
-      {product && seller ? (
+      {product ? (
         <div>
           <div className="component">
             <Header />
@@ -141,18 +141,18 @@ const SingleProduct = () => {
                 <div className="col-md-7">
                   <div className="product_detail">
                     <h1>{product?.product?.data.productName}</h1>
-                    <div className="Reviews">
+                    {/* <div className="Reviews">
                       <i className="fa fa-star" />
                       <i className="fa fa-star" />
                       <i className="fa fa-star" />
                       <i className="fa fa-star" />
                       <i className="fa fa-star" />
-                    </div>
-                    <h3> ${product?.product?.data.productPrice}</h3>
+                    </div> */}
                     <h6 className="text-success">
                       Avalibility ( {product?.product?.data.productQuantity} In
                       Stock )
                     </h6>
+                    <h3> ${product?.product?.data.productPrice}</h3>
                     <p>{product?.product?.data.productDescription}</p>
                     {user && user.role === "customer" && (
                       <>

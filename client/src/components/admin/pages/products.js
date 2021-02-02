@@ -47,7 +47,10 @@ const Products = () => {
       (user.role === "admin" && x.productQuantity < 0) ||
       (x.productQuantity < 0 && x.createdBy === user._id)
   )?.length;
-  const totalOrders = orders.length;
+  const totalOrdersLength = orders.length;
+  const sellerOrdersLength = orders.filter((order) =>
+    order.cartSeller.find((seller) => seller === user._id)
+  )?.length;
   const SellerproductsLength = productData.filter(
     (product) => product.createdBy === user._id
   )?.length;
@@ -127,7 +130,11 @@ const Products = () => {
                         />
                       </div>
                       <div>
-                        <h2 className="text-left text-purple">{totalOrders}</h2>
+                        <h2 className="text-left text-purple">
+                          {user.role === "seller"
+                            ? sellerOrdersLength
+                            : totalOrdersLength}
+                        </h2>
                         <p className="text-secondary ">Total Orders</p>
                       </div>
                     </div>
@@ -204,7 +211,14 @@ const Products = () => {
                                     {user._id === item.createdBy && (
                                       <tr key={item._id}>
                                         <td className="productName">
-                                          <Link to={`/product/${item._id}`}>
+                                          <Link
+                                            to={{
+                                              pathname: `/product/${item._id}`,
+                                              state: {
+                                                _id: item._id,
+                                              },
+                                            }}
+                                          >
                                             <div className="product_image">
                                               <img
                                                 src={`/${item.productImage}`}
@@ -259,7 +273,14 @@ const Products = () => {
                                 product.products.data?.map((item) => (
                                   <tr key={item._id}>
                                     <td className="productName">
-                                      <Link to={`/product/${item._id}`}>
+                                      <Link
+                                        to={{
+                                          pathname: `/product/${item._id}`,
+                                          state: {
+                                            _id: item._id,
+                                          },
+                                        }}
+                                      >
                                         <div className="product_image">
                                           <img
                                             src={`/${item.productImage}`}
@@ -303,7 +324,14 @@ const Products = () => {
                                         ></i>
                                       )}
                                       {user.role === "admin" && (
-                                        <Link to={`/product/${item._id}`}>
+                                        <Link
+                                          to={{
+                                            pathname: `/product/${item._id}`,
+                                            state: {
+                                              _id: item._id,
+                                            },
+                                          }}
+                                        >
                                           <i className="fas fa-eye text-dark"></i>
                                         </Link>
                                       )}
